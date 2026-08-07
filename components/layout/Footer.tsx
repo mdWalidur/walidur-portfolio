@@ -116,15 +116,12 @@ export default function Footer() {
         </motion.div>
 
         <div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © {currentYear} Walidur Rahman. All rights reserved.
-          </p>
+          <p>© {currentYear} Walidur Rahman. All rights reserved.</p>
 
-          <p className="flex items-center gap-1.5">
-            Designed and built in Finland
-            
-        
-          </p>
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-teal-800" />
+            <p className="text-sm text-slate-1000">Designed and built in Finland</p>
+          </div>
 
           <a
             href="#home"
