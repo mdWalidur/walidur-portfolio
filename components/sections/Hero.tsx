@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ArrowDownRight, ArrowUpRight, Mail } from "lucide-react";
@@ -13,7 +14,17 @@ type HeroProps = {
 };
 
 function HeroTechStack() {
-  const stack = ["Docker", "Kubernetes", "Terraform", "AWS", "Python", "Node.js", "React", "Next.js", "AI/ML"];
+  const stack = [
+    "Docker",
+    "Kubernetes",
+    "Terraform",
+    "AWS",
+    "Python",
+    "Node.js",
+    "React",
+    "Next.js",
+    "AI/ML",
+  ];
 
   return (
     <div className="mt-4 flex flex-wrap gap-2">
@@ -75,7 +86,6 @@ export default function Hero({
       const rect = section.getBoundingClientRect();
       const x = ((event.clientX - rect.left) / rect.width) * 100;
       const y = ((event.clientY - rect.top) / rect.height) * 100;
-
       setMousePosition({ x, y });
     };
 
@@ -96,86 +106,28 @@ export default function Hero({
   const firstName = nameParts.slice(0, -1).join(" ") || nameParts[0];
   const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : "";
 
-  const particles = [
-    {
-      id: "p1",
-      left: "12%",
-      top: "22%",
-      className: "h-2 w-2 rounded-full bg-teal-300/45 blur-[1px]",
-      duration: 7.5,
-      delay: 0,
-    },
-    {
-      id: "p2",
-      left: "82%",
-      top: "20%",
-      className: "h-1.5 w-1.5 rounded-full bg-cyan-300/35",
-      duration: 8.8,
-      delay: 0.8,
-    },
-    {
-      id: "p3",
-      left: "76%",
-      top: "72%",
-      className: "h-2.5 w-2.5 rounded-full bg-teal-200/35 blur-[0.5px]",
-      duration: 9.4,
-      delay: 1.3,
-    },
-    {
-      id: "p4",
-      left: "20%",
-      top: "76%",
-      className: "h-1.5 w-1.5 rounded-full bg-white/40",
-      duration: 6.7,
-      delay: 0.4,
-    },
-  ];
-
   return (
     <section
       ref={sectionRef}
       id="home"
       aria-labelledby="hero-heading"
-      className="relative isolate min-h-screen overflow-hidden bg-[#050505] px-5 pb-12 pt-28 text-slate-100 sm:px-8 sm:pt-32 lg:px-12 xl:px-20"
+      className="relative isolate min-h-screen overflow-hidden px-5 pb-12 pt-28 text-slate-100 sm:px-8 sm:pt-32 lg:px-12 xl:px-20"
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-20 transition duration-500"
+        className="pointer-events-none absolute inset-0 -z-10 transition duration-500"
         style={{
-          background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(20,184,166,0.18), transparent 28%), radial-gradient(circle at 85% 70%, rgba(45,212,191,0.08), transparent 24%)`,
+          background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(20,184,166,0.10), transparent 24%)`,
         }}
       />
-      <motion.div
-        aria-hidden="true"
-        initial={{ opacity: 0.28 }}
-        animate={{ opacity: [0.12, 0.2, 0.12], scale: [1, 1.01, 1] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.14] [background-image:linear-gradient(rgba(148,163,184,0.18)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.18)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:linear-gradient(to_bottom,black,transparent_85%)]"
-      />
-      <motion.div
-        aria-hidden="true"
-        animate={{ x: [0, 12, 0], y: [0, -18, 0], scale: [1, 1.03, 1] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-teal-400/10 blur-[130px]"
-      />
 
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-        {particles.map(({ id, left, top, className, duration, delay }) => (
-          <motion.span
-            key={id}
-            initial={{ opacity: 0.25, y: 0, scale: 1 }}
-            animate={{
-              opacity: [0.25, 0.7, 0.25],
-              y: [0, -14, 0],
-              x: [0, 6, 0],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{ duration, delay, repeat: Infinity, ease: "easeInOut" }}
-            className={`absolute ${className}`}
-            style={{ left, top }}
-          />
-        ))}
-      </div>
+      <motion.div
+        aria-hidden="true"
+        initial={{ opacity: 0.16 }}
+        animate={{ opacity: [0.08, 0.14, 0.08] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.08] [background-image:linear-gradient(rgba(148,163,184,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.14)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:linear-gradient(to_bottom,black,transparent_85%)]"
+      />
 
       <div className="mx-auto flex min-h-[calc(100vh-10rem)] max-w-7xl flex-col justify-center">
         <div className="grid items-center gap-14 lg:grid-cols-[minmax(0,1.15fr)_minmax(340px,0.85fr)] lg:gap-10 xl:gap-20">
@@ -224,7 +176,7 @@ export default function Hero({
 
               <motion.div
                 initial={{ opacity: 0.9 }}
-                animate={{ opacity: 2 }}
+                animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 className="hidden shrink-0 items-center gap-3 sm:flex"
               >
@@ -333,7 +285,7 @@ export default function Hero({
                 <div className="flex flex-col gap-3">
                   <div>
                     <p className="text-[10px] uppercase tracking-[0.18em] text-teal-200/70">
-                      Cloud/DevOps + AI Engineer
+                      {role}
                     </p>
                     <p className="mt-1 text-lg font-medium tracking-[-0.03em] text-white">
                       Building scalable, cloud-native systems for the web.
@@ -350,10 +302,10 @@ export default function Hero({
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
               className="absolute -right-3 top-[15%] hidden rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 backdrop-blur-xl sm:block"
             >
-              <p className="text-[10px] uppercase tracking-[0.16em] text-slate-900">
+              <p className="text-[10px] uppercase tracking-[0.16em] text-slate-800">
                 Focus
               </p>
-              <p className="mt-1 text-sm font-semibold text-teal-1000">
+              <p className="mt-1 text-sm font-semibold text-teal-800">
                 Design × Code
               </p>
             </motion.div>
@@ -366,7 +318,7 @@ export default function Hero({
           transition={{ delay: 0.8, duration: 0.7 }}
           className="mt-14 flex items-center justify-between border-t border-white/10 pt-5 text-[10px] font-medium uppercase tracking-[0.18em] text-slate-500 sm:mt-16"
         >
-          <span>Portfolio </span>
+          <span>Portfolio</span>
           <a
             href="#work"
             className="group inline-flex items-center gap-2 text-slate-400 transition-colors hover:text-teal-300"

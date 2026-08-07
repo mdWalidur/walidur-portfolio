@@ -2,8 +2,7 @@
 
 import { motion } from "framer-motion";
 import {
-  SiAmazonaws,
-  SiAzure,
+  
   SiDocker,
   SiGithubactions,
   SiKubernetes,
@@ -13,18 +12,7 @@ import {
 } from "react-icons/si";
 
 const techStack = [
-  {
-    name: "AWS",
-    href: "https://aws.amazon.com/",
-    icon: SiAmazonaws,
-    hoverClass: "group-hover:text-[#FF9900]",
-  },
-  {
-    name: "Azure",
-    href: "https://azure.microsoft.com/",
-    icon: SiAzure,
-    hoverClass: "group-hover:text-[#0089D6]",
-  },
+  
   {
     name: "Docker",
     href: "https://www.docker.com/",

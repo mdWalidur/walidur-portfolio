@@ -3,6 +3,7 @@
 import { ArrowUpRight, ExternalLink, Layers3, ShieldCheck } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { motion } from "framer-motion";
+import SectionShell from "@/components/ui/SectionTitle";
 
 type Project = {
   number: string;
@@ -226,15 +227,13 @@ function ProjectVisual({ visual }: Pick<Project, "visual">) {
 
         <div className="mt-4 h-20 rounded-xl border border-white/10 bg-white/[0.03] p-3">
           <div className="flex h-full items-end gap-1.5">
-            {[35, 42, 31, 58, 47, 72, 61, 80, 67, 88].map(
-              (height, index) => (
-                <span
-                  key={index}
-                  className="flex-1 rounded-t-sm bg-gradient-to-t from-teal-400/30 to-teal-200/90"
-                  style={{ height: `${height}%` }}
-                />
-              ),
-            )}
+            {[35, 42, 31, 58, 47, 72, 61, 80, 67, 88].map((height, index) => (
+              <span
+                key={index}
+                className="flex-1 rounded-t-sm bg-gradient-to-t from-teal-400/30 to-teal-200/90"
+                style={{ height: `${height}%` }}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -244,168 +243,132 @@ function ProjectVisual({ visual }: Pick<Project, "visual">) {
 
 export default function Work() {
   return (
-    <section
+    <SectionShell
       id="work"
-      aria-labelledby="work-heading"
-      className="relative overflow-hidden bg-[#050505] px-5 py-24 text-slate-100 sm:px-8 sm:py-32 lg:px-12 xl:px-20"
+      eyebrow="Selected work"
+      title="Projects made to solve real problems."
+      description="A selection of projects spanning IoT, web development, networking, and cybersecurity."
+      contentClassName="space-y-16 sm:space-y-24"
     >
-      <div
-        aria-hidden="true"
-        className="absolute right-0 top-1/4 h-96 w-96 rounded-full bg-teal-400/[0.06] blur-[130px]"
-      />
+      {projects.map((project, index) => {
+        const destinationUrl = project.liveUrl ?? project.githubUrl;
 
-      <div className="relative mx-auto max-w-7xl">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col justify-between gap-6 border-b border-white/10 pb-8 sm:flex-row sm:items-end"
-        >
-          <div>
-            <div className="mb-5 flex items-center gap-3">
-              <span className="h-px w-10 bg-teal-300" />
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-teal-300">
-                Selected work
-              </p>
-            </div>
-
-            <h2
-              id="work-heading"
-              className="max-w-xl text-4xl font-semibold tracking-[-0.055em] text-white sm:text-5xl"
-            >
-              Projects made to solve real problems.
-            </h2>
-          </div>
-
-          <p className="max-w-xs text-sm leading-relaxed text-slate-400">
-            A selection of projects spanning IoT, web development, networking,
-            and cybersecurity.
-          </p>
-        </motion.div>
-
-        <div className="mt-10 space-y-16 sm:mt-14 sm:space-y-24">
-          {projects.map((project, index) => {
-            const destinationUrl = project.liveUrl ?? project.githubUrl;
-
-            return (
-              <motion.article
-                key={project.title}
-                initial={{ opacity: 0, y: 32 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.12 }}
-                transition={{
-                  duration: 0.75,
-                  delay: index * 0.08,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className={`group grid gap-7 lg:grid-cols-2 lg:items-center lg:gap-14 ${
-                  index % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
-                }`}
+        return (
+          <motion.article
+            key={project.title}
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.12 }}
+            transition={{
+              duration: 0.75,
+              delay: index * 0.08,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className={`group grid gap-7 lg:grid-cols-2 lg:items-center lg:gap-14 ${
+              index % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""
+            }`}
+          >
+            {destinationUrl && (
+              <a
+                href={destinationUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Open ${project.title}`}
+                className="relative block aspect-[16/10] overflow-hidden rounded-2xl border border-white/10 bg-slate-900 shadow-2xl shadow-black/20 focus:outline-none focus:ring-2 focus:ring-teal-300 focus:ring-offset-4 focus:ring-offset-[#050505]"
               >
-                {destinationUrl && (
+                <div className="h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.04]">
+                  <ProjectVisual visual={project.visual} />
+                </div>
+
+                <span className="absolute right-5 top-5 grid h-11 w-11 translate-y-2 place-items-center rounded-full bg-white text-slate-950 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                  <ArrowUpRight size={19} />
+                </span>
+
+                <div className="absolute bottom-4 left-4 rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/80 backdrop-blur-md">
+                  {project.category}
+                </div>
+              </a>
+            )}
+
+            <div className="lg:py-8">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-sm text-teal-300">
+                  /{project.number}
+                </span>
+                <span className="text-xs font-medium uppercase tracking-[0.17em] text-slate-500">
+                  Featured project
+                </span>
+              </div>
+
+              <h3 className="mt-6 text-3xl font-semibold tracking-[-0.05em] text-white sm:text-4xl">
+                {project.title}
+              </h3>
+
+              <p className="mt-4 max-w-md leading-relaxed text-slate-400">
+                {project.description}
+              </p>
+
+              <div className="mt-6 flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-slate-300"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-8 flex items-center gap-4">
+                {project.liveUrl && (
                   <a
-                    href={destinationUrl}
+                    href={project.liveUrl}
                     target="_blank"
                     rel="noreferrer"
-                    aria-label={`Open ${project.title}`}
-                    className="relative block aspect-[16/10] overflow-hidden rounded-2xl border border-white/10 bg-slate-900 shadow-2xl shadow-black/20 focus:outline-none focus:ring-2 focus:ring-teal-300 focus:ring-offset-4 focus:ring-offset-[#050505]"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-teal-300 transition-colors hover:text-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-300"
                   >
-                    <div className="h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.04]">
-                      <ProjectVisual visual={project.visual} />
-                    </div>
-
-                    <span className="absolute right-5 top-5 grid h-11 w-11 translate-y-2 place-items-center rounded-full bg-white text-slate-950 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                      <ArrowUpRight size={19} />
-                    </span>
-
-                    <div className="absolute bottom-4 left-4 rounded-full border border-white/10 bg-black/30 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/80 backdrop-blur-md">
-                      {project.category}
-                    </div>
+                    View project
+                    <ExternalLink size={16} />
                   </a>
                 )}
 
-                <div className="lg:py-8">
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-sm text-teal-300">
-                      /{project.number}
-                    </span>
-                    <span className="text-xs font-medium uppercase tracking-[0.17em] text-slate-500">
-                      Featured project
-                    </span>
-                  </div>
+                {project.liveUrl && project.githubUrl && (
+                  <span className="h-4 w-px bg-white/15" />
+                )}
 
-                  <h3 className="mt-6 text-3xl font-semibold tracking-[-0.05em] text-white sm:text-4xl">
-                    {project.title}
-                  </h3>
+                {project.githubUrl && (
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`View ${project.title} source code on GitHub`}
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 transition-colors hover:text-white focus:outline-none focus:ring-2 focus:ring-teal-300"
+                  >
+                    <FaGithub size={19} />
+                    {!project.liveUrl && "View on GitHub"}
+                  </a>
+                )}
+              </div>
+            </div>
+          </motion.article>
+        );
+      })}
 
-                  <p className="mt-4 max-w-md leading-relaxed text-slate-400">
-                    {project.description}
-                  </p>
-
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-slate-300"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="mt-8 flex items-center gap-4">
-                    {project.liveUrl && (
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-semibold text-teal-300 transition-colors hover:text-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-300"
-                      >
-                        View project
-                        <ExternalLink size={16} />
-                      </a>
-                    )}
-
-                    {project.liveUrl && project.githubUrl && (
-                      <span className="h-4 w-px bg-white/15" />
-                    )}
-
-                    {project.githubUrl && (
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label={`View ${project.title} source code on GitHub`}
-                        className="inline-flex items-center gap-2 text-sm font-semibold text-slate-400 transition-colors hover:text-white focus:outline-none focus:ring-2 focus:ring-teal-300"
-                      >
-                        <FaGithub size={19} />
-                        {!project.liveUrl && "View on GitHub"}
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </motion.article>
-            );
-          })}
-        </div>
-
-        <a
-          href="https://github.com/mdWalidur"
-          target="_blank"
-          rel="noreferrer"
-          className="group mt-16 flex items-center justify-between border-y border-white/10 py-6 text-sm font-semibold text-slate-200 transition-colors hover:text-teal-300 sm:mt-24"
-        >
-          <span className="flex items-center gap-3">
-            <Layers3 size={18} className="text-teal-300" />
-            Explore more work on GitHub
-          </span>
-          <ArrowUpRight
-            size={18}
-            className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
-          />
-        </a>
-      </div>
-    </section>
+      <a
+        href="https://github.com/mdWalidur"
+        target="_blank"
+        rel="noreferrer"
+        className="group mt-16 flex items-center justify-between border-y border-white/10 py-6 text-sm font-semibold text-slate-200 transition-colors hover:text-teal-300 sm:mt-24"
+      >
+        <span className="flex items-center gap-3">
+          <Layers3 size={18} className="text-teal-300" />
+          Explore more work on GitHub
+        </span>
+        <ArrowUpRight
+          size={18}
+          className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+        />
+      </a>
+    </SectionShell>
   );
 }
