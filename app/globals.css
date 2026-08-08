@@ -43,12 +43,6 @@
 
   --selection-background: #c5a059;
   --selection-foreground: #080808;
-
-  --theme-transition:
-    background-color 700ms cubic-bezier(0.19, 1, 0.22, 1),
-    color 700ms cubic-bezier(0.19, 1, 0.22, 1),
-    border-color 700ms cubic-bezier(0.19, 1, 0.22, 1),
-    box-shadow 700ms cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 
@@ -111,16 +105,15 @@
   --text-muted: rgba(23, 21, 18, 0.48);
   --text-faint: rgba(23, 21, 18, 0.32);
 
-  /* Chocolate / warm gold */
+  /* Warm chocolate / gold */
   --accent: #8b5e3c;
   --accent-dark: #6f452c;
   --accent-soft: #b88a68;
 
-  /* Dedicated readable accent for light backgrounds */
+  /* Readable accent for light backgrounds */
   --accent-readable: #6f452c;
   --accent-hover: #8b5e3c;
 
-  /* Dark text / readable contrast */
   --accent-contrast: #ffffff;
 
   --border: rgba(23, 21, 18, 0.14);
@@ -234,8 +227,8 @@ html {
   color-scheme: dark;
 
   transition:
-    background-color 700ms cubic-bezier(0.19, 1, 0.22, 1),
-    color 700ms cubic-bezier(0.19, 1, 0.22, 1);
+    background-color 350ms ease,
+    color 350ms ease;
 }
 
 
@@ -269,8 +262,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   transition:
-    background-color 700ms cubic-bezier(0.19, 1, 0.22, 1),
-    color 700ms cubic-bezier(0.19, 1, 0.22, 1);
+    background-color 350ms ease,
+    color 350ms ease;
 }
 
 
@@ -288,10 +281,10 @@ footer,
 input,
 textarea {
   transition:
-    background-color 700ms cubic-bezier(0.19, 1, 0.22, 1),
-    border-color 700ms cubic-bezier(0.19, 1, 0.22, 1),
-    color 700ms cubic-bezier(0.19, 1, 0.22, 1),
-    box-shadow 700ms cubic-bezier(0.19, 1, 0.22, 1);
+    background-color 350ms ease,
+    border-color 350ms ease,
+    color 350ms ease,
+    box-shadow 350ms ease;
 }
 
 
