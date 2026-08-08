@@ -62,7 +62,7 @@ export default function Hero({
   name = "Walidur Rahman",
   role = "Cloud / DevOps + AI Engineer",
   tagline = "Building cloud-native applications, automating infrastructure, and creating AI-powered solutions.",
-  portraitSrc = "/profile/profile.PNG",
+  portraitSrc = "/profile/WRprofile.png",
 }: HeroProps) {
   return (
     <section
