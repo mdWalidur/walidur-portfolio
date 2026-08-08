@@ -1,6 +1,8 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
+// metadataBase is included below in the single metadata export
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,12 +15,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://walidur-portfolio.vercel.app"),
   title: {
     default: "Walidur Rahman | Cloud/DevOps + AI Engineer",
     template: "%s | Walidur Rahman",
   },
+
+   icons: {
+    icon: "/icon.png",
+  },
+
   description:
     "Portfolio of Walidur Rahman, a Cloud/DevOps + AI Engineer building thoughtful web experiences with modern technology, AI, IoT, and cybersecurity.",
+
   keywords: [
     "Walidur Rahman",
     "Cloud/DevOps + AI Engineer",
@@ -29,12 +38,15 @@ export const metadata: Metadata = {
     "Cybersecurity",
     "Portfolio",
   ],
+
   authors: [{ name: "Walidur Rahman" }],
   creator: "Walidur Rahman",
+
   robots: {
     index: true,
     follow: true,
   },
+
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -51,6 +63,7 @@ export const metadata: Metadata = {
       },
     ],
   },
+
   twitter: {
     card: "summary_large_image",
     title: "Walidur Rahman | Cloud/DevOps + AI Engineer",
@@ -60,32 +73,19 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = {
-  themeColor: "#050505",
-  colorScheme: "dark",
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} relative bg-[#050505] font-sans text-slate-100 antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} relative antialiased`}
       >
-        <div
-          aria-hidden="true"
-          className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
-        >
-          <div className="absolute left-[8%] top-[6%] h-[30rem] w-[30rem] rounded-full bg-teal-400/10 blur-[140px]" />
-          <div className="absolute right-[10%] top-[24%] h-[26rem] w-[26rem] rounded-full bg-cyan-400/10 blur-[140px]" />
-          <div className="absolute left-[28%] bottom-[8%] h-[34rem] w-[34rem] rounded-full bg-emerald-400/10 blur-[170px]" />
-          <div className="absolute inset-0 opacity-[0.10] [background-image:linear-gradient(rgba(148,163,184,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.12)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]" />
-        </div>
-
-        <div className="relative z-10">{children}</div>
+        <ThemeProvider>
+          <div className="relative z-10">{children}</div>
+        </ThemeProvider>
       </body>
     </html>
   );

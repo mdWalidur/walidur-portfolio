@@ -1,36 +1,318 @@
 @import "tailwindcss";
 
+/* =========================================================
+   LUMINA — GLOBAL THEME SYSTEM
+   ========================================================= */
+
 :root {
+  /* =======================================================
+     OBSIDIAN GOLD — DEFAULT
+     ======================================================= */
+
+  --background: #080808;
+  --foreground: #ffffff;
+
+  --surface: #101010;
+  --surface-soft: rgba(255, 255, 255, 0.025);
+  --surface-hover: rgba(255, 255, 255, 0.05);
+
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.62);
+  --text-muted: rgba(255, 255, 255, 0.40);
+  --text-faint: rgba(255, 255, 255, 0.25);
+
+  --accent: #c5a059;
+  --accent-dark: #b8860b;
+  --accent-soft: #e8d0a3;
+
+  --accent-readable: #c5a059;
+  --accent-hover: #e8d0a3;
+
+  --accent-contrast: #080808;
+
+  --border: rgba(255, 255, 255, 0.10);
+  --border-soft: rgba(255, 255, 255, 0.05);
+
+  --glass-background: rgba(255, 255, 255, 0.025);
+  --glass-border: rgba(255, 255, 255, 0.06);
+
+  --header-background: rgba(8, 8, 8, 0.82);
+  --header-text: rgba(255, 255, 255, 0.72);
+
+  --shadow-color: rgba(0, 0, 0, 0.45);
+
+  --selection-background: #c5a059;
+  --selection-foreground: #080808;
+
+  --theme-transition:
+    background-color 700ms cubic-bezier(0.19, 1, 0.22, 1),
+    color 700ms cubic-bezier(0.19, 1, 0.22, 1),
+    border-color 700ms cubic-bezier(0.19, 1, 0.22, 1),
+    box-shadow 700ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+
+/* =========================================================
+   SPECTRAL BLACK
+   ========================================================= */
+
+[data-theme="spectral"] {
   --background: #050505;
   --foreground: #f8fafc;
+
+  --surface: #0b0b0b;
+  --surface-soft: rgba(255, 255, 255, 0.025);
+  --surface-hover: rgba(255, 255, 255, 0.05);
+
+  --text-primary: #f8fafc;
+  --text-secondary: rgba(248, 250, 252, 0.62);
+  --text-muted: rgba(248, 250, 252, 0.40);
+  --text-faint: rgba(248, 250, 252, 0.25);
+
+  --accent: #2dd4bf;
+  --accent-dark: #0f766e;
+  --accent-soft: #99f6e4;
+
+  --accent-readable: #99f6e4;
+  --accent-hover: #2dd4bf;
+
+  --accent-contrast: #02100f;
+
+  --border: rgba(255, 255, 255, 0.10);
+  --border-soft: rgba(255, 255, 255, 0.05);
+
+  --glass-background: rgba(255, 255, 255, 0.025);
+  --glass-border: rgba(255, 255, 255, 0.06);
+
+  --header-background: rgba(5, 5, 5, 0.84);
+  --header-text: rgba(248, 250, 252, 0.72);
+
+  --shadow-color: rgba(0, 0, 0, 0.50);
+
+  --selection-background: #2dd4bf;
+  --selection-foreground: #02100f;
 }
+
+
+/* =========================================================
+   CREAM
+   ========================================================= */
+
+[data-theme="cream"] {
+  --background: #f4f0e8;
+  --foreground: #171512;
+
+  --surface: #ebe5da;
+  --surface-soft: rgba(23, 21, 18, 0.035);
+  --surface-hover: rgba(23, 21, 18, 0.07);
+
+  --text-primary: #171512;
+  --text-secondary: rgba(23, 21, 18, 0.68);
+  --text-muted: rgba(23, 21, 18, 0.48);
+  --text-faint: rgba(23, 21, 18, 0.32);
+
+  /* Chocolate / warm gold */
+  --accent: #8b5e3c;
+  --accent-dark: #6f452c;
+  --accent-soft: #b88a68;
+
+  /* Dedicated readable accent for light backgrounds */
+  --accent-readable: #6f452c;
+  --accent-hover: #8b5e3c;
+
+  /* Dark text / readable contrast */
+  --accent-contrast: #ffffff;
+
+  --border: rgba(23, 21, 18, 0.14);
+  --border-soft: rgba(23, 21, 18, 0.08);
+
+  --glass-background: rgba(255, 255, 255, 0.30);
+  --glass-border: rgba(23, 21, 18, 0.12);
+
+  --header-background: rgba(244, 240, 232, 0.88);
+  --header-text: rgba(23, 21, 18, 0.78);
+
+  --shadow-color: rgba(73, 55, 39, 0.16);
+
+  --selection-background: #8b5e3c;
+  --selection-foreground: #ffffff;
+}
+
+
+/* =========================================================
+   CHOCOLATE
+   ========================================================= */
+
+[data-theme="chocolate"] {
+  --background: #120d0a;
+  --foreground: #f5ede4;
+
+  --surface: #1c1410;
+  --surface-soft: rgba(245, 237, 228, 0.025);
+  --surface-hover: rgba(245, 237, 228, 0.05);
+
+  --text-primary: #f5ede4;
+  --text-secondary: rgba(245, 237, 228, 0.64);
+  --text-muted: rgba(245, 237, 228, 0.40);
+  --text-faint: rgba(245, 237, 228, 0.25);
+
+  --accent: #c98b5b;
+  --accent-dark: #9c623b;
+  --accent-soft: #e1b38c;
+
+  --accent-readable: #e1b38c;
+  --accent-hover: #c98b5b;
+
+  --accent-contrast: #120d0a;
+
+  --border: rgba(245, 237, 228, 0.10);
+  --border-soft: rgba(245, 237, 228, 0.05);
+
+  --glass-background: rgba(245, 237, 228, 0.025);
+  --glass-border: rgba(245, 237, 228, 0.07);
+
+  --header-background: rgba(18, 13, 10, 0.84);
+  --header-text: rgba(245, 237, 228, 0.72);
+
+  --shadow-color: rgba(0, 0, 0, 0.55);
+
+  --selection-background: #c98b5b;
+  --selection-foreground: #120d0a;
+}
+
+
+/* =========================================================
+   GRAPHITE
+   ========================================================= */
+
+[data-theme="graphite"] {
+  --background: #0d1014;
+  --foreground: #edf2f7;
+
+  --surface: #151a20;
+  --surface-soft: rgba(237, 242, 247, 0.025);
+  --surface-hover: rgba(237, 242, 247, 0.05);
+
+  --text-primary: #edf2f7;
+  --text-secondary: rgba(237, 242, 247, 0.62);
+  --text-muted: rgba(237, 242, 247, 0.40);
+  --text-faint: rgba(237, 242, 247, 0.25);
+
+  --accent: #7dd3fc;
+  --accent-dark: #0284c7;
+  --accent-soft: #bae6fd;
+
+  --accent-readable: #bae6fd;
+  --accent-hover: #7dd3fc;
+
+  --accent-contrast: #0d1014;
+
+  --border: rgba(237, 242, 247, 0.10);
+  --border-soft: rgba(237, 242, 247, 0.05);
+
+  --glass-background: rgba(237, 242, 247, 0.025);
+  --glass-border: rgba(237, 242, 247, 0.07);
+
+  --header-background: rgba(13, 16, 20, 0.84);
+  --header-text: rgba(237, 242, 247, 0.72);
+
+  --shadow-color: rgba(0, 0, 0, 0.50);
+
+  --selection-background: #7dd3fc;
+  --selection-foreground: #0d1014;
+}
+
+
+/* =========================================================
+   BASE
+   ========================================================= */
 
 html {
   scroll-behavior: smooth;
   background: var(--background);
+  color: var(--foreground);
+  color-scheme: dark;
+
+  transition:
+    background-color 700ms cubic-bezier(0.19, 1, 0.22, 1),
+    color 700ms cubic-bezier(0.19, 1, 0.22, 1);
 }
+
+
+/* =========================================================
+   CREAM — LIGHT VISUAL ENVIRONMENT
+   ========================================================= */
+
+html[data-theme="cream"] {
+  color-scheme: light;
+}
+
+
+/* =========================================================
+   BODY
+   ========================================================= */
 
 body {
   min-width: 320px;
   min-height: 100vh;
   overflow-x: hidden;
+
+  margin: 0;
+
   background: var(--background);
   color: var(--foreground);
+
   font-family: Arial, Helvetica, sans-serif;
   text-rendering: optimizeLegibility;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  transition:
+    background-color 700ms cubic-bezier(0.19, 1, 0.22, 1),
+    color 700ms cubic-bezier(0.19, 1, 0.22, 1);
 }
 
+
+/* =========================================================
+   GLOBAL THEME TRANSITIONS
+   ========================================================= */
+
+a,
+button,
+section,
+article,
+nav,
+header,
+footer,
+input,
+textarea {
+  transition:
+    background-color 700ms cubic-bezier(0.19, 1, 0.22, 1),
+    border-color 700ms cubic-bezier(0.19, 1, 0.22, 1),
+    color 700ms cubic-bezier(0.19, 1, 0.22, 1),
+    box-shadow 700ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+
+/* =========================================================
+   TEXT SELECTION
+   ========================================================= */
+
 ::selection {
-  background: rgba(45, 212, 191, 0.9);
-  color: #02100f;
+  background: var(--selection-background);
+  color: var(--selection-foreground);
 }
 
 ::-moz-selection {
-  background: rgba(45, 212, 191, 0.9);
-  color: #02100f;
+  background: var(--selection-background);
+  color: var(--selection-foreground);
 }
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
 
 * {
   box-sizing: border-box;
@@ -46,13 +328,71 @@ a {
   touch-action: manipulation;
 }
 
+img {
+  max-width: 100%;
+}
+
+
+/* =========================================================
+   THEME UTILITY CLASSES
+   ========================================================= */
+
+.theme-bg {
+  background: var(--background);
+}
+
+.theme-surface {
+  background: var(--surface);
+}
+
+.theme-surface-soft {
+  background: var(--surface-soft);
+}
+
+.theme-text {
+  color: var(--text-primary);
+}
+
+.theme-text-secondary {
+  color: var(--text-secondary);
+}
+
+.theme-text-muted {
+  color: var(--text-muted);
+}
+
+.theme-accent {
+  color: var(--accent);
+}
+
+.theme-accent-readable {
+  color: var(--accent-readable);
+}
+
+.theme-border {
+  border-color: var(--border);
+}
+
+.theme-glass {
+  background: var(--glass-background);
+  border-color: var(--glass-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+
+/* =========================================================
+   ANCHOR SCROLL OFFSET
+   ========================================================= */
+
 section[id] {
   scroll-margin-top: 6.5rem;
 }
 
-img {
-  max-width: 100%;
-}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
   html {

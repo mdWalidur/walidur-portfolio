@@ -1,7 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowUpRight, BriefcaseBusiness, GraduationCap, Plus } from "lucide-react";
+import {
+  ArrowUpRight,
+  BriefcaseBusiness,
+  GraduationCap,
+  Plus,
+} from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
 type ExperienceItem = {
@@ -30,7 +35,12 @@ const experience: ExperienceItem[] = [
       "Translated complex product requirements into clear, reusable interfaces.",
       "Partnered closely with clients to improve performance and user experience.",
     ],
-    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+    technologies: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+    ],
     link: "https://linkedin.com/in/",
   },
   {
@@ -59,179 +69,524 @@ const experience: ExperienceItem[] = [
       "Focused on modern web development and full-stack application architecture.",
       "Completed practical projects using collaborative software delivery workflows.",
     ],
-    technologies: ["Software Design", "Databases", "Web Development"],
+    technologies: [
+      "Software Design",
+      "Databases",
+      "Web Development",
+    ],
   },
 ];
 
-function TypeIcon({ type }: Pick<ExperienceItem, "type">) {
+function TypeIcon({
+  type,
+}: Pick<ExperienceItem, "type">) {
   return type === "work" ? (
-    <BriefcaseBusiness size={17} strokeWidth={1.8} />
+    <BriefcaseBusiness
+      size={17}
+      strokeWidth={1.6}
+    />
   ) : (
-    <GraduationCap size={18} strokeWidth={1.8} />
+    <GraduationCap
+      size={18}
+      strokeWidth={1.6}
+    />
   );
 }
 
 export default function Experience() {
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
+  const [expandedIndex, setExpandedIndex] =
+    useState<number | null>(0);
 
   const toggleItem = (index: number) => {
-    setExpandedIndex((current) => (current === index ? null : index));
+    setExpandedIndex((current) =>
+      current === index ? null : index
+    );
   };
 
   return (
     <section
       id="experience"
       aria-labelledby="experience-heading"
-      className="relative overflow-hidden bg-[#050505] px-5 py-24 text-slate-100 sm:px-8 sm:py-32 lg:px-12 xl:px-20"
+      className="relative scroll-mt-28 overflow-hidden px-5 py-24 sm:px-8 sm:py-32 lg:px-12 xl:px-20"
+      style={{
+        background: "var(--background)",
+        color: "var(--text-primary)",
+      }}
     >
+      {/* =====================================================
+          AMBIENT BACKGROUND
+          ===================================================== */}
+
       <div
         aria-hidden="true"
-        className="absolute left-[-10rem] top-1/3 h-80 w-80 rounded-full bg-teal-400/[0.07] blur-[120px]"
+        className="pointer-events-none absolute -right-48 top-1/4 h-[32rem] w-[32rem] rounded-full blur-[140px]"
+        style={{
+          background: "var(--accent)",
+          opacity: 0.035,
+        }}
+      />
+
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-0 top-0 h-full w-px opacity-20"
+        style={{
+          background:
+            "linear-gradient(to bottom, transparent, var(--accent), transparent)",
+        }}
       />
 
       <div className="relative mx-auto max-w-7xl">
+
+        {/* ===================================================
+            HEADER
+            =================================================== */}
+
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-          className="grid gap-8 border-b border-white/10 pb-10 lg:grid-cols-[1fr_0.62fr]"
+          initial={{
+            opacity: 0,
+            y: 24,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.25,
+          }}
+          transition={{
+            duration: 1.2,
+            ease: [0.19, 1, 0.22, 1],
+          }}
+          className="grid gap-8 border-b pb-10 lg:grid-cols-[1fr_0.62fr]"
+          style={{
+            borderColor: "var(--border)",
+          }}
         >
           <div>
-            <div className="mb-5 flex items-center gap-3">
-              <span className="h-px w-10 bg-teal-300" />
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-teal-300">
+            <div className="mb-6 flex items-center gap-4">
+              <span
+                className="h-px w-12"
+                style={{
+                  background: "var(--accent)",
+                }}
+              />
+
+              <p
+                className="text-[10px] font-semibold uppercase tracking-[0.3em]"
+                style={{
+                  color: "var(--accent)",
+                }}
+              >
                 Experience
               </p>
             </div>
 
             <h2
               id="experience-heading"
-              className="max-w-2xl text-4xl font-semibold tracking-[-0.055em] text-white sm:text-5xl"
+              className="max-w-2xl text-4xl font-light tracking-[-0.05em] sm:text-5xl lg:text-6xl"
+              style={{
+                color: "var(--text-primary)",
+              }}
             >
-              Building with curiosity, clarity, and care.
+              Building with curiosity,
+              <br />
+
+              <span
+                className="font-serif italic"
+                style={{
+                  color: "var(--accent)",
+                }}
+              >
+                clarity, and care.
+              </span>
             </h2>
           </div>
 
-          <p className="self-end max-w-md text-base leading-relaxed text-slate-400">
-            A growing body of work across software engineering, digital products,
-            and collaborative problem-solving.
+          <p
+            className="max-w-md self-end text-base leading-7"
+            style={{
+              color: "var(--text-secondary)",
+            }}
+          >
+            A growing body of work across software
+            engineering, digital products, and
+            collaborative problem-solving.
           </p>
         </motion.div>
 
-        <div className="mt-3">
+        {/* ===================================================
+            TIMELINE
+            =================================================== */}
+
+        <div className="relative mt-3">
+
+          {/* Central timeline line */}
+          <div
+            aria-hidden="true"
+            className="absolute bottom-0 left-[7px] top-0 hidden w-px sm:block"
+            style={{
+              background:
+                "linear-gradient(to bottom, transparent, var(--border), var(--border), transparent)",
+            }}
+          />
+
           {experience.map((item, index) => {
-            const isExpanded = expandedIndex === index;
+            const isExpanded =
+              expandedIndex === index;
 
             return (
               <motion.article
                 key={`${item.organization}-${item.period}`}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.1 }}
+                initial={{
+                  opacity: 0,
+                  y: 28,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                viewport={{
+                  once: true,
+                  amount: 0.1,
+                }}
                 transition={{
                   delay: index * 0.08,
-                  duration: 0.6,
-                  ease: [0.16, 1, 0.3, 1],
+                  duration: 1.2,
+                  ease: [0.19, 1, 0.22, 1],
                 }}
-                className="border-b border-white/10"
+                className="group relative border-b"
+                style={{
+                  borderColor: "var(--border)",
+                }}
               >
+                {/* Timeline node */}
+                <div
+                  aria-hidden="true"
+                  className="absolute left-0 top-9 hidden h-[15px] w-[15px] rounded-full border sm:block"
+                  style={{
+                    borderColor: isExpanded
+                      ? "var(--accent)"
+                      : "var(--border)",
+                    background:
+                      "var(--background)",
+                    boxShadow: isExpanded
+                      ? "0 0 0 5px color-mix(in srgb, var(--accent) 8%, transparent), 0 0 20px color-mix(in srgb, var(--accent) 25%, transparent)"
+                      : "none",
+                  }}
+                >
+                  <span
+                    className="absolute inset-[4px] rounded-full"
+                    style={{
+                      background: isExpanded
+                        ? "var(--accent)"
+                        : "var(--text-muted)",
+                    }}
+                  />
+                </div>
+
+                {/* =================================================
+                    HEADER / TRIGGER
+                    ================================================= */}
+
                 <button
                   type="button"
-                  onClick={() => toggleItem(index)}
+                  onClick={() =>
+                    toggleItem(index)
+                  }
                   aria-expanded={isExpanded}
                   aria-controls={`experience-panel-${index}`}
-                  className="group grid w-full grid-cols-[auto_1fr_auto] items-start gap-4 py-7 text-left sm:grid-cols-[10rem_1fr_auto] sm:gap-7 sm:py-9"
+                  className="group/trigger grid w-full items-start gap-5 py-7 text-left sm:grid-cols-[10rem_1fr_auto] sm:gap-8 sm:py-10 sm:pl-12"
                 >
-                  <span className="mt-1.5 hidden font-mono text-xs text-teal-300 sm:block">
+                  {/* Period */}
+                  <span
+                    className="hidden pt-1 font-mono text-xs sm:block"
+                    style={{
+                      color: "var(--accent)",
+                    }}
+                  >
                     {item.period}
                   </span>
 
-                  <span className="mt-0.5 grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-white/[0.04] text-teal-300 sm:hidden">
-                    <TypeIcon type={item.type} />
-                  </span>
-
-                  <span>
-                    <span className="flex items-center gap-3">
-                      <span className="hidden text-teal-300 sm:block">
-                        <TypeIcon type={item.type} />
+                  {/* Main content */}
+                  <span className="min-w-0">
+                    {/* Mobile meta */}
+                    <span className="mb-3 flex items-center gap-3 sm:hidden">
+                      <span
+                        className="grid h-8 w-8 place-items-center rounded-full border"
+                        style={{
+                          borderColor:
+                            "var(--border)",
+                          background:
+                            "var(--surface-soft)",
+                          color: "var(--accent)",
+                        }}
+                      >
+                        <TypeIcon
+                          type={item.type}
+                        />
                       </span>
-                      <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500 sm:hidden">
+
+                      <span
+                        className="text-[9px] font-semibold uppercase tracking-[0.2em]"
+                        style={{
+                          color: "var(--accent)",
+                        }}
+                      >
                         {item.period}
                       </span>
                     </span>
 
-                    <span className="mt-1 block text-xl font-semibold tracking-[-0.035em] text-white sm:mt-2 sm:text-2xl">
+                    {/* Desktop icon + type */}
+                    <span className="mb-2 hidden items-center gap-3 sm:flex">
+                      <span
+                        style={{
+                          color: "var(--accent)",
+                        }}
+                      >
+                        <TypeIcon
+                          type={item.type}
+                        />
+                      </span>
+
+                      <span
+                        className="text-[9px] font-semibold uppercase tracking-[0.22em]"
+                        style={{
+                          color: "var(--text-muted)",
+                        }}
+                      >
+                        {item.type ===
+                        "work"
+                          ? "Professional"
+                          : "Education"}
+                      </span>
+                    </span>
+
+                    <span
+                      className="block text-xl font-medium tracking-[-0.035em] transition-colors duration-700 sm:text-2xl"
+                      style={{
+                        color:
+                          "var(--text-primary)",
+                      }}
+                    >
                       {item.title}
                     </span>
 
-                    <span className="mt-1.5 block text-sm text-slate-400">
+                    <span
+                      className="mt-2 block text-sm"
+                      style={{
+                        color:
+                          "var(--text-secondary)",
+                      }}
+                    >
                       {item.organization}
-                      <span className="mx-2 text-slate-600">·</span>
+
+                      <span
+                        className="mx-2"
+                        style={{
+                          color:
+                            "var(--text-muted)",
+                        }}
+                      >
+                        ·
+                      </span>
+
                       {item.location}
                     </span>
                   </span>
 
+                  {/* =================================================
+                      EXPAND CONTROL
+                      ================================================= */}
+
                   <span
-                    className={`grid h-9 w-9 place-items-center rounded-full border transition-all duration-300 ${
-                      isExpanded
-                        ? "rotate-45 border-teal-300 bg-teal-300 text-slate-950"
-                        : "border-white/10 bg-white/[0.03] text-slate-300 group-hover:border-teal-300/50 group-hover:text-teal-200"
-                    }`}
+                    className="relative grid h-10 w-10 shrink-0 place-items-center rounded-full border transition-all duration-700"
+                    style={{
+                      borderColor: isExpanded
+                        ? "var(--accent)"
+                        : "var(--border)",
+
+                      background: isExpanded
+                        ? "var(--accent)"
+                        : "var(--surface-soft)",
+
+                      color: isExpanded
+                        ? "var(--accent-contrast)"
+                        : "var(--text-secondary)",
+
+                      transform: isExpanded
+                        ? "rotate(45deg)"
+                        : "rotate(0deg)",
+
+                      boxShadow: isExpanded
+                        ? "0 8px 30px color-mix(in srgb, var(--accent) 20%, transparent)"
+                        : "none",
+                    }}
                   >
                     <Plus size={17} />
                   </span>
                 </button>
 
-                <AnimatePresence initial={false}>
+                {/* =================================================
+                    EXPANDED CONTENT
+                    ================================================= */}
+
+                <AnimatePresence
+                  initial={false}
+                >
                   {isExpanded && (
                     <motion.div
                       id={`experience-panel-${index}`}
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                      initial={{
+                        height: 0,
+                        opacity: 0,
+                      }}
+                      animate={{
+                        height: "auto",
+                        opacity: 1,
+                      }}
+                      exit={{
+                        height: 0,
+                        opacity: 0,
+                      }}
+                      transition={{
+                        duration: 0.7,
+                        ease: [
+                          0.19,
+                          1,
+                          0.22,
+                          1,
+                        ],
+                      }}
                       className="overflow-hidden"
                     >
-                      <div className="pb-8 pl-[3.25rem] pr-0 sm:ml-[10rem] sm:pl-10 sm:pr-16">
-                        <p className="max-w-2xl leading-relaxed text-slate-400">
-                          {item.summary}
-                        </p>
+                      <div className="pb-10 pl-0 sm:ml-[10rem] sm:pl-8 sm:pr-16">
 
-                        <ul className="mt-5 space-y-2.5">
-                          {item.highlights.map((highlight) => (
-                            <li
-                              key={highlight}
-                              className="flex gap-3 text-sm leading-relaxed text-slate-300"
-                            >
-                              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-teal-300" />
-                              {highlight}
-                            </li>
-                          ))}
-                        </ul>
-
-                        <div className="mt-6 flex flex-wrap items-center gap-2">
-                          {item.technologies?.map((technology) => (
-                            <span
-                              key={technology}
-                              className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-slate-400"
-                            >
-                              {technology}
-                            </span>
-                          ))}
-                        </div>
-
-                        {item.link && (
-                          <a
-                            href={item.link}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-teal-300 transition-colors hover:text-teal-100 focus:outline-none focus:ring-2 focus:ring-teal-300"
+                        {/* Content card */}
+                        <div
+                          className="border p-5 sm:p-7"
+                          style={{
+                            borderColor:
+                              "var(--border)",
+                            background:
+                              "var(--surface-soft)",
+                            boxShadow:
+                              "0 20px 70px var(--shadow-color)",
+                          }}
+                        >
+                          {/* Summary */}
+                          <p
+                            className="max-w-2xl font-serif text-base leading-7 sm:text-lg"
+                            style={{
+                              color:
+                                "var(--text-secondary)",
+                            }}
                           >
-                            View profile
-                            <ArrowUpRight size={16} />
-                          </a>
-                        )}
+                            {item.summary}
+                          </p>
+
+                          {/* Highlights */}
+                          <ul className="mt-7 space-y-3">
+                            {item.highlights.map(
+                              (highlight) => (
+                                <li
+                                  key={
+                                    highlight
+                                  }
+                                  className="flex gap-3 text-sm leading-6"
+                                  style={{
+                                    color:
+                                      "var(--text-secondary)",
+                                  }}
+                                >
+                                  <span
+                                    className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full"
+                                    style={{
+                                      background:
+                                        "var(--accent)",
+                                      boxShadow:
+                                        "0 0 12px color-mix(in srgb, var(--accent) 35%, transparent)",
+                                    }}
+                                  />
+
+                                  <span>
+                                    {highlight}
+                                  </span>
+                                </li>
+                              )
+                            )}
+                          </ul>
+
+                          {/* Technologies */}
+                          {item.technologies &&
+                            item.technologies
+                              .length >
+                              0 && (
+                              <div className="mt-7">
+                                <p
+                                  className="mb-3 text-[9px] font-semibold uppercase tracking-[0.25em]"
+                                  style={{
+                                    color:
+                                      "var(--accent)",
+                                  }}
+                                >
+                                  Technologies
+                                </p>
+
+                                <div className="flex flex-wrap gap-2">
+                                  {item.technologies.map(
+                                    (
+                                      technology
+                                    ) => (
+                                      <span
+                                        key={
+                                          technology
+                                        }
+                                        className="rounded-full border px-3 py-1.5 text-xs font-medium transition-all duration-700 hover:-translate-y-0.5"
+                                        style={{
+                                          borderColor:
+                                            "var(--border)",
+                                          background:
+                                            "var(--surface)",
+                                          color:
+                                            "var(--text-secondary)",
+                                        }}
+                                      >
+                                        {
+                                          technology
+                                        }
+                                      </span>
+                                    )
+                                  )}
+                                </div>
+                              </div>
+                            )}
+
+                          {/* Profile link */}
+                          {item.link && (
+                            <a
+                              href={
+                                item.link
+                              }
+                              target="_blank"
+                              rel="noreferrer"
+                              className="group/link mt-8 inline-flex items-center gap-2 text-sm font-semibold"
+                              style={{
+                                color:
+                                  "var(--accent)",
+                              }}
+                            >
+                              View profile
+
+                              <ArrowUpRight
+                                size={
+                                  16
+                                }
+                                className="transition-transform duration-700 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
+                              />
+                            </a>
+                          )}
+                        </div>
                       </div>
                     </motion.div>
                   )}
@@ -241,14 +596,42 @@ export default function Experience() {
           })}
         </div>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="mt-8 text-xs uppercase tracking-[0.17em] text-slate-500"
+        {/* =====================================================
+            INSTRUCTION
+            ===================================================== */}
+
+        <motion.div
+          initial={{
+            opacity: 0,
+          }}
+          whileInView={{
+            opacity: 1,
+          }}
+          viewport={{
+            once: true,
+          }}
+          transition={{
+            duration: 1.2,
+            ease: [0.19, 1, 0.22, 1],
+          }}
+          className="mt-8 flex items-center gap-3"
         >
-          Click an entry to explore the details.
-        </motion.p>
+          <span
+            className="h-px w-8"
+            style={{
+              background: "var(--accent)",
+            }}
+          />
+
+          <p
+            className="text-[9px] uppercase tracking-[0.25em]"
+            style={{
+              color: "var(--text-muted)",
+            }}
+          >
+            Click an entry to explore the details.
+          </p>
+        </motion.div>
       </div>
     </section>
   );
