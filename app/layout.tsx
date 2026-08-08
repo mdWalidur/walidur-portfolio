@@ -1,76 +1,108 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
-// metadataBase is included below in the single metadata export
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://walidur-portfolio.vercel.app"),
   title: {
-    default: "Walidur Rahman | Cloud/DevOps + AI Engineer",
+    default: "Walidur Rahman | Cloud, DevOps & AI Engineer",
     template: "%s | Walidur Rahman",
   },
 
-   icons: {
-    icon: "/icon.png",
-  },
-
   description:
-    "Portfolio of Walidur Rahman, a Cloud/DevOps + AI Engineer building thoughtful web experiences with modern technology, AI, IoT, and cybersecurity.",
+    "Portfolio of Walidur Rahman — a Cloud, DevOps and AI Engineer building modern digital experiences, cloud solutions, and intelligent applications.",
 
   keywords: [
     "Walidur Rahman",
-    "Cloud/DevOps + AI Engineer",
-    "Frontend Developer",
-    "Next.js Developer",
-    "React Developer",
-    "IoT",
-    "Cybersecurity",
-    "Portfolio",
+    "Cloud Engineer",
+    "DevOps Engineer",
+    "AI Engineer",
+    "Software Engineer",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "AWS",
+    "Azure",
+    "Docker",
+    "Kubernetes",
+    "Artificial Intelligence",
+    "Web Development",
   ],
 
-  authors: [{ name: "Walidur Rahman" }],
+  authors: [
+    {
+      name: "Walidur Rahman",
+    },
+  ],
+
   creator: "Walidur Rahman",
 
-  robots: {
-    index: true,
-    follow: true,
-  },
+  applicationName: "Walidur Rahman Portfolio",
+
+  metadataBase: new URL(
+    "https://walidur-portfolio.vercel.app"
+  ),
 
   openGraph: {
     type: "website",
     locale: "en_US",
-    title: "Walidur Rahman | Cloud/DevOps + AI Engineer",
+    url: "https://walidur-portfolio.vercel.app",
+
+    title: "Walidur Rahman | Cloud, DevOps & AI Engineer",
+
     description:
-      "Building thoughtful web experiences with modern technology, AI, IoT, and cybersecurity.",
-    siteName: "Walidur Rahman Portfolio",
+      "Cloud, DevOps and AI Engineer building modern digital experiences, cloud solutions, and intelligent applications.",
+
+    siteName: "Walidur Rahman",
+
     images: [
       {
-        url: "/social-preview.png",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Walidur Rahman — Cloud/DevOps + AI Engineer",
+        alt: "Walidur Rahman — Cloud, DevOps & AI Engineer",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Walidur Rahman | Cloud/DevOps + AI Engineer",
+
+    title: "Walidur Rahman | Cloud, DevOps & AI Engineer",
+
     description:
-      "Building thoughtful web experiences with modern technology, AI, IoT, and cybersecurity.",
-    images: ["/social-preview.png"],
+      "Cloud, DevOps and AI Engineer building modern digital experiences and intelligent applications.",
+
+    images: ["/og-image.png"],
   },
+
+  robots: {
+    index: true,
+    follow: true,
+
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  colorScheme: "light dark",
+  themeColor: [
+    {
+      media: "(prefers-color-scheme: light)",
+      color: "#eee9dc",
+    },
+    {
+      media: "(prefers-color-scheme: dark)",
+      color: "#0a0a0a",
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -79,13 +111,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} relative antialiased`}
-      >
-        <ThemeProvider>
-          <div className="relative z-10">{children}</div>
-        </ThemeProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

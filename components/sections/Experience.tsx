@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowUpRight,
   BriefcaseBusiness,
+  ChevronDown,
   GraduationCap,
-  Plus,
+  MapPin,
 } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
 
 type ExperienceItem = {
   type: "work" | "education";
@@ -15,83 +16,718 @@ type ExperienceItem = {
   title: string;
   organization: string;
   location: string;
-  summary: string;
+  description: string;
   highlights: string[];
-  technologies?: string[];
-  link?: string;
+  technologies: string[];
 };
 
-const experience: ExperienceItem[] = [
+const experiences: ExperienceItem[] = [
   {
     type: "work",
     period: "2024 — Present",
     title: "Web and App Developer",
     organization: "Freelance",
     location: "Remote",
-    summary:
-      "Designing and building fast, accessible web experiences for startups, creators, and growing businesses.",
+    description:
+      "Designing and developing modern web applications with a focus on clean interfaces, scalable architecture, cloud technologies, and practical user experiences.",
     highlights: [
-      "Shipped responsive products from early concept to production.",
-      "Translated complex product requirements into clear, reusable interfaces.",
-      "Partnered closely with clients to improve performance and user experience.",
+      "Develop responsive web applications using modern JavaScript and React-based technologies.",
+      "Build reusable components and maintain clean, structured code.",
+      "Work with cloud, DevOps, automation, and deployment workflows.",
+      "Explore AI-powered solutions and integrate emerging technologies into applications.",
     ],
     technologies: [
-      "Next.js",
-      "React",
+      "JavaScript",
       "TypeScript",
-      "Tailwind CSS",
+      "React",
+      "Next.js",
+      "Node.js",
+      "Python",
+      "AWS",
+      "Docker",
     ],
-    link: "https://linkedin.com/in/",
   },
+
   {
     type: "work",
     period: "Aug 2020 — Dec 2022",
     title: "Executive",
     organization: "Acsotex Ltd.",
     location: "Narayanganj District, Dhaka, Bangladesh",
-    summary:
-      "Supported day-to-day business operations through administration, organization, and on-site coordination.",
+    description:
+      "Professional experience in an operational business environment, developing communication, coordination, responsibility, and problem-solving skills.",
     highlights: [
-      "Contributed to office administration and organized operational workflows.",
-      "Strengthened organizational, communication, and coordination skills in a full-time on-site role.",
-      "Worked collaboratively to support reliable day-to-day business activities.",
+      "Coordinated day-to-day operational responsibilities.",
+      "Worked with teams and handled professional communication.",
+      "Developed organizational and time-management skills.",
+      "Handled responsibilities in a structured and deadline-driven environment.",
+    ],
+    technologies: [
+      "Operations",
+      "Communication",
+      "Coordination",
+      "Problem Solving",
     ],
   },
+
   {
     type: "education",
     period: "2023 — 2027",
     title: "Bachelor of Engineering, Information Technology",
     organization: "Centria University of Applied Sciences",
     location: "Finland",
-    summary:
-      "Developed a foundation in software architecture, web engineering, databases, and human-centred product development.",
+    description:
+      "Bachelor of Engineering studies focused on information technology, programming, cloud computing, DevOps, networking, databases, AI, and modern software development.",
     highlights: [
-      "Focused on modern web development and full-stack application architecture.",
-      "Completed practical projects using collaborative software delivery workflows.",
+      "Studying software development and information technology.",
+      "Developing practical skills in cloud computing and DevOps.",
+      "Working with programming, databases, networking, and modern web technologies.",
+      "Building practical projects and continuously expanding technical expertise.",
     ],
     technologies: [
-      "Software Design",
-      "Databases",
-      "Web Development",
+      "C#",
+      "C++",
+      "Python",
+      "JavaScript",
+      "React",
+      "Azure",
+      "AWS",
+      "Docker",
+      "Kubernetes",
     ],
   },
 ];
 
-function TypeIcon({
-  type,
-}: Pick<ExperienceItem, "type">) {
-  return type === "work" ? (
-    <BriefcaseBusiness
-      size={17}
-      strokeWidth={1.6}
-    />
-  ) : (
-    <GraduationCap
-      size={18}
-      strokeWidth={1.6}
-    />
+const easing = [0.19, 1, 0.22, 1] as const;
+
+/* =========================================================
+   EXPERIENCE ITEM
+   ========================================================= */
+
+function ExperienceCard({
+  item,
+  index,
+  expanded,
+  onToggle,
+}: {
+  item: ExperienceItem;
+  index: number;
+  expanded: boolean;
+  onToggle: () => void;
+}) {
+  const Icon =
+    item.type === "education"
+      ? GraduationCap
+      : BriefcaseBusiness;
+
+  return (
+    <motion.article
+      initial={{
+        opacity: 0,
+        y: 35,
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+      }}
+      viewport={{
+        once: true,
+        amount: 0.15,
+      }}
+      transition={{
+        duration: 0.8,
+        delay: index * 0.08,
+        ease: easing,
+      }}
+      className="relative"
+    >
+      {/* =====================================================
+          DESKTOP TIMELINE MARKER
+          ===================================================== */}
+
+      <div
+        className="
+          absolute
+          -left-[13px]
+          top-8
+          z-20
+          hidden
+          h-6
+          w-6
+          items-center
+          justify-center
+          rounded-full
+          border
+          md:flex
+        "
+        style={{
+          borderColor: expanded
+            ? "var(--accent)"
+            : "var(--border)",
+          background: "var(--background)",
+        }}
+      >
+        <span
+          className="
+            h-1.5
+            w-1.5
+            rounded-full
+          "
+          style={{
+            background: expanded
+              ? "var(--accent)"
+              : "var(--text-muted)",
+            boxShadow: expanded
+              ? "0 0 10px var(--accent)"
+              : "none",
+          }}
+        />
+      </div>
+
+      {/* =====================================================
+          CARD
+          ===================================================== */}
+
+      <div
+        className="
+          overflow-hidden
+          border
+          transition-all
+          duration-500
+        "
+        style={{
+          borderColor: expanded
+            ? "color-mix(in srgb, var(--accent) 32%, var(--border))"
+            : "var(--border)",
+          background: expanded
+            ? "var(--surface)"
+            : "var(--surface-soft)",
+          boxShadow: expanded
+            ? "0 25px 80px color-mix(in srgb, var(--shadow-color) 45%, transparent)"
+            : "none",
+        }}
+      >
+        {/* ===================================================
+            HEADER
+            =================================================== */}
+
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-expanded={expanded}
+          className="
+            group
+            flex
+            w-full
+            items-start
+            gap-4
+            p-5
+            text-left
+            outline-none
+            transition-colors
+            duration-500
+
+            sm:gap-5
+            sm:p-6
+
+            lg:gap-7
+            lg:p-7
+
+            focus-visible:ring-2
+            focus-visible:ring-inset
+            focus-visible:ring-[var(--accent)]
+          "
+        >
+          {/* Icon */}
+
+          <span
+            className="
+              flex
+              h-11
+              w-11
+              shrink-0
+              items-center
+              justify-center
+              border
+
+              sm:h-12
+              sm:w-12
+            "
+            style={{
+              borderColor: expanded
+                ? "var(--accent)"
+                : "var(--border)",
+              background: expanded
+                ? "color-mix(in srgb, var(--accent) 9%, transparent)"
+                : "transparent",
+              color: expanded
+                ? "var(--accent)"
+                : "var(--text-muted)",
+            }}
+          >
+            <Icon
+              size={17}
+              strokeWidth={1.5}
+            />
+          </span>
+
+          {/* Main information */}
+
+          <div className="min-w-0 flex-1">
+            {/* Period + type */}
+
+            <div
+              className="
+                mb-2.5
+                flex
+                flex-wrap
+                items-center
+                gap-x-3
+                gap-y-1
+              "
+            >
+              <span
+                className="
+                  text-[8px]
+                  font-semibold
+                  uppercase
+                  tracking-[0.24em]
+
+                  sm:text-[9px]
+                "
+                style={{
+                  color: "var(--accent)",
+                }}
+              >
+                {item.period}
+              </span>
+
+              <span
+                className="
+                  hidden
+                  h-px
+                  w-5
+
+                  sm:block
+                "
+                style={{
+                  background: "var(--border)",
+                }}
+              />
+
+              <span
+                className="
+                  text-[8px]
+                  uppercase
+                  tracking-[0.2em]
+
+                  sm:text-[9px]
+                "
+                style={{
+                  color: "var(--text-muted)",
+                }}
+              >
+                {item.type === "education"
+                  ? "Education"
+                  : "Professional"}
+              </span>
+            </div>
+
+            {/* Title */}
+
+            <h3
+              className="
+                text-lg
+                font-medium
+                leading-tight
+                tracking-[-0.025em]
+
+                sm:text-xl
+
+                lg:text-2xl
+              "
+              style={{
+                color: "var(--text-primary)",
+              }}
+            >
+              {item.title}
+            </h3>
+
+            {/* Organization + location */}
+
+            <div
+              className="
+                mt-2
+                flex
+                flex-wrap
+                items-center
+                gap-x-3
+                gap-y-1.5
+              "
+            >
+              <span
+                className="
+                  text-xs
+                  font-medium
+
+                  sm:text-sm
+                "
+                style={{
+                  color: "var(--text-secondary)",
+                }}
+              >
+                {item.organization}
+              </span>
+
+              <span
+                className="
+                  hidden
+                  h-3
+                  w-px
+
+                  sm:block
+                "
+                style={{
+                  background: "var(--border)",
+                }}
+              />
+
+              <span
+                className="
+                  inline-flex
+                  items-center
+                  gap-1.5
+                  text-[10px]
+
+                  sm:text-xs
+                "
+                style={{
+                  color: "var(--text-muted)",
+                }}
+              >
+                <MapPin
+                  size={12}
+                  strokeWidth={1.5}
+                />
+
+                {item.location}
+              </span>
+            </div>
+          </div>
+
+          {/* Expand button */}
+
+          <span
+            className="
+              flex
+              h-9
+              w-9
+              shrink-0
+              items-center
+              justify-center
+              border
+
+              sm:h-10
+              sm:w-10
+            "
+            style={{
+              borderColor: "var(--border)",
+              color: expanded
+                ? "var(--accent)"
+                : "var(--text-muted)",
+            }}
+          >
+            <ChevronDown
+              size={16}
+              strokeWidth={1.5}
+              className={`
+                transition-transform
+                duration-500
+                ${expanded ? "rotate-180" : ""}
+              `}
+            />
+          </span>
+        </button>
+
+        {/* ===================================================
+            EXPANDED CONTENT
+            =================================================== */}
+
+        <AnimatePresence initial={false}>
+          {expanded && (
+            <motion.div
+              initial={{
+                height: 0,
+                opacity: 0,
+              }}
+              animate={{
+                height: "auto",
+                opacity: 1,
+              }}
+              exit={{
+                height: 0,
+                opacity: 0,
+              }}
+              transition={{
+                duration: 0.5,
+                ease: easing,
+              }}
+            >
+              <div
+                className="
+                  border-t
+                  px-5
+                  pb-7
+                  pt-6
+
+                  sm:px-6
+                  sm:pb-8
+                  sm:pt-7
+
+                  lg:px-7
+                "
+                style={{
+                  borderColor: "var(--border)",
+                }}
+              >
+                <div
+                  className="
+                    grid
+                    gap-8
+
+                    lg:grid-cols-[1fr_0.72fr]
+                    lg:gap-12
+                  "
+                >
+                  {/* =================================================
+                      LEFT SIDE
+                      ================================================= */}
+
+                  <div>
+                    {/* Description */}
+
+                    <div>
+                      <p
+                        className="
+                          mb-3
+                          text-[8px]
+                          font-semibold
+                          uppercase
+                          tracking-[0.28em]
+
+                          sm:text-[9px]
+                        "
+                        style={{
+                          color: "var(--accent)",
+                        }}
+                      >
+                        Overview
+                      </p>
+
+                      <p
+                        className="
+                          max-w-2xl
+                          text-sm
+                          leading-7
+
+                          sm:text-base
+                        "
+                        style={{
+                          color: "var(--text-secondary)",
+                        }}
+                      >
+                        {item.description}
+                      </p>
+                    </div>
+
+                    {/* Highlights */}
+
+                    <div className="mt-8">
+                      <p
+                        className="
+                          mb-4
+                          text-[8px]
+                          font-semibold
+                          uppercase
+                          tracking-[0.28em]
+
+                          sm:text-[9px]
+                        "
+                        style={{
+                          color: "var(--accent)",
+                        }}
+                      >
+                        Key highlights
+                      </p>
+
+                      <ul className="space-y-3.5">
+                        {item.highlights.map(
+                          (highlight, highlightIndex) => (
+                            <motion.li
+                              key={highlight}
+                              initial={{
+                                opacity: 0,
+                                x: -8,
+                              }}
+                              animate={{
+                                opacity: 1,
+                                x: 0,
+                              }}
+                              transition={{
+                                duration: 0.4,
+                                delay:
+                                  highlightIndex *
+                                  0.05,
+                              }}
+                              className="
+                                flex
+                                gap-3
+                                text-sm
+                                leading-6
+                              "
+                              style={{
+                                color:
+                                  "var(--text-secondary)",
+                              }}
+                            >
+                              <span
+                                className="
+                                  mt-[9px]
+                                  h-1
+                                  w-1
+                                  shrink-0
+                                  rounded-full
+                                "
+                                style={{
+                                  background:
+                                    "var(--accent)",
+                                  boxShadow:
+                                    "0 0 7px var(--accent)",
+                                }}
+                              />
+
+                              <span>
+                                {highlight}
+                              </span>
+                            </motion.li>
+                          )
+                        )}
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* =================================================
+                      RIGHT SIDE
+                      ================================================= */}
+
+                  <div>
+                    <p
+                      className="
+                        mb-4
+                        text-[8px]
+                        font-semibold
+                        uppercase
+                        tracking-[0.28em]
+
+                        sm:text-[9px]
+                      "
+                      style={{
+                        color: "var(--accent)",
+                      }}
+                    >
+                      Technologies
+                    </p>
+
+                    <div className="flex flex-wrap gap-2">
+                      {item.technologies.map(
+                        (technology) => (
+                          <span
+                            key={technology}
+                            className="
+                              border
+                              px-3
+                              py-2
+                              text-[8px]
+                              font-medium
+                              uppercase
+                              tracking-[0.13em]
+
+                              sm:text-[9px]
+                            "
+                            style={{
+                              borderColor:
+                                "var(--border)",
+                              background:
+                                "var(--surface-soft)",
+                              color:
+                                "var(--text-secondary)",
+                            }}
+                          >
+                            {technology}
+                          </span>
+                        )
+                      )}
+                    </div>
+
+                    {/* Technical marker */}
+
+                    <div
+                      className="
+                        mt-8
+                        border-t
+                        pt-5
+                      "
+                      style={{
+                        borderColor:
+                          "var(--border)",
+                      }}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span
+                          className="
+                            h-1.5
+                            w-1.5
+                            rounded-full
+                          "
+                          style={{
+                            background:
+                              "var(--accent)",
+                            boxShadow:
+                              "0 0 10px var(--accent)",
+                          }}
+                        />
+
+                        <span
+                          className="
+                            text-[8px]
+                            uppercase
+                            tracking-[0.22em]
+
+                            sm:text-[9px]
+                          "
+                          style={{
+                            color:
+                              "var(--text-muted)",
+                          }}
+                        >
+                          Continuous learning
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </motion.article>
   );
 }
+
+/* =========================================================
+   EXPERIENCE SECTION
+   ========================================================= */
 
 export default function Experience() {
   const [expandedIndex, setExpandedIndex] =
@@ -106,45 +742,106 @@ export default function Experience() {
   return (
     <section
       id="experience"
-      aria-labelledby="experience-heading"
-      className="relative scroll-mt-28 overflow-hidden px-5 py-24 sm:px-8 sm:py-32 lg:px-12 xl:px-20"
+      className="
+        relative
+        overflow-hidden
+        py-24
+
+        md:py-32
+      "
       style={{
         background: "var(--background)",
         color: "var(--text-primary)",
       }}
     >
       {/* =====================================================
-          AMBIENT BACKGROUND
+          BACKGROUND
           ===================================================== */}
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-48 top-1/4 h-[32rem] w-[32rem] rounded-full blur-[140px]"
-        style={{
-          background: "var(--accent)",
-          opacity: 0.035,
-        }}
-      />
+        className="
+          pointer-events-none
+          absolute
+          inset-0
+        "
+      >
+        {/* Accent glow */}
+
+        <div
+          className="
+            absolute
+            left-1/2
+            top-1/4
+            h-[420px]
+            w-[420px]
+            -translate-x-1/2
+            rounded-full
+            blur-[150px]
+
+            sm:h-[520px]
+            sm:w-[520px]
+          "
+          style={{
+            background: "var(--accent)",
+            opacity: 0.035,
+          }}
+        />
+
+        {/* Top border */}
+
+        <div
+          className="
+            absolute
+            inset-x-0
+            top-0
+            h-px
+          "
+          style={{
+            background: "var(--border)",
+          }}
+        />
+
+        {/* Subtle grid */}
+
+        <div
+          className="
+            absolute
+            inset-0
+            opacity-[0.018]
+          "
+          style={{
+            backgroundImage:
+              "linear-gradient(var(--text-primary) 1px, transparent 1px), linear-gradient(90deg, var(--text-primary) 1px, transparent 1px)",
+            backgroundSize: "64px 64px",
+          }}
+        />
+      </div>
+
+      {/* =====================================================
+          CONTAINER
+          ===================================================== */}
 
       <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-0 top-0 h-full w-px opacity-20"
-        style={{
-          background:
-            "linear-gradient(to bottom, transparent, var(--accent), transparent)",
-        }}
-      />
+        className="
+          relative
+          mx-auto
+          max-w-7xl
+          px-5
 
-      <div className="relative mx-auto max-w-7xl">
+          sm:px-6
 
-        {/* ===================================================
+          lg:px-8
+        "
+      >
+        {/* =================================================
             HEADER
-            =================================================== */}
+            ================================================= */}
 
         <motion.div
           initial={{
             opacity: 0,
-            y: 24,
+            y: 25,
           }}
           whileInView={{
             opacity: 1,
@@ -152,453 +849,165 @@ export default function Experience() {
           }}
           viewport={{
             once: true,
-            amount: 0.25,
+            amount: 0.2,
           }}
           transition={{
-            duration: 1.2,
-            ease: [0.19, 1, 0.22, 1],
+            duration: 0.9,
+            ease: easing,
           }}
-          className="grid gap-8 border-b pb-10 lg:grid-cols-[1fr_0.62fr]"
-          style={{
-            borderColor: "var(--border)",
-          }}
+          className="
+            mb-14
+            max-w-3xl
+
+            sm:mb-18
+
+            lg:mb-20
+          "
         >
-          <div>
-            <div className="mb-6 flex items-center gap-4">
-              <span
-                className="h-px w-12"
-                style={{
-                  background: "var(--accent)",
-                }}
-              />
+          {/* Eyebrow */}
 
-              <p
-                className="text-[10px] font-semibold uppercase tracking-[0.3em]"
-                style={{
-                  color: "var(--accent)",
-                }}
-              >
-                Experience
-              </p>
-            </div>
+          <div className="mb-6 flex items-center gap-3">
+            <span
+              className="
+                h-px
+                w-8
 
-            <h2
-              id="experience-heading"
-              className="max-w-2xl text-4xl font-light tracking-[-0.05em] sm:text-5xl lg:text-6xl"
+                sm:w-10
+              "
               style={{
-                color: "var(--text-primary)",
+                background: "var(--accent)",
+              }}
+            />
+
+            <span
+              className="
+                text-[9px]
+                font-semibold
+                uppercase
+                tracking-[0.28em]
+
+                sm:text-[10px]
+                sm:tracking-[0.32em]
+              "
+              style={{
+                color: "var(--accent)",
               }}
             >
-              Building with curiosity,
-              <br />
-
-              <span
-                className="font-serif italic"
-                style={{
-                  color: "var(--accent)",
-                }}
-              >
-                clarity, and care.
-              </span>
-            </h2>
+              Experience
+            </span>
           </div>
 
+          {/* Heading */}
+
+          <h2
+            className="
+              max-w-4xl
+              text-[clamp(2.7rem,8vw,5.8rem)]
+              font-light
+              leading-[0.9]
+              tracking-[-0.06em]
+            "
+            style={{
+              color: "var(--text-primary)",
+            }}
+          >
+            Experience
+            <span
+              className="
+                block
+                font-serif
+                italic
+              "
+              style={{
+                color: "var(--accent)",
+              }}
+            >
+              & education.
+            </span>
+          </h2>
+
+          {/* Description */}
+
           <p
-            className="max-w-md self-end text-base leading-7"
+            className="
+              mt-6
+              max-w-2xl
+              text-sm
+              leading-7
+
+              sm:mt-7
+              sm:text-base
+              sm:leading-7
+
+              md:text-lg
+            "
             style={{
               color: "var(--text-secondary)",
             }}
           >
-            A growing body of work across software
-            engineering, digital products, and
-            collaborative problem-solving.
+            A combination of professional experience,
+            academic development, and continuous
+            technical learning.
           </p>
         </motion.div>
 
-        {/* ===================================================
+        {/* =================================================
             TIMELINE
-            =================================================== */}
+            ================================================= */}
 
-        <div className="relative mt-3">
+        <div className="relative">
+          {/* Desktop timeline line */}
 
-          {/* Central timeline line */}
           <div
             aria-hidden="true"
-            className="absolute bottom-0 left-[7px] top-0 hidden w-px sm:block"
+            className="
+              absolute
+              bottom-4
+              left-[11px]
+              top-4
+              hidden
+              w-px
+
+              md:block
+            "
             style={{
               background:
-                "linear-gradient(to bottom, transparent, var(--border), var(--border), transparent)",
+                "linear-gradient(to bottom, transparent, var(--border) 8%, var(--border) 92%, transparent)",
             }}
           />
 
-          {experience.map((item, index) => {
-            const isExpanded =
-              expandedIndex === index;
+          {/* Items */}
 
-            return (
-              <motion.article
-                key={`${item.organization}-${item.period}`}
-                initial={{
-                  opacity: 0,
-                  y: 28,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                viewport={{
-                  once: true,
-                  amount: 0.1,
-                }}
-                transition={{
-                  delay: index * 0.08,
-                  duration: 1.2,
-                  ease: [0.19, 1, 0.22, 1],
-                }}
-                className="group relative border-b"
-                style={{
-                  borderColor: "var(--border)",
-                }}
-              >
-                {/* Timeline node */}
-                <div
-                  aria-hidden="true"
-                  className="absolute left-0 top-9 hidden h-[15px] w-[15px] rounded-full border sm:block"
-                  style={{
-                    borderColor: isExpanded
-                      ? "var(--accent)"
-                      : "var(--border)",
-                    background:
-                      "var(--background)",
-                    boxShadow: isExpanded
-                      ? "0 0 0 5px color-mix(in srgb, var(--accent) 8%, transparent), 0 0 20px color-mix(in srgb, var(--accent) 25%, transparent)"
-                      : "none",
-                  }}
-                >
-                  <span
-                    className="absolute inset-[4px] rounded-full"
-                    style={{
-                      background: isExpanded
-                        ? "var(--accent)"
-                        : "var(--text-muted)",
-                    }}
-                  />
-                </div>
+          <div
+            className="
+              space-y-5
 
-                {/* =================================================
-                    HEADER / TRIGGER
-                    ================================================= */}
+              sm:space-y-6
 
-                <button
-                  type="button"
-                  onClick={() =>
+              lg:space-y-7
+            "
+          >
+            {experiences.map(
+              (item, index) => (
+                <ExperienceCard
+                  key={`${item.title}-${item.organization}`}
+                  item={item}
+                  index={index}
+                  expanded={
+                    expandedIndex === index
+                  }
+                  onToggle={() =>
                     toggleItem(index)
                   }
-                  aria-expanded={isExpanded}
-                  aria-controls={`experience-panel-${index}`}
-                  className="group/trigger grid w-full items-start gap-5 py-7 text-left sm:grid-cols-[10rem_1fr_auto] sm:gap-8 sm:py-10 sm:pl-12"
-                >
-                  {/* Period */}
-                  <span
-                    className="hidden pt-1 font-mono text-xs sm:block"
-                    style={{
-                      color: "var(--accent)",
-                    }}
-                  >
-                    {item.period}
-                  </span>
-
-                  {/* Main content */}
-                  <span className="min-w-0">
-                    {/* Mobile meta */}
-                    <span className="mb-3 flex items-center gap-3 sm:hidden">
-                      <span
-                        className="grid h-8 w-8 place-items-center rounded-full border"
-                        style={{
-                          borderColor:
-                            "var(--border)",
-                          background:
-                            "var(--surface-soft)",
-                          color: "var(--accent)",
-                        }}
-                      >
-                        <TypeIcon
-                          type={item.type}
-                        />
-                      </span>
-
-                      <span
-                        className="text-[9px] font-semibold uppercase tracking-[0.2em]"
-                        style={{
-                          color: "var(--accent)",
-                        }}
-                      >
-                        {item.period}
-                      </span>
-                    </span>
-
-                    {/* Desktop icon + type */}
-                    <span className="mb-2 hidden items-center gap-3 sm:flex">
-                      <span
-                        style={{
-                          color: "var(--accent)",
-                        }}
-                      >
-                        <TypeIcon
-                          type={item.type}
-                        />
-                      </span>
-
-                      <span
-                        className="text-[9px] font-semibold uppercase tracking-[0.22em]"
-                        style={{
-                          color: "var(--text-muted)",
-                        }}
-                      >
-                        {item.type ===
-                        "work"
-                          ? "Professional"
-                          : "Education"}
-                      </span>
-                    </span>
-
-                    <span
-                      className="block text-xl font-medium tracking-[-0.035em] transition-colors duration-700 sm:text-2xl"
-                      style={{
-                        color:
-                          "var(--text-primary)",
-                      }}
-                    >
-                      {item.title}
-                    </span>
-
-                    <span
-                      className="mt-2 block text-sm"
-                      style={{
-                        color:
-                          "var(--text-secondary)",
-                      }}
-                    >
-                      {item.organization}
-
-                      <span
-                        className="mx-2"
-                        style={{
-                          color:
-                            "var(--text-muted)",
-                        }}
-                      >
-                        ·
-                      </span>
-
-                      {item.location}
-                    </span>
-                  </span>
-
-                  {/* =================================================
-                      EXPAND CONTROL
-                      ================================================= */}
-
-                  <span
-                    className="relative grid h-10 w-10 shrink-0 place-items-center rounded-full border transition-all duration-700"
-                    style={{
-                      borderColor: isExpanded
-                        ? "var(--accent)"
-                        : "var(--border)",
-
-                      background: isExpanded
-                        ? "var(--accent)"
-                        : "var(--surface-soft)",
-
-                      color: isExpanded
-                        ? "var(--accent-contrast)"
-                        : "var(--text-secondary)",
-
-                      transform: isExpanded
-                        ? "rotate(45deg)"
-                        : "rotate(0deg)",
-
-                      boxShadow: isExpanded
-                        ? "0 8px 30px color-mix(in srgb, var(--accent) 20%, transparent)"
-                        : "none",
-                    }}
-                  >
-                    <Plus size={17} />
-                  </span>
-                </button>
-
-                {/* =================================================
-                    EXPANDED CONTENT
-                    ================================================= */}
-
-                <AnimatePresence
-                  initial={false}
-                >
-                  {isExpanded && (
-                    <motion.div
-                      id={`experience-panel-${index}`}
-                      initial={{
-                        height: 0,
-                        opacity: 0,
-                      }}
-                      animate={{
-                        height: "auto",
-                        opacity: 1,
-                      }}
-                      exit={{
-                        height: 0,
-                        opacity: 0,
-                      }}
-                      transition={{
-                        duration: 0.7,
-                        ease: [
-                          0.19,
-                          1,
-                          0.22,
-                          1,
-                        ],
-                      }}
-                      className="overflow-hidden"
-                    >
-                      <div className="pb-10 pl-0 sm:ml-[10rem] sm:pl-8 sm:pr-16">
-
-                        {/* Content card */}
-                        <div
-                          className="border p-5 sm:p-7"
-                          style={{
-                            borderColor:
-                              "var(--border)",
-                            background:
-                              "var(--surface-soft)",
-                            boxShadow:
-                              "0 20px 70px var(--shadow-color)",
-                          }}
-                        >
-                          {/* Summary */}
-                          <p
-                            className="max-w-2xl font-serif text-base leading-7 sm:text-lg"
-                            style={{
-                              color:
-                                "var(--text-secondary)",
-                            }}
-                          >
-                            {item.summary}
-                          </p>
-
-                          {/* Highlights */}
-                          <ul className="mt-7 space-y-3">
-                            {item.highlights.map(
-                              (highlight) => (
-                                <li
-                                  key={
-                                    highlight
-                                  }
-                                  className="flex gap-3 text-sm leading-6"
-                                  style={{
-                                    color:
-                                      "var(--text-secondary)",
-                                  }}
-                                >
-                                  <span
-                                    className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full"
-                                    style={{
-                                      background:
-                                        "var(--accent)",
-                                      boxShadow:
-                                        "0 0 12px color-mix(in srgb, var(--accent) 35%, transparent)",
-                                    }}
-                                  />
-
-                                  <span>
-                                    {highlight}
-                                  </span>
-                                </li>
-                              )
-                            )}
-                          </ul>
-
-                          {/* Technologies */}
-                          {item.technologies &&
-                            item.technologies
-                              .length >
-                              0 && (
-                              <div className="mt-7">
-                                <p
-                                  className="mb-3 text-[9px] font-semibold uppercase tracking-[0.25em]"
-                                  style={{
-                                    color:
-                                      "var(--accent)",
-                                  }}
-                                >
-                                  Technologies
-                                </p>
-
-                                <div className="flex flex-wrap gap-2">
-                                  {item.technologies.map(
-                                    (
-                                      technology
-                                    ) => (
-                                      <span
-                                        key={
-                                          technology
-                                        }
-                                        className="rounded-full border px-3 py-1.5 text-xs font-medium transition-all duration-700 hover:-translate-y-0.5"
-                                        style={{
-                                          borderColor:
-                                            "var(--border)",
-                                          background:
-                                            "var(--surface)",
-                                          color:
-                                            "var(--text-secondary)",
-                                        }}
-                                      >
-                                        {
-                                          technology
-                                        }
-                                      </span>
-                                    )
-                                  )}
-                                </div>
-                              </div>
-                            )}
-
-                          {/* Profile link */}
-                          {item.link && (
-                            <a
-                              href={
-                                item.link
-                              }
-                              target="_blank"
-                              rel="noreferrer"
-                              className="group/link mt-8 inline-flex items-center gap-2 text-sm font-semibold"
-                              style={{
-                                color:
-                                  "var(--accent)",
-                              }}
-                            >
-                              View profile
-
-                              <ArrowUpRight
-                                size={
-                                  16
-                                }
-                                className="transition-transform duration-700 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
-                              />
-                            </a>
-                          )}
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.article>
-            );
-          })}
+                />
+              )
+            )}
+          </div>
         </div>
 
-        {/* =====================================================
-            INSTRUCTION
-            ===================================================== */}
+        {/* =================================================
+            BOTTOM NOTE
+            ================================================= */}
 
         <motion.div
           initial={{
@@ -611,26 +1020,61 @@ export default function Experience() {
             once: true,
           }}
           transition={{
-            duration: 1.2,
-            ease: [0.19, 1, 0.22, 1],
+            duration: 0.9,
+            delay: 0.2,
+            ease: easing,
           }}
-          className="mt-8 flex items-center gap-3"
+          className="
+            mt-12
+            flex
+            items-center
+            gap-3
+            border-t
+            pt-5
+
+            sm:mt-16
+          "
+          style={{
+            borderColor: "var(--border)",
+          }}
         >
           <span
-            className="h-px w-8"
+            className="
+              h-1.5
+              w-1.5
+              shrink-0
+              rounded-full
+            "
             style={{
               background: "var(--accent)",
+              boxShadow:
+                "0 0 9px var(--accent)",
             }}
           />
 
-          <p
-            className="text-[9px] uppercase tracking-[0.25em]"
+          <span
+            className="
+              text-[8px]
+              uppercase
+              tracking-[0.22em]
+
+              sm:text-[9px]
+              sm:tracking-[0.25em]
+            "
             style={{
               color: "var(--text-muted)",
             }}
           >
-            Click an entry to explore the details.
-          </p>
+            Building experience through practice
+          </span>
+
+          <ArrowUpRight
+            size={13}
+            strokeWidth={1.5}
+            style={{
+              color: "var(--accent)",
+            }}
+          />
         </motion.div>
       </div>
     </section>

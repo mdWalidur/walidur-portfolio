@@ -5,12 +5,12 @@ import type { ReactNode } from "react";
 
 type SectionShellProps = {
   id?: string;
-  eyebrow: string;
-  title: string | ReactNode;
-  description?: string | ReactNode;
+  eyebrow?: string;
+  title: string;
+  description?: string;
   children: ReactNode;
-  contentClassName?: string;
   className?: string;
+  contentClassName?: string;
 };
 
 export default function SectionShell({
@@ -19,61 +19,179 @@ export default function SectionShell({
   title,
   description,
   children,
-  contentClassName = "",
   className = "",
+  contentClassName = "",
 }: SectionShellProps) {
   return (
     <section
       id={id}
-      className={`relative scroll-mt-28 py-24 sm:py-32 ${className}`}
+      className={`
+        relative
+        scroll-mt-28
+        overflow-hidden
+        px-5
+        py-24
+        sm:px-8
+        sm:py-32
+        lg:px-12
+        xl:px-20
+        ${className}
+      `}
+      style={{
+        background: "var(--background)",
+        color: "var(--text-primary)",
+      }}
     >
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Section header */}
+      {/* =====================================================
+          AMBIENT BACKGROUND
+          ===================================================== */}
+
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none
+          absolute
+          -right-40
+          top-1/4
+          h-[28rem]
+          w-[28rem]
+          rounded-full
+          blur-[140px]
+        "
+        style={{
+          background: "var(--accent)",
+          opacity: 0.035,
+        }}
+      />
+
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none
+          absolute
+          -left-48
+          bottom-0
+          h-[24rem]
+          w-[24rem]
+          rounded-full
+          blur-[130px]
+        "
+        style={{
+          background: "var(--accent)",
+          opacity: 0.025,
+        }}
+      />
+
+      {/* =====================================================
+          MAIN CONTAINER
+          ===================================================== */}
+
+      <div className="relative mx-auto max-w-7xl">
+        {/* ===================================================
+            HEADER
+            =================================================== */}
+
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
+          initial={{
+            opacity: 0,
+            y: 24,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.2,
+          }}
           transition={{
-            duration: 1.2,
+            duration: 0.9,
             ease: [0.19, 1, 0.22, 1],
           }}
-          className="mb-16 max-w-4xl"
+          className="
+            grid
+            gap-8
+            border-b
+            pb-10
+            lg:grid-cols-[1fr_0.62fr]
+          "
+          style={{
+            borderColor: "var(--border)",
+          }}
         >
-          {/* Eyebrow */}
-          <div className="mb-6 flex items-center gap-4">
-            <span
-              className="h-px w-12"
-              style={{
-                background: "var(--accent)",
-              }}
-            />
+          {/* LEFT */}
 
-            <span
-              className="text-[10px] font-semibold uppercase tracking-[0.3em]"
+          <div>
+            {eyebrow && (
+              <div
+                className="
+                  mb-6
+                  flex
+                  items-center
+                  gap-4
+                "
+              >
+                <span
+                  className="
+                    h-px
+                    w-12
+                    shrink-0
+                  "
+                  style={{
+                    background:
+                      "var(--accent)",
+                  }}
+                />
+
+                <p
+                  className="
+                    text-[10px]
+                    font-semibold
+                    uppercase
+                    tracking-[0.3em]
+                  "
+                  style={{
+                    color:
+                      "var(--accent)",
+                  }}
+                >
+                  {eyebrow}
+                </p>
+              </div>
+            )}
+
+            <h2
+              className="
+                max-w-4xl
+                text-4xl
+                font-light
+                leading-[1.04]
+                tracking-[-0.055em]
+                sm:text-5xl
+                lg:text-6xl
+              "
               style={{
-                color: "var(--accent)",
+                color:
+                  "var(--text-primary)",
               }}
             >
-              {eyebrow}
-            </span>
+              {title}
+            </h2>
           </div>
 
-          {/* Title */}
-          <h2
-            className="max-w-4xl text-4xl font-light tracking-[-0.045em] sm:text-5xl lg:text-6xl"
-            style={{
-              color: "var(--text-primary)",
-            }}
-          >
-            {title}
-          </h2>
+          {/* RIGHT */}
 
-          {/* Description */}
           {description && (
             <p
-              className="mt-6 max-w-2xl text-base leading-7 sm:text-lg"
+              className="
+                max-w-md
+                self-end
+                text-base
+                leading-7
+              "
               style={{
-                color: "var(--text-secondary)",
+                color:
+                  "var(--text-secondary)",
               }}
             >
               {description}
@@ -81,8 +199,35 @@ export default function SectionShell({
           )}
         </motion.div>
 
-        {/* Section content */}
-        <div className={contentClassName}>{children}</div>
+        {/* ===================================================
+            CONTENT
+            =================================================== */}
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.08,
+          }}
+          transition={{
+            duration: 0.9,
+            delay: 0.08,
+            ease: [0.19, 1, 0.22, 1],
+          }}
+          className={`
+            mt-14
+            ${contentClassName}
+          `}
+        >
+          {children}
+        </motion.div>
       </div>
     </section>
   );

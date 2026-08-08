@@ -222,15 +222,7 @@ export default function Certifications() {
                     NUMBER
                     ================================================= */}
 
-                <div
-                  className="absolute left-5 top-5 z-20 text-[9px] font-semibold tracking-[0.25em]"
-                  style={{
-                    color: "var(--accent)",
-                  }}
-                >
-                  / 0{index + 1}
-                </div>
-
+                
                 {/* =================================================
                     BADGE AREA
                     ================================================= */}
