@@ -26,43 +26,121 @@ const ThemeContext = createContext<ThemeContextType | undefined>(
 
 const STORAGE_KEY = "walidur-portfolio-theme";
 
+const themes: Record<
+  ThemeName,
+  {
+    background: string;
+    foreground: string;
+  }
+> = {
+  obsidian: {
+    background: "#080808",
+    foreground: "#ffffff",
+  },
+
+  spectral: {
+    background: "#050505",
+    foreground: "#f8fafc",
+  },
+
+  cream: {
+    background: "#f4f0e8",
+    foreground: "#171512",
+  },
+
+  chocolate: {
+    background: "#120d0a",
+    foreground: "#f5ede4",
+  },
+
+  graphite: {
+    background: "#0d1014",
+    foreground: "#edf2f7",
+  },
+};
+
+function applyTheme(newTheme: ThemeName) {
+  document.documentElement.dataset.theme = newTheme;
+  localStorage.setItem(STORAGE_KEY, newTheme);
+}
+
 export function ThemeProvider({
   children,
 }: {
   children: ReactNode;
 }) {
-  const [theme, setThemeState] = useState<ThemeName>("obsidian");
+  const [theme, setThemeState] =
+    useState<ThemeName>("obsidian");
 
   useEffect(() => {
     const savedTheme = localStorage.getItem(
       STORAGE_KEY
     ) as ThemeName | null;
 
+    const validThemes: ThemeName[] = [
+      "obsidian",
+      "spectral",
+      "cream",
+      "chocolate",
+      "graphite",
+    ];
+
     if (
       savedTheme &&
-      [
-        "obsidian",
-        "spectral",
-        "cream",
-        "chocolate",
-        "graphite",
-      ].includes(savedTheme)
+      validThemes.includes(savedTheme)
     ) {
       setThemeState(savedTheme);
-      document.documentElement.dataset.theme = savedTheme;
+      applyTheme(savedTheme);
     } else {
-      document.documentElement.dataset.theme = "obsidian";
+      applyTheme("obsidian");
     }
   }, []);
 
   const setTheme = (newTheme: ThemeName) => {
-    setThemeState(newTheme);
-    document.documentElement.dataset.theme = newTheme;
-    localStorage.setItem(STORAGE_KEY, newTheme);
+    if (newTheme === theme) return;
+
+    const root = document.documentElement;
+
+    const changeTheme = () => {
+      setThemeState(newTheme);
+      applyTheme(newTheme);
+    };
+
+    /*
+     * Use the View Transitions API when available.
+     * This creates a controlled crossfade between
+     * the old and new visual states.
+     */
+    if (
+      "startViewTransition" in document &&
+      typeof document.startViewTransition === "function"
+    ) {
+      document.startViewTransition(() => {
+        changeTheme();
+      });
+
+      return;
+    }
+
+    /*
+     * Fallback for browsers without View Transitions.
+     */
+    root.classList.add("theme-changing");
+
+    changeTheme();
+
+    window.setTimeout(() => {
+      root.classList.remove("theme-changing");
+    }, 360);
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider
+      value={{
+        theme,
+        setTheme,
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   );

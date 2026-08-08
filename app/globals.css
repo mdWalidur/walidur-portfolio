@@ -89,43 +89,43 @@
 
 
 /* =========================================================
-   CREAM
+   CREAM — WARM IVORY / EDITORIAL
    ========================================================= */
 
 [data-theme="cream"] {
-  --background: #f4f0e8;
-  --foreground: #171512;
+  --background: #e8e0d2;
+  --foreground: #211b16;
 
-  --surface: #ebe5da;
-  --surface-soft: rgba(23, 21, 18, 0.035);
-  --surface-hover: rgba(23, 21, 18, 0.07);
+  --surface: #ded4c3;
+  --surface-soft: rgba(33, 27, 22, 0.035);
+  --surface-hover: rgba(33, 27, 22, 0.07);
 
-  --text-primary: #171512;
-  --text-secondary: rgba(23, 21, 18, 0.68);
-  --text-muted: rgba(23, 21, 18, 0.48);
-  --text-faint: rgba(23, 21, 18, 0.32);
+  --text-primary: #211b16;
+  --text-secondary: rgba(33, 27, 22, 0.68);
+  --text-muted: rgba(33, 27, 22, 0.48);
+  --text-faint: rgba(33, 27, 22, 0.32);
 
   /* Warm chocolate / gold */
   --accent: #8b5e3c;
   --accent-dark: #6f452c;
   --accent-soft: #b88a68;
 
-  /* Readable accent for light backgrounds */
+  /* Better readability on the warm light background */
   --accent-readable: #6f452c;
   --accent-hover: #8b5e3c;
 
   --accent-contrast: #ffffff;
 
-  --border: rgba(23, 21, 18, 0.14);
-  --border-soft: rgba(23, 21, 18, 0.08);
+  --border: rgba(33, 27, 22, 0.14);
+  --border-soft: rgba(33, 27, 22, 0.08);
 
-  --glass-background: rgba(255, 255, 255, 0.30);
-  --glass-border: rgba(23, 21, 18, 0.12);
+  --glass-background: rgba(255, 255, 255, 0.22);
+  --glass-border: rgba(33, 27, 22, 0.12);
 
-  --header-background: rgba(244, 240, 232, 0.88);
-  --header-text: rgba(23, 21, 18, 0.78);
+  --header-background: rgba(232, 224, 210, 0.88);
+  --header-text: rgba(33, 27, 22, 0.78);
 
-  --shadow-color: rgba(73, 55, 39, 0.16);
+  --shadow-color: rgba(73, 55, 39, 0.18);
 
   --selection-background: #8b5e3c;
   --selection-foreground: #ffffff;
@@ -222,22 +222,19 @@
 
 html {
   scroll-behavior: smooth;
+
   background: var(--background);
   color: var(--foreground);
+
+  /*
+   * Keep browser UI behavior consistent between themes.
+   * Cream no longer switches the browser to color-scheme: light.
+   */
   color-scheme: dark;
 
   transition:
     background-color 350ms ease,
     color 350ms ease;
-}
-
-
-/* =========================================================
-   CREAM — LIGHT VISUAL ENVIRONMENT
-   ========================================================= */
-
-html[data-theme="cream"] {
-  color-scheme: light;
 }
 
 
@@ -369,8 +366,9 @@ img {
 .theme-glass {
   background: var(--glass-background);
   border-color: var(--glass-border);
-  backdrop-filter: blur(20px);
+
   -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
 }
 
 
@@ -399,5 +397,70 @@ section[id] {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+}
+@supports (view-transition-name: root) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 350ms;
+    animation-timing-function: ease;
+  }
+
+  ::view-transition-old(root) {
+    animation-name: theme-fade-out;
+  }
+
+  ::view-transition-new(root) {
+    animation-name: theme-fade-in;
+  }
+}
+
+@keyframes theme-fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes theme-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* =========================================================
+   FALLBACK THEME CROSSFADE
+   ========================================================= */
+
+html.theme-changing::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  pointer-events: none;
+
+  background: var(--background);
+
+  opacity: 1;
+
+  animation: theme-cover-fade 360ms ease forwards;
+}
+
+@keyframes theme-cover-fade {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
   }
 }
