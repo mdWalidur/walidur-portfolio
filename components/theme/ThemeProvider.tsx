@@ -2,80 +2,67 @@
 
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
   type ReactNode,
 } from "react";
 
-export type ThemeName =
-  | "obsidian"
-  | "spectral"
-  | "cream"
-  | "chocolate"
-  | "graphite";
+export type ThemeName = "signal" | "paper" | "midnight";
 
-type ThemeContextType = {
+type ThemeContextValue = {
   theme: ThemeName;
   setTheme: (theme: ThemeName) => void;
 };
 
-const ThemeContext = createContext<ThemeContextType | undefined>(
+const STORAGE_KEY = "walidur-portfolio-theme";
+
+const ThemeContext = createContext<ThemeContextValue | undefined>(
   undefined
 );
 
-const STORAGE_KEY = "walidur-portfolio-theme";
-
-const THEMES: ThemeName[] = [
-  "obsidian",
-  "spectral",
-  "cream",
-  "chocolate",
-  "graphite",
+const validThemes: ThemeName[] = [
+  "signal",
+  "paper",
+  "midnight",
 ];
+
+function isValidTheme(value: string | null): value is ThemeName {
+  return value !== null && validThemes.includes(value as ThemeName);
+}
 
 export function ThemeProvider({
   children,
 }: {
   children: ReactNode;
 }) {
-  const [theme, setThemeState] =
-    useState<ThemeName>("obsidian");
+  const [theme, setThemeState] = useState<ThemeName>("signal");
 
   useEffect(() => {
-    const savedTheme =
-      localStorage.getItem(STORAGE_KEY) as ThemeName | null;
+    const savedTheme = window.localStorage.getItem(STORAGE_KEY);
 
-    const initialTheme =
-      savedTheme && THEMES.includes(savedTheme)
-        ? savedTheme
-        : "obsidian";
-
-    setThemeState(initialTheme);
-
-    document.documentElement.setAttribute(
-      "data-theme",
-      initialTheme
-    );
+    if (isValidTheme(savedTheme)) {
+      setThemeState(savedTheme);
+    }
   }, []);
 
-  const setTheme = (newTheme: ThemeName) => {
-    if (!THEMES.includes(newTheme)) {
-      return;
-    }
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    window.localStorage.setItem(STORAGE_KEY, theme);
+  }, [theme]);
 
-    setThemeState(newTheme);
+  const setTheme = useCallback((nextTheme: ThemeName) => {
+    const root = document.documentElement;
 
-    document.documentElement.setAttribute(
-      "data-theme",
-      newTheme
-    );
+    root.classList.add("is-theme-changing");
 
-    localStorage.setItem(
-      STORAGE_KEY,
-      newTheme
-    );
-  };
+    setThemeState(nextTheme);
+
+    window.setTimeout(() => {
+      root.classList.remove("is-theme-changing");
+    }, 250);
+  }, []);
 
   return (
     <ThemeContext.Provider

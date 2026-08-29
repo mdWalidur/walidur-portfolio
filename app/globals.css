@@ -1,202 +1,228 @@
 @import "tailwindcss";
 
 /* =========================================================
-   ROOT / OBSIDIAN GOLD
+   WALIDUR RAHMAN — PORTFOLIO DESIGN SYSTEM
+   EDITORIAL ENGINEERING / 2026
    ========================================================= */
 
 :root {
-  --background: #080808;
-  --foreground: #ffffff;
+  /* ---------------------------------------------------------
+     TYPOGRAPHY
+     --------------------------------------------------------- */
 
-  --surface: #101010;
-  --surface-soft: rgba(255, 255, 255, 0.025);
-  --surface-hover: rgba(255, 255, 255, 0.05);
+  --font-display: var(--font-geist-sans);
+  --font-body: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.62);
-  --text-muted: rgba(255, 255, 255, 0.40);
-  --text-faint: rgba(255, 255, 255, 0.25);
+  /* ---------------------------------------------------------
+     LAYOUT
+     --------------------------------------------------------- */
 
-  --accent: #c5a059;
-  --accent-dark: #b8860b;
-  --accent-soft: #e8d0a3;
-  --accent-contrast: #080808;
+  --page-padding: clamp(1.25rem, 3vw, 4rem);
+  --content-width: 1440px;
+  --reading-width: 760px;
 
-  --border: rgba(255, 255, 255, 0.10);
-  --border-soft: rgba(255, 255, 255, 0.05);
+  /* ---------------------------------------------------------
+     SPACING
+     --------------------------------------------------------- */
 
-  --glass-background: rgba(255, 255, 255, 0.025);
-  --glass-border: rgba(255, 255, 255, 0.06);
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+  --space-11: 12rem;
 
-  --header-background: rgba(8, 8, 8, 0.82);
-  --header-text: rgba(255, 255, 255, 0.72);
+  --section-space: clamp(6rem, 12vw, 12rem);
+  --section-space-tight: clamp(4rem, 8vw, 7rem);
 
-  --shadow-color: rgba(0, 0, 0, 0.45);
+  /* ---------------------------------------------------------
+     MOTION
+     --------------------------------------------------------- */
 
-  --selection-background: #c5a059;
-  --selection-foreground: #080808;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ---------------------------------------------------------
+     DEFAULT THEME
+     SIGNAL
+     --------------------------------------------------------- */
+
+  --background: #121314;
+  --background-deep: #0a0b0c;
+
+  --surface: #191b1d;
+  --surface-raised: #222528;
+  --surface-soft: rgba(255, 255, 255, 0.035);
+  --surface-hover: rgba(255, 255, 255, 0.065);
+
+  --foreground: #f2f0e8;
+
+  --text-primary: #f2f0e8;
+  --text-secondary: rgba(242, 240, 232, 0.68);
+  --text-muted: rgba(242, 240, 232, 0.46);
+  --text-faint: rgba(242, 240, 232, 0.28);
+
+  --accent: #c8ff3d;
+  --accent-soft: #ddff85;
+  --accent-dark: #94c520;
+  --accent-contrast: #101300;
+
+  --secondary-accent: #7c9cff;
+
+  --border: rgba(242, 240, 232, 0.14);
+  --border-strong: rgba(242, 240, 232, 0.24);
+  --border-soft: rgba(242, 240, 232, 0.075);
+
+  --header-background: rgba(18, 19, 20, 0.84);
+  --header-text: rgba(242, 240, 232, 0.8);
+
+  --shadow-color: rgba(0, 0, 0, 0.34);
+
+  --selection-background: var(--accent);
+  --selection-foreground: var(--accent-contrast);
 }
 
 /* =========================================================
-   SPECTRAL BLACK
+   THEME 01 — SIGNAL
+   MAIN PORTFOLIO IDENTITY
    ========================================================= */
 
-[data-theme="spectral"] {
-  --background: #050505;
-  --foreground: #f8fafc;
+[data-theme="signal"] {
+  color-scheme: dark;
 
-  --surface: #0b0b0b;
-  --surface-soft: rgba(255, 255, 255, 0.025);
-  --surface-hover: rgba(255, 255, 255, 0.05);
+  --background: #121314;
+  --background-deep: #0a0b0c;
 
-  --text-primary: #f8fafc;
-  --text-secondary: rgba(248, 250, 252, 0.62);
-  --text-muted: rgba(248, 250, 252, 0.40);
-  --text-faint: rgba(248, 250, 252, 0.25);
+  --surface: #191b1d;
+  --surface-raised: #222528;
+  --surface-soft: rgba(255, 255, 255, 0.035);
+  --surface-hover: rgba(255, 255, 255, 0.065);
 
-  --accent: #2dd4bf;
-  --accent-dark: #0f766e;
-  --accent-soft: #99f6e4;
-  --accent-contrast: #02100f;
+  --foreground: #f2f0e8;
 
-  --border: rgba(255, 255, 255, 0.10);
-  --border-soft: rgba(255, 255, 255, 0.05);
+  --text-primary: #f2f0e8;
+  --text-secondary: rgba(242, 240, 232, 0.68);
+  --text-muted: rgba(242, 240, 232, 0.46);
+  --text-faint: rgba(242, 240, 232, 0.28);
 
-  --glass-background: rgba(255, 255, 255, 0.025);
-  --glass-border: rgba(255, 255, 255, 0.06);
+  --accent: #c8ff3d;
+  --accent-soft: #ddff85;
+  --accent-dark: #94c520;
+  --accent-contrast: #101300;
 
-  --header-background: rgba(5, 5, 5, 0.84);
-  --header-text: rgba(248, 250, 252, 0.72);
+  --secondary-accent: #7c9cff;
 
-  --shadow-color: rgba(0, 0, 0, 0.50);
+  --border: rgba(242, 240, 232, 0.14);
+  --border-strong: rgba(242, 240, 232, 0.24);
+  --border-soft: rgba(242, 240, 232, 0.075);
 
-  --selection-background: #2dd4bf;
-  --selection-foreground: #02100f;
+  --header-background: rgba(18, 19, 20, 0.84);
+  --header-text: rgba(242, 240, 232, 0.8);
+
+  --shadow-color: rgba(0, 0, 0, 0.34);
 }
 
 /* =========================================================
-   CREAM
+   THEME 02 — PAPER
+   EDITORIAL / LIGHT
    ========================================================= */
 
-[data-theme="cream"] {
-  --background: #f4f0e8;
-  --foreground: #171512;
+[data-theme="paper"] {
+  color-scheme: light;
 
-  --surface: #ebe5da;
-  --surface-soft: rgba(23, 21, 18, 0.035);
-  --surface-hover: rgba(23, 21, 18, 0.07);
+  --background: #eeece5;
+  --background-deep: #e3e0d7;
 
-  --text-primary: #171512;
-  --text-secondary: rgba(23, 21, 18, 0.68);
-  --text-muted: rgba(23, 21, 18, 0.48);
-  --text-faint: rgba(23, 21, 18, 0.32);
+  --surface: #e7e4dc;
+  --surface-raised: #f7f5ef;
+  --surface-soft: rgba(20, 22, 25, 0.035);
+  --surface-hover: rgba(20, 22, 25, 0.06);
 
-  --accent: #8b5e3c;
-  --accent-dark: #6f452c;
-  --accent-soft: #b88a68;
+  --foreground: #15171a;
+
+  --text-primary: #15171a;
+  --text-secondary: rgba(21, 23, 26, 0.68);
+  --text-muted: rgba(21, 23, 26, 0.48);
+  --text-faint: rgba(21, 23, 26, 0.3);
+
+  --accent: #315efb;
+  --accent-soft: #7896ff;
+  --accent-dark: #2048cf;
   --accent-contrast: #ffffff;
 
-  --border: rgba(23, 21, 18, 0.14);
-  --border-soft: rgba(23, 21, 18, 0.08);
+  --secondary-accent: #a85e38;
 
-  --glass-background: rgba(255, 255, 255, 0.30);
-  --glass-border: rgba(23, 21, 18, 0.12);
+  --border: rgba(21, 23, 26, 0.15);
+  --border-strong: rgba(21, 23, 26, 0.25);
+  --border-soft: rgba(21, 23, 26, 0.08);
 
-  --header-background: rgba(244, 240, 232, 0.88);
-  --header-text: rgba(23, 21, 18, 0.78);
+  --header-background: rgba(238, 236, 229, 0.88);
+  --header-text: rgba(21, 23, 26, 0.8);
 
-  --shadow-color: rgba(73, 55, 39, 0.16);
-
-  --selection-background: #8b5e3c;
-  --selection-foreground: #ffffff;
+  --shadow-color: rgba(32, 29, 22, 0.12);
 }
 
 /* =========================================================
-   CHOCOLATE
+   THEME 03 — MIDNIGHT
+   TECHNICAL / LOW-LIGHT
    ========================================================= */
 
-[data-theme="chocolate"] {
-  --background: #120d0a;
-  --foreground: #f5ede4;
+[data-theme="midnight"] {
+  color-scheme: dark;
 
-  --surface: #1c1410;
-  --surface-soft: rgba(245, 237, 228, 0.025);
-  --surface-hover: rgba(245, 237, 228, 0.05);
+  --background: #090e18;
+  --background-deep: #05080f;
 
-  --text-primary: #f5ede4;
-  --text-secondary: rgba(245, 237, 228, 0.64);
-  --text-muted: rgba(245, 237, 228, 0.40);
-  --text-faint: rgba(245, 237, 228, 0.25);
+  --surface: #101724;
+  --surface-raised: #182130;
+  --surface-soft: rgba(225, 237, 255, 0.035);
+  --surface-hover: rgba(225, 237, 255, 0.065);
 
-  --accent: #c98b5b;
-  --accent-dark: #9c623b;
-  --accent-soft: #e1b38c;
-  --accent-contrast: #120d0a;
+  --foreground: #e8eef8;
 
-  --border: rgba(245, 237, 228, 0.10);
-  --border-soft: rgba(245, 237, 228, 0.05);
+  --text-primary: #e8eef8;
+  --text-secondary: rgba(232, 238, 248, 0.68);
+  --text-muted: rgba(232, 238, 248, 0.46);
+  --text-faint: rgba(232, 238, 248, 0.28);
 
-  --glass-background: rgba(245, 237, 228, 0.025);
-  --glass-border: rgba(245, 237, 228, 0.07);
+  --accent: #6c8dff;
+  --accent-soft: #a9bcff;
+  --accent-dark: #4564d6;
+  --accent-contrast: #080d1a;
 
-  --header-background: rgba(18, 13, 10, 0.84);
-  --header-text: rgba(245, 237, 228, 0.72);
+  --secondary-accent: #8ee6d1;
 
-  --shadow-color: rgba(0, 0, 0, 0.55);
+  --border: rgba(232, 238, 248, 0.13);
+  --border-strong: rgba(232, 238, 248, 0.22);
+  --border-soft: rgba(232, 238, 248, 0.075);
 
-  --selection-background: #c98b5b;
-  --selection-foreground: #120d0a;
+  --header-background: rgba(9, 14, 24, 0.88);
+  --header-text: rgba(232, 238, 248, 0.8);
+
+  --shadow-color: rgba(0, 0, 0, 0.4);
 }
 
 /* =========================================================
-   GRAPHITE
+   RESET
    ========================================================= */
 
-[data-theme="graphite"] {
-  --background: #0d1014;
-  --foreground: #edf2f7;
-
-  --surface: #151a20;
-  --surface-soft: rgba(237, 242, 247, 0.025);
-  --surface-hover: rgba(237, 242, 247, 0.05);
-
-  --text-primary: #edf2f7;
-  --text-secondary: rgba(237, 242, 247, 0.62);
-  --text-muted: rgba(237, 242, 247, 0.40);
-  --text-faint: rgba(237, 242, 247, 0.25);
-
-  --accent: #7dd3fc;
-  --accent-dark: #0284c7;
-  --accent-soft: #bae6fd;
-  --accent-contrast: #0d1014;
-
-  --border: rgba(237, 242, 247, 0.10);
-  --border-soft: rgba(237, 242, 247, 0.05);
-
-  --glass-background: rgba(237, 242, 247, 0.025);
-  --glass-border: rgba(237, 242, 247, 0.07);
-
-  --header-background: rgba(13, 16, 20, 0.84);
-  --header-text: rgba(237, 242, 247, 0.72);
-
-  --shadow-color: rgba(0, 0, 0, 0.50);
-
-  --selection-background: #7dd3fc;
-  --selection-foreground: #0d1014;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
-
-/* =========================================================
-   BASE
-   ========================================================= */
 
 html {
-  scroll-behavior: smooth;
+  min-width: 320px;
   background: var(--background);
-  color: var(--foreground);
-}
-
-html[data-theme="cream"] {
-  color-scheme: light;
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
 }
 
 body {
@@ -205,117 +231,191 @@ body {
   margin: 0;
   overflow-x: hidden;
 
-  background: var(--background);
+  background:
+    radial-gradient(
+      circle at 50% -20%,
+      color-mix(in srgb, var(--accent) 8%, transparent),
+      transparent 45%
+    ),
+    var(--background);
+
   color: var(--foreground);
 
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
+  font-family: var(--font-body), Arial, sans-serif;
 
   text-rendering: optimizeLegibility;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  transition:
-    background-color 700ms cubic-bezier(0.19, 1, 0.22, 1),
-    color 700ms cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 /* =========================================================
-   GLOBAL TRANSITIONS
+   TYPOGRAPHY
    ========================================================= */
 
-a,
-button,
-section,
-article,
-nav,
-header,
-footer,
-div {
-  transition:
-    background-color 700ms cubic-bezier(0.19, 1, 0.22, 1),
-    border-color 700ms cubic-bezier(0.19, 1, 0.22, 1),
-    color 700ms cubic-bezier(0.19, 1, 0.22, 1),
-    box-shadow 700ms cubic-bezier(0.19, 1, 0.22, 1);
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
 }
 
-/* =========================================================
-   SELECTION
-   ========================================================= */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display), Arial, sans-serif;
+}
+
+p {
+  text-wrap: balance;
+}
 
 ::selection {
   background: var(--selection-background);
   color: var(--selection-foreground);
 }
 
-::-moz-selection {
-  background: var(--selection-background);
-  color: var(--selection-foreground);
+/* =========================================================
+   BASE ELEMENTS
+   ========================================================= */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
 }
 
 /* =========================================================
-   RESET
+   ACCESSIBILITY
    ========================================================= */
 
-* {
-  box-sizing: border-box;
+a,
+button,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
 }
 
-html,
-body {
-  padding: 0;
-}
-/* =========================================================
-   GLOBAL MOUSE INTERACTION
-   PREMIUM CURSOR GLOW
-   ========================================================= */
-
-.mouse-interaction {
-  position: fixed;
-  top: 0;
-  left: 0;
-
-  width: 340px;
-  height: 340px;
-
-  margin-left: -170px;
-  margin-top: -170px;
-
-  pointer-events: none;
-  z-index: 9999;
-
-  border-radius: 50%;
-
-  background: radial-gradient(
-    circle,
-    color-mix(in srgb, var(--accent) 28%, transparent) 0%,
-    color-mix(in srgb, var(--accent) 14%, transparent) 22%,
-    color-mix(in srgb, var(--accent) 6%, transparent) 45%,
-    transparent 72%
-  );
-
-  filter: blur(18px);
-
-  opacity: 0.9;
-
-  transform: translate3d(50vw, 50vh, 0);
-
-  will-change: transform;
-
-  mix-blend-mode: screen;
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
 }
 
 /* =========================================================
-   TOUCH DEVICES
+   EDITORIAL LAYOUT SYSTEM
    ========================================================= */
 
-@media (hover: none), (pointer: coarse) {
-  .mouse-interaction {
-    display: none;
+.page-shell {
+  width: min(100%, var(--content-width));
+  margin-inline: auto;
+  padding-inline: var(--page-padding);
+}
+
+.editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 2rem);
+}
+
+.section-frame {
+  position: relative;
+  border-top: 1px solid var(--border);
+  padding-block: var(--section-space);
+}
+
+.section-frame--tight {
+  padding-block: var(--section-space-tight);
+}
+
+/* =========================================================
+   TYPOGRAPHIC UTILITIES
+   ========================================================= */
+
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  color: var(--text-muted);
+
+  font-family: var(--font-mono), monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.section-kicker::before {
+  width: 2rem;
+  height: 1px;
+
+  content: "";
+
+  background: var(--accent);
+}
+
+.meta {
+  color: var(--text-muted);
+
+  font-family: var(--font-mono), monospace;
+  font-size: 0.68rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   INTERACTION PRIMITIVES
+   ========================================================= */
+
+.interactive {
+  transition:
+    transform 220ms var(--ease-out),
+    background-color 220ms var(--ease-out),
+    border-color 220ms var(--ease-out),
+    color 220ms var(--ease-out);
+}
+
+@media (hover: hover) {
+  .interactive:hover {
+    transform: translateY(-2px);
   }
+}
+
+/* =========================================================
+   THEME TRANSITION
+   Only activated intentionally by ThemeProvider.
+   ========================================================= */
+
+html.is-theme-changing,
+html.is-theme-changing * {
+  transition:
+    background-color 220ms var(--ease-out),
+    color 220ms var(--ease-out),
+    border-color 220ms var(--ease-out),
+    box-shadow 220ms var(--ease-out) !important;
 }
 
 /* =========================================================
@@ -323,7 +423,31 @@ body {
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .mouse-interaction {
-    display: none;
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767px) {
+  .editorial-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .section-frame {
+    padding-block: var(--section-space-tight);
   }
 }

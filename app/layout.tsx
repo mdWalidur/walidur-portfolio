@@ -1,8 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {
+  Geist,
+  Geist_Mono,
+} from "next/font/google";
+
 import "./globals.css";
+
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
-import MouseInteraction from "@/components/effects/MouseInteraction";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,106 +20,47 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Walidur Rahman | Cloud, DevOps & AI Engineer",
+    default: "Walidur Rahman — IT Engineering Portfolio",
     template: "%s | Walidur Rahman",
   },
 
   description:
-    "Portfolio of Walidur Rahman — a Cloud, DevOps and AI Engineer building modern digital experiences, cloud solutions, and intelligent applications.",
+    "Portfolio of Walidur Rahman, an IT engineering student and technology enthusiast exploring software development, cloud computing, DevOps, AI, and modern digital systems.",
 
   keywords: [
     "Walidur Rahman",
-    "Cloud Engineer",
-    "DevOps Engineer",
-    "AI Engineer",
-    "Software Engineer",
-    "Next.js",
-    "React",
-    "TypeScript",
-    "AWS",
-    "Azure",
-    "Docker",
-    "Kubernetes",
+    "IT Engineer",
+    "Software Developer",
+    "Cloud Computing",
+    "DevOps",
     "Artificial Intelligence",
-    "Web Development",
+    "Portfolio",
   ],
-
-  authors: [
-    {
-      name: "Walidur Rahman",
-    },
-  ],
-
-  creator: "Walidur Rahman",
-
-  applicationName: "Walidur Rahman Portfolio",
-
-  metadataBase: new URL(
-    "https://walidur-portfolio.vercel.app"
-  ),
-
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: "https://walidur-portfolio.vercel.app",
-
-    title: "Walidur Rahman | Cloud, DevOps & AI Engineer",
-
-    description:
-      "Cloud, DevOps and AI Engineer building modern digital experiences, cloud solutions, and intelligent applications.",
-
-    siteName: "Walidur Rahman",
-
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Walidur Rahman — Cloud, DevOps & AI Engineer",
-      },
-    ],
-  },
-
-  twitter: {
-    card: "summary_large_image",
-
-    title: "Walidur Rahman | Cloud, DevOps & AI Engineer",
-
-    description:
-      "Cloud, DevOps and AI Engineer building modern digital experiences and intelligent applications.",
-
-    images: ["/og-image.png"],
-  },
 
   robots: {
     index: true,
     follow: true,
+  },
 
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
+  openGraph: {
+    type: "website",
+    title: "Walidur Rahman — IT Engineering Portfolio",
+    description:
+      "Exploring software, cloud systems, DevOps, AI, and modern technology.",
+    siteName: "Walidur Rahman",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Walidur Rahman — IT Engineering Portfolio",
+    description:
+      "IT Engineering portfolio focused on software, cloud, DevOps, and emerging technology.",
   },
 };
 
 export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  colorScheme: "light dark",
-
-  themeColor: [
-    {
-      media: "(prefers-color-scheme: light)",
-      color: "#eee9dc",
-    },
-    {
-      media: "(prefers-color-scheme: dark)",
-      color: "#0a0a0a",
-    },
-  ],
+  themeColor: "#121314",
+  colorScheme: "dark light",
 };
 
 export default function RootLayout({
@@ -124,12 +69,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      data-theme="signal"
+      suppressHydrationWarning
+    >
       <body
-        className={`${geistSans.variable} ${geistMono.variable}`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider>
-          <MouseInteraction />
           {children}
         </ThemeProvider>
       </body>
