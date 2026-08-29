@@ -1,6 +1,18 @@
 import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import MouseInteraction from "@/components/effects/MouseInteraction";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: {
@@ -93,6 +105,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   colorScheme: "light dark",
+
   themeColor: [
     {
       media: "(prefers-color-scheme: light)",
@@ -112,8 +125,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
-        <ThemeProvider>{children}</ThemeProvider>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable}`}
+      >
+        <ThemeProvider>
+          <MouseInteraction />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

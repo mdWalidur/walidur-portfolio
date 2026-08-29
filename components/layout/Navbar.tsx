@@ -1,59 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Menu, X } from "lucide-react";
+
 import ThemeSwitcher from "../theme/ThemeSwitcher";
-
-const navigation = [
-  { label: "Home", href: "#home" },
-  { label: "Work", href: "#work" },
-  { label: "Experience", href: "#experience" },
-  { label: "Credentials", href: "#credentials" },
-  { label: "About", href: "#about" },
-];
-
-type DotPosition = {
-  x: number;
-  y: number;
-};
-
-function getRandomDotPosition(): DotPosition {
-  return {
-    x: 12 + Math.random() * 76,
-    y: 18 + Math.random() * 64,
-  };
-}
+import { navigationItems } from "../data/portfolio";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-
-  const [dotPosition, setDotPosition] = useState<DotPosition>({
-    x: 50,
-    y: 50,
-  });
-
-  /* =========================================================
-     RANDOM NAVBAR DOT
-     ========================================================= */
-
-  useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout>;
-
-    const moveDot = () => {
-      setDotPosition(getRandomDotPosition());
-
-      const nextDelay = 2500 + Math.random() * 2500;
-
-      timeoutId = setTimeout(moveDot, nextDelay);
-    };
-
-    timeoutId = setTimeout(moveDot, 1800);
-
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, []);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   /* =========================================================
      CLOSE MOBILE MENU WITH ESC
@@ -78,11 +34,29 @@ export default function Navbar() {
      ========================================================= */
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "";
+    if (!isOpen) {
+      document.body.style.overflow = "";
+
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
 
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
     };
+  }, [isOpen]);
+
+  /* =========================================================
+     RESTORE FOCUS TO MENU BUTTON
+     ========================================================= */
+
+  useEffect(() => {
+    if (!isOpen) {
+      menuButtonRef.current?.focus();
+    }
   }, [isOpen]);
 
   const closeMenu = () => {
@@ -124,7 +98,6 @@ export default function Navbar() {
           h-[72px]
           max-w-[1440px]
           items-center
-          overflow-visible
           border
           px-4
           backdrop-blur-xl
@@ -139,34 +112,6 @@ export default function Navbar() {
           boxShadow: "0 20px 60px var(--shadow-color)",
         }}
       >
-        {/* ===================================================
-            RANDOM AMBIENT DOT
-            =================================================== */}
-
-        <motion.span
-          aria-hidden="true"
-          className="
-            pointer-events-none
-            absolute
-            z-0
-            h-1.5
-            w-1.5
-            rounded-full
-          "
-          animate={{
-            left: `${dotPosition.x}%`,
-            top: `${dotPosition.y}%`,
-          }}
-          transition={{
-            duration: 2.2,
-            ease: [0.19, 1, 0.22, 1],
-          }}
-          style={{
-            background: "var(--accent)",
-            boxShadow: "0 0 10px var(--accent)",
-          }}
-        />
-
         {/* ===================================================
             BRAND
             =================================================== */}
@@ -184,8 +129,6 @@ export default function Navbar() {
             gap-3
           "
         >
-          {/* WR DIAMOND */}
-
           <span
             className="
               relative
@@ -197,8 +140,9 @@ export default function Navbar() {
               place-items-center
               border
               transition-transform
-              duration-500
+              duration-300
               group-hover:scale-105
+              group-focus-visible:scale-105
             "
             style={{
               borderColor: "var(--accent)",
@@ -218,8 +162,6 @@ export default function Navbar() {
               WR
             </span>
           </span>
-
-          {/* NAME */}
 
           <span className="hidden sm:block">
             <span
@@ -276,7 +218,7 @@ export default function Navbar() {
               xl:gap-10
             "
           >
-            {navigation.map((item) => (
+            {navigationItems.map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}
@@ -291,15 +233,14 @@ export default function Navbar() {
                     uppercase
                     tracking-[0.28em]
                     transition-colors
-                    duration-300
+                    duration-200
+                    focus-visible:outline-none
                   "
                   style={{
                     color: "var(--header-text)",
                   }}
                 >
                   {item.label}
-
-                  {/* Hover dot */}
 
                   <span
                     aria-hidden="true"
@@ -313,8 +254,9 @@ export default function Navbar() {
                       scale-0
                       rounded-full
                       transition-transform
-                      duration-300
+                      duration-200
                       group-hover:scale-100
+                      group-focus-visible:scale-100
                     "
                     style={{
                       background: "var(--accent)",
@@ -340,11 +282,7 @@ export default function Navbar() {
             gap-3
           "
         >
-          {/* THEME SWITCHER */}
-
           <ThemeSwitcher />
-
-          {/* CONTACT */}
 
           <a
             href="#contact"
@@ -361,8 +299,9 @@ export default function Navbar() {
               uppercase
               tracking-[0.28em]
               transition-colors
-              duration-300
+              duration-200
               sm:inline-flex
+              focus-visible:outline-none
             "
             style={{
               color: "var(--header-text)",
@@ -372,8 +311,9 @@ export default function Navbar() {
             <span
               className="
                 transition-colors
-                duration-300
+                duration-200
                 group-hover:text-[var(--accent)]
+                group-focus-visible:text-[var(--accent)]
               "
             >
               Contact
@@ -384,9 +324,11 @@ export default function Navbar() {
               strokeWidth={1.5}
               className="
                 transition-transform
-                duration-300
+                duration-200
                 group-hover:-translate-y-0.5
                 group-hover:translate-x-0.5
+                group-focus-visible:-translate-y-0.5
+                group-focus-visible:translate-x-0.5
               "
               style={{
                 color: "var(--accent)",
@@ -397,6 +339,7 @@ export default function Navbar() {
           {/* MOBILE MENU BUTTON */}
 
           <button
+            ref={menuButtonRef}
             type="button"
             aria-label={
               isOpen
@@ -404,6 +347,7 @@ export default function Navbar() {
                 : "Open navigation menu"
             }
             aria-expanded={isOpen}
+            aria-controls="mobile-navigation"
             onClick={() => setIsOpen((value) => !value)}
             className="
               grid
@@ -411,9 +355,10 @@ export default function Navbar() {
               w-10
               place-items-center
               border
-              transition-all
-              duration-300
+              transition-colors
+              duration-200
               lg:hidden
+              focus-visible:outline-none
             "
             style={{
               borderColor: "var(--border)",
@@ -440,168 +385,177 @@ export default function Navbar() {
           MOBILE MENU
           ===================================================== */}
 
-      {isOpen && (
-        <>
-          {/* BACKDROP */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* BACKDROP */}
 
-          <button
-            type="button"
-            aria-label="Close navigation menu"
-            onClick={closeMenu}
-            className="
-              fixed
-              inset-0
-              z-40
-              cursor-default
-              lg:hidden
-            "
-            style={{
-              background: "rgba(0, 0, 0, 0.35)",
-              backdropFilter: "blur(8px)",
-            }}
-          />
+            <motion.button
+              type="button"
+              aria-label="Close navigation menu"
+              onClick={closeMenu}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="
+                fixed
+                inset-0
+                z-40
+                cursor-default
+                lg:hidden
+              "
+              style={{
+                background: "rgba(0, 0, 0, 0.35)",
+                backdropFilter: "blur(8px)",
+              }}
+            />
 
-          {/* MOBILE MENU */}
+            {/* MOBILE MENU */}
 
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: -12,
-              scale: 0.98,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-              scale: 1,
-            }}
-            exit={{
-              opacity: 0,
-              y: -12,
-              scale: 0.98,
-            }}
-            transition={{
-              duration: 0.22,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            className="
-              relative
-              z-50
-              mx-auto
-              mt-2
-              max-w-[1440px]
-              overflow-hidden
-              border
-              p-3
-              lg:hidden
-            "
-            style={{
-              background: "var(--header-background)",
-              borderColor: "var(--border)",
-              boxShadow: "0 30px 80px var(--shadow-color)",
-              backdropFilter: "blur(24px)",
-            }}
-          >
-            <nav aria-label="Mobile navigation">
-              <div className="flex flex-col">
-                {navigation.map((item, index) => (
-                  <motion.a
-                    key={item.href}
-                    href={item.href}
-                    onClick={closeMenu}
-                    initial={{
-                      opacity: 0,
-                      x: -8,
-                    }}
-                    animate={{
-                      opacity: 1,
-                      x: 0,
-                    }}
-                    transition={{
-                      delay: index * 0.04,
-                    }}
-                    className="
-                      group
-                      flex
-                      items-center
-                      justify-between
-                      border-b
-                      px-4
-                      py-4
-                      text-sm
-                      font-medium
-                      uppercase
-                      tracking-[0.18em]
-                      transition-all
-                      duration-300
-                    "
-                    style={{
-                      borderColor: "var(--border-soft)",
-                      color: "var(--text-secondary)",
-                    }}
-                  >
-                    <span
+            <motion.div
+              id="mobile-navigation"
+              initial={{
+                opacity: 0,
+                y: -12,
+                scale: 0.98,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
+              }}
+              exit={{
+                opacity: 0,
+                y: -12,
+                scale: 0.98,
+              }}
+              transition={{
+                duration: 0.22,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="
+                relative
+                z-50
+                mx-auto
+                mt-2
+                max-w-[1440px]
+                overflow-hidden
+                border
+                p-3
+                lg:hidden
+              "
+              style={{
+                background: "var(--header-background)",
+                borderColor: "var(--border)",
+                boxShadow: "0 30px 80px var(--shadow-color)",
+                backdropFilter: "blur(24px)",
+              }}
+            >
+              <nav aria-label="Mobile navigation">
+                <div className="flex flex-col">
+                  {navigationItems.map((item, index) => (
+                    <motion.a
+                      key={item.href}
+                      href={item.href}
+                      onClick={closeMenu}
+                      initial={{
+                        opacity: 0,
+                        x: -8,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        x: 0,
+                      }}
+                      transition={{
+                        delay: index * 0.04,
+                      }}
                       className="
+                        group
+                        flex
+                        items-center
+                        justify-between
+                        border-b
+                        px-4
+                        py-4
+                        text-sm
+                        font-medium
+                        uppercase
+                        tracking-[0.18em]
                         transition-colors
-                        duration-300
-                        group-hover:text-[var(--accent)]
-                      "
-                    >
-                      {item.label}
-                    </span>
-
-                    <ArrowUpRight
-                      size={16}
-                      strokeWidth={1.5}
-                      className="
-                        transition-all
-                        duration-300
-                        group-hover:-translate-y-0.5
-                        group-hover:translate-x-0.5
+                        duration-200
+                        focus-visible:outline-none
                       "
                       style={{
-                        color: "var(--accent)",
+                        borderColor: "var(--border-soft)",
+                        color: "var(--text-secondary)",
                       }}
+                    >
+                      <span
+                        className="
+                          transition-colors
+                          duration-200
+                          group-hover:text-[var(--accent)]
+                          group-focus-visible:text-[var(--accent)]
+                        "
+                      >
+                        {item.label}
+                      </span>
+
+                      <ArrowUpRight
+                        size={16}
+                        strokeWidth={1.5}
+                        className="
+                          transition-transform
+                          duration-200
+                          group-hover:-translate-y-0.5
+                          group-hover:translate-x-0.5
+                        "
+                        style={{
+                          color: "var(--accent)",
+                        }}
+                      />
+                    </motion.a>
+                  ))}
+
+                  <a
+                    href="#contact"
+                    onClick={closeMenu}
+                    className="
+                      mt-3
+                      flex
+                      items-center
+                      justify-center
+                      gap-2
+                      px-4
+                      py-3.5
+                      text-[10px]
+                      font-bold
+                      uppercase
+                      tracking-[0.2em]
+                      transition-opacity
+                      duration-200
+                      hover:opacity-90
+                      focus-visible:outline-none
+                    "
+                    style={{
+                      background: "var(--accent)",
+                      color: "var(--accent-contrast)",
+                    }}
+                  >
+                    Let&apos;s work together
+
+                    <ArrowUpRight
+                      size={15}
+                      strokeWidth={1.5}
                     />
-                  </motion.a>
-                ))}
-
-                {/* MOBILE CONTACT */}
-
-                <a
-                  href="#contact"
-                  onClick={closeMenu}
-                  className="
-                    mt-3
-                    flex
-                    items-center
-                    justify-center
-                    gap-2
-                    px-4
-                    py-3.5
-                    text-[10px]
-                    font-bold
-                    uppercase
-                    tracking-[0.2em]
-                    transition-all
-                    duration-300
-                  "
-                  style={{
-                    background: "var(--accent)",
-                    color: "var(--accent-contrast)",
-                  }}
-                >
-                  Let&apos;s work together
-
-                  <ArrowUpRight
-                    size={15}
-                    strokeWidth={1.5}
-                  />
-                </a>
-              </div>
-            </nav>
-          </motion.div>
-        </>
-      )}
+                  </a>
+                </div>
+              </nav>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

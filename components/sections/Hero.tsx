@@ -11,6 +11,7 @@ import {
   FaLinkedin,
 } from "react-icons/fa";
 import { motion, Variants } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 import HeroTechStack from "./HeroTechStack";
 import Hero3DDecor from "./Hero3DDecor";
@@ -61,11 +62,163 @@ const transition = (delay = 0) => ({
 export default function Hero({
   name = "Walidur Rahman",
   role = "Cloud / DevOps + AI Engineer",
-  tagline = "Building cloud-native applications, automating infrastructure, and creating AI-powered solutions.",
+  tagline =
+    "Building cloud-native applications, automating infrastructure, and creating AI-powered solutions.",
   portraitSrc = "/profile/WRprofile.png",
 }: HeroProps) {
+  const heroRef = useRef<HTMLElement>(null);
+
+  const spotlightRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const portraitRef = useRef<HTMLDivElement>(null);
+  const statusRef = useRef<HTMLDivElement>(null);
+  const techRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+
+    if (!hero) return;
+
+    // Disable heavy mouse interaction for touch devices.
+    const isTouch =
+      window.matchMedia("(pointer: coarse)").matches;
+
+    if (isTouch) return;
+
+    let targetX = 0;
+    let targetY = 0;
+
+    let currentX = 0;
+    let currentY = 0;
+
+    let animationFrame = 0;
+
+    const handlePointerMove = (event: PointerEvent) => {
+      const rect = hero.getBoundingClientRect();
+
+      const x =
+        (event.clientX - rect.left) / rect.width;
+
+      const y =
+        (event.clientY - rect.top) / rect.height;
+
+      targetX = (x - 0.5) * 2;
+      targetY = (y - 0.5) * 2;
+
+      if (spotlightRef.current) {
+        spotlightRef.current.style.left =
+          `${event.clientX - rect.left}px`;
+
+        spotlightRef.current.style.top =
+          `${event.clientY - rect.top}px`;
+      }
+    };
+
+    const handlePointerLeave = () => {
+      targetX = 0;
+      targetY = 0;
+    };
+
+    const animate = () => {
+      currentX +=
+        (targetX - currentX) * 0.07;
+
+      currentY +=
+        (targetY - currentY) * 0.07;
+
+      /*
+       * Main content
+       * Very subtle movement.
+       */
+      if (contentRef.current) {
+        contentRef.current.style.transform = `
+          translate3d(
+            ${currentX * -7}px,
+            ${currentY * -4}px,
+            0
+          )
+        `;
+      }
+
+      /*
+       * Portrait
+       * Deeper parallax + tiny rotation.
+       */
+      if (portraitRef.current) {
+        portraitRef.current.style.transform = `
+          perspective(1200px)
+          rotateX(${currentY * -3}deg)
+          rotateY(${currentX * 4}deg)
+          translate3d(
+            ${currentX * 10}px,
+            ${currentY * 7}px,
+            0
+          )
+        `;
+      }
+
+      /*
+       * Status card
+       */
+      if (statusRef.current) {
+        statusRef.current.style.transform = `
+          translate3d(
+            ${currentX * -18}px,
+            ${currentY * -12}px,
+            0
+          )
+        `;
+      }
+
+      /*
+       * Technology panel
+       */
+      if (techRef.current) {
+        techRef.current.style.transform = `
+          translate3d(
+            ${currentX * 5}px,
+            ${currentY * 3}px,
+            0
+          )
+        `;
+      }
+
+      animationFrame =
+        requestAnimationFrame(animate);
+    };
+
+    hero.addEventListener(
+      "pointermove",
+      handlePointerMove,
+      { passive: true }
+    );
+
+    hero.addEventListener(
+      "pointerleave",
+      handlePointerLeave
+    );
+
+    animationFrame =
+      requestAnimationFrame(animate);
+
+    return () => {
+      hero.removeEventListener(
+        "pointermove",
+        handlePointerMove
+      );
+
+      hero.removeEventListener(
+        "pointerleave",
+        handlePointerLeave
+      );
+
+      cancelAnimationFrame(animationFrame);
+    };
+  }, []);
+
   return (
     <section
+      ref={heroRef}
       id="home"
       aria-labelledby="hero-heading"
       className="
@@ -79,6 +232,32 @@ export default function Hero({
         color: "var(--text-primary)",
       }}
     >
+      {/* =====================================================
+          MOUSE SPOTLIGHT
+          ===================================================== */}
+
+      <div
+        ref={spotlightRef}
+        aria-hidden="true"
+        className="
+          pointer-events-none
+          absolute
+          z-0
+          h-[420px]
+          w-[420px]
+          -translate-x-1/2
+          -translate-y-1/2
+          rounded-full
+          blur-[80px]
+        "
+        style={{
+          background:
+            "radial-gradient(circle, rgba(197,160,89,0.16) 0%, rgba(197,160,89,0.07) 28%, transparent 70%)",
+          transition:
+            "left 0.15s ease-out, top 0.15s ease-out",
+        }}
+      />
+
       {/* =====================================================
           3D BACKGROUND
           ===================================================== */}
@@ -98,7 +277,7 @@ export default function Hero({
           -z-10
         "
       >
-        {/* Accent glow */}
+        {/* Main ambient glow */}
 
         <div
           className="
@@ -173,7 +352,6 @@ export default function Hero({
               grid
               w-full
               items-center
-
               gap-12
 
               md:gap-14
@@ -190,16 +368,20 @@ export default function Hero({
                 ================================================= */}
 
             <div
+              ref={contentRef}
               className="
                 relative
                 z-10
                 w-full
                 max-w-3xl
               "
+              style={{
+                transition:
+                  "transform 0.2s linear",
+                willChange: "transform",
+              }}
             >
-              {/* -------------------------------------------------
-                  ROLE
-                  ------------------------------------------------- */}
+              {/* ROLE */}
 
               <motion.div
                 initial="hidden"
@@ -224,7 +406,8 @@ export default function Hero({
                     sm:w-12
                   "
                   style={{
-                    background: "var(--accent)",
+                    background:
+                      "var(--accent)",
                   }}
                 />
 
@@ -239,16 +422,15 @@ export default function Hero({
                     sm:tracking-[0.32em]
                   "
                   style={{
-                    color: "var(--accent)",
+                    color:
+                      "var(--accent)",
                   }}
                 >
                   {role}
                 </span>
               </motion.div>
 
-              {/* -------------------------------------------------
-                  MAIN HEADING
-                  ------------------------------------------------- */}
+              {/* HEADING */}
 
               <motion.h1
                 id="hero-heading"
@@ -268,19 +450,15 @@ export default function Hero({
                   lg:text-[clamp(4.5rem,8vw,7.5rem)]
                 "
                 style={{
-                  color: "var(--text-primary)",
+                  color:
+                    "var(--text-primary)",
                 }}
               >
                 <span className="block">
                   Building
                 </span>
 
-                <span
-                  className="block"
-                  style={{
-                    color: "var(--text-primary)",
-                  }}
-                >
+                <span className="block">
                   systems
                 </span>
 
@@ -292,27 +470,22 @@ export default function Hero({
                     font-light
                   "
                   style={{
-                    color: "var(--accent)",
+                    color:
+                      "var(--accent)",
                   }}
                 >
                   that scale.
                 </span>
               </motion.h1>
 
-              {/* -------------------------------------------------
-                  NAME
-                  ------------------------------------------------- */}
+              {/* NAME */}
 
               <motion.div
                 initial="hidden"
                 animate="visible"
                 variants={reveal}
                 transition={transition(0.22)}
-                className="
-                  mt-6
-
-                  sm:mt-8
-                "
+                className="mt-6 sm:mt-8"
               >
                 <p
                   className="
@@ -325,16 +498,15 @@ export default function Hero({
                     sm:tracking-[0.3em]
                   "
                   style={{
-                    color: "var(--text-muted)",
+                    color:
+                      "var(--text-muted)",
                   }}
                 >
                   — {name}
                 </p>
               </motion.div>
 
-              {/* -------------------------------------------------
-                  TAGLINE
-                  ------------------------------------------------- */}
+              {/* TAGLINE */}
 
               <motion.p
                 initial="hidden"
@@ -355,15 +527,14 @@ export default function Hero({
                   md:text-xl
                 "
                 style={{
-                  color: "var(--text-secondary)",
+                  color:
+                    "var(--text-secondary)",
                 }}
               >
                 {tagline}
               </motion.p>
 
-              {/* -------------------------------------------------
-                  ACTION BUTTONS
-                  ------------------------------------------------- */}
+              {/* CTA */}
 
               <motion.div
                 initial="hidden"
@@ -384,10 +555,26 @@ export default function Hero({
                   sm:gap-4
                 "
               >
-                {/* Primary */}
+                {/* PRIMARY BUTTON */}
 
-                <a
+                <motion.a
                   href="#work"
+                  whileHover={{
+                    y: -3,
+                    scale: 1.015,
+                  }}
+                  whileTap={{
+                    scale: 0.98,
+                  }}
+                  transition={{
+                    duration: 0.35,
+                    ease: [
+                      0.19,
+                      1,
+                      0.22,
+                      1,
+                    ],
+                  }}
                   className="
                     group
                     inline-flex
@@ -404,9 +591,6 @@ export default function Hero({
                     font-bold
                     uppercase
                     tracking-[0.18em]
-                    transition-all
-                    duration-700
-                    hover:-translate-y-0.5
 
                     sm:w-auto
                     sm:justify-start
@@ -417,7 +601,8 @@ export default function Hero({
                     sm:tracking-[0.2em]
                   "
                   style={{
-                    color: "var(--accent-contrast)",
+                    color:
+                      "var(--accent-contrast)",
                     boxShadow:
                       "0 10px 35px color-mix(in srgb, var(--accent) 18%, transparent)",
                   }}
@@ -429,19 +614,26 @@ export default function Hero({
                     strokeWidth={1.5}
                     className="
                       transition-transform
-                      duration-700
+                      duration-500
                       group-hover:translate-x-1
                       group-hover:translate-y-1
                     "
                   />
-                </a>
+                </motion.a>
 
-                {/* Resume */}
+                {/* RESUME */}
 
-                <a
+                <motion.a
                   href="/WalidurRahmanCV.pdf"
                   target="_blank"
                   rel="noreferrer"
+                  whileHover={{
+                    y: -3,
+                    scale: 1.015,
+                  }}
+                  whileTap={{
+                    scale: 0.98,
+                  }}
                   className="
                     group
                     inline-flex
@@ -457,9 +649,6 @@ export default function Hero({
                     uppercase
                     tracking-[0.18em]
                     backdrop-blur-[20px]
-                    transition-all
-                    duration-700
-                    hover:-translate-y-0.5
 
                     sm:w-auto
                     sm:px-6
@@ -468,9 +657,12 @@ export default function Hero({
                     sm:tracking-[0.2em]
                   "
                   style={{
-                    borderColor: "var(--border)",
-                    background: "var(--surface-soft)",
-                    color: "var(--text-primary)",
+                    borderColor:
+                      "var(--border)",
+                    background:
+                      "var(--surface-soft)",
+                    color:
+                      "var(--text-primary)",
                   }}
                 >
                   Resume
@@ -480,17 +672,15 @@ export default function Hero({
                     strokeWidth={1.5}
                     className="
                       transition-transform
-                      duration-700
+                      duration-500
                       group-hover:translate-x-0.5
                       group-hover:-translate-y-0.5
                     "
                   />
-                </a>
+                </motion.a>
               </motion.div>
 
-              {/* -------------------------------------------------
-                  SOCIAL LINKS
-                  ------------------------------------------------- */}
+              {/* SOCIAL LINKS */}
 
               <motion.div
                 initial="hidden"
@@ -517,7 +707,8 @@ export default function Hero({
                     sm:tracking-[0.28em]
                   "
                   style={{
-                    color: "var(--text-muted)",
+                    color:
+                      "var(--text-muted)",
                   }}
                 >
                   Connect
@@ -529,20 +720,31 @@ export default function Hero({
                     href,
                     icon: Icon,
                   }) => (
-                    <a
+                    <motion.a
                       key={label}
                       href={href}
                       aria-label={label}
                       target={
-                        href.startsWith("http")
+                        href.startsWith(
+                          "http"
+                        )
                           ? "_blank"
                           : undefined
                       }
                       rel={
-                        href.startsWith("http")
+                        href.startsWith(
+                          "http"
+                        )
                           ? "noreferrer"
                           : undefined
                       }
+                      whileHover={{
+                        y: -4,
+                        scale: 1.12,
+                      }}
+                      whileTap={{
+                        scale: 0.95,
+                      }}
                       className="
                         group
                         flex
@@ -550,9 +752,6 @@ export default function Hero({
                         w-9
                         items-center
                         justify-center
-                        transition-all
-                        duration-700
-                        hover:-translate-y-0.5
 
                         sm:h-auto
                         sm:w-auto
@@ -566,11 +765,11 @@ export default function Hero({
                         size={17}
                         className="
                           transition-colors
-                          duration-700
+                          duration-500
                           group-hover:text-[var(--accent)]
                         "
                       />
-                    </a>
+                    </motion.a>
                   )
                 )}
               </motion.div>
@@ -601,11 +800,18 @@ export default function Hero({
                 lg:mx-auto
               "
             >
-              {/* -------------------------------------------------
-                  PORTRAIT GLOW
-                  ------------------------------------------------- */}
+              {/* PORTRAIT GLOW */}
 
-              <div
+              <motion.div
+                animate={{
+                  scale: [1, 1.05, 1],
+                  opacity: [0.06, 0.1, 0.06],
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
                 className="
                   pointer-events-none
                   absolute
@@ -617,163 +823,195 @@ export default function Hero({
                   sm:blur-[100px]
                 "
                 style={{
-                  background: "var(--accent)",
-                  opacity: 0.07,
+                  background:
+                    "var(--accent)",
                 }}
               />
 
-              {/* -------------------------------------------------
-                  PORTRAIT CARD
-                  ------------------------------------------------- */}
+              {/* INTERACTIVE PORTRAIT */}
 
               <div
+                ref={portraitRef}
                 className="
                   relative
-                  overflow-hidden
-                  border
-                  p-1.5
-                  backdrop-blur-[20px]
-
-                  sm:p-2
+                  z-10
+                  overflow-visible
                 "
                 style={{
-                  borderColor: "var(--border)",
-                  background: "var(--surface-soft)",
+                  transformStyle:
+                    "preserve-3d",
+                  transition:
+                    "transform 0.12s linear",
+                  willChange:
+                    "transform",
                 }}
               >
                 <div
                   className="
                     relative
-                    aspect-[4/5]
                     overflow-hidden
+                    border
+                    p-1.5
+                    backdrop-blur-[20px]
+
+                    sm:p-2
                   "
+                  style={{
+                    borderColor:
+                      "var(--border)",
+                    background:
+                      "var(--surface-soft)",
+                    transformStyle:
+                      "preserve-3d",
+                  }}
                 >
-                  <Image
-  src={portraitSrc}
-  alt={`Portrait of ${name}`}
-  fill
-  priority
-  sizes="(max-width: 640px) 92vw, (max-width: 1024px) 78vw, 42vw"
-  className="
-    object-cover
-    object-center
-    grayscale-[35%]
-    transition-all
-    duration-[1200ms]
-    hover:scale-[1.025]
-    hover:grayscale-0
-  "
-/>
-
-                  {/* Image readability overlay */}
-
                   <div
                     className="
-                      absolute
-                      inset-0
-                    "
-                    style={{
-                      background:
-                        "linear-gradient(to top, color-mix(in srgb, var(--background) 88%, transparent), transparent 52%, color-mix(in srgb, var(--background) 10%, transparent))",
-                    }}
-                  />
-
-                  {/* Theme accent overlay */}
-
-                  <div
-                    className="
-                      absolute
-                      inset-0
-                    "
-                    style={{
-                      background:
-                        "linear-gradient(115deg, color-mix(in srgb, var(--accent) 12%, transparent), transparent 35%, transparent 70%, color-mix(in srgb, var(--text-primary) 3%, transparent))",
-                    }}
-                  />
-
-                  {/* Portrait caption */}
-
-                  <div
-                    className="
-                      absolute
-                      bottom-4
-                      left-4
-                      right-4
-
-                      sm:bottom-6
-                      sm:left-6
-                      sm:right-6
+                      relative
+                      aspect-[4/5]
+                      overflow-hidden
                     "
                   >
+                    <Image
+                      src={portraitSrc}
+                      alt={`Portrait of ${name}`}
+                      fill
+                      priority
+                      sizes="(max-width: 640px) 92vw, (max-width: 1024px) 78vw, 42vw"
+                      className="
+                        object-cover
+                        object-center
+                        grayscale-[35%]
+                        transition-all
+                        duration-[1200ms]
+                        hover:scale-[1.035]
+                        hover:grayscale-0
+                      "
+                    />
+
+                    {/* IMAGE LIGHT */}
+
                     <div
                       className="
-                        border-t
-                        pt-3
+                        pointer-events-none
+                        absolute
+                        inset-0
+                      "
+                      style={{
+                        background:
+                          "linear-gradient(to top, color-mix(in srgb, var(--background) 88%, transparent), transparent 52%, color-mix(in srgb, var(--background) 10%, transparent))",
+                      }}
+                    />
 
-                        sm:pt-4
+                    {/* GOLD TINT */}
+
+                    <div
+                      className="
+                        pointer-events-none
+                        absolute
+                        inset-0
+                      "
+                      style={{
+                        background:
+                          "linear-gradient(115deg, color-mix(in srgb, var(--accent) 12%, transparent), transparent 35%, transparent 70%, color-mix(in srgb, var(--text-primary) 3%, transparent))",
+                      }}
+                    />
+
+                    {/* PORTRAIT CAPTION */}
+
+                    <div
+                      className="
+                        absolute
+                        bottom-4
+                        left-4
+                        right-4
+
+                        sm:bottom-6
+                        sm:left-6
+                        sm:right-6
+                      "
+                    >
+                      <div
+                        className="
+                          border-t
+                          pt-3
+
+                          sm:pt-4
+                        "
+                        style={{
+                          borderColor:
+                            "color-mix(in srgb, var(--text-primary) 20%, transparent)",
+                        }}
+                      >
+                        <p
+                          className="
+                            text-[8px]
+                            uppercase
+                            tracking-[0.25em]
+
+                            sm:text-[9px]
+                            sm:tracking-[0.3em]
+                          "
+                          style={{
+                            color:
+                              "var(--accent-soft)",
+                          }}
+                        >
+                          Cloud / DevOps / AI
+                        </p>
+
+                        <p
+                          className="
+                            mt-1.5
+                            max-w-sm
+                            font-serif
+                            text-base
+                            italic
+
+                            sm:mt-2
+                            sm:text-lg
+                          "
+                          style={{
+                            color:
+                              "var(--text-primary)",
+                          }}
+                        >
+                          Engineering digital
+                          systems with clarity,
+                          scale, and purpose.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* IMAGE EDGE */}
+
+                    <div
+                      className="
+                        pointer-events-none
+                        absolute
+                        inset-0
+                        border
                       "
                       style={{
                         borderColor:
-                          "color-mix(in srgb, var(--text-primary) 20%, transparent)",
+                          "color-mix(in srgb, var(--accent) 12%, transparent)",
                       }}
-                    >
-                      <p
-                        className="
-                          text-[8px]
-                          uppercase
-                          tracking-[0.25em]
-
-                          sm:text-[9px]
-                          sm:tracking-[0.3em]
-                        "
-                        style={{
-                          color: "var(--accent-soft)",
-                        }}
-                      >
-                        Cloud / DevOps / AI
-                      </p>
-
-                      <p
-                        className="
-                          mt-1.5
-                          max-w-sm
-                          font-serif
-                          text-base
-                          italic
-
-                          sm:mt-2
-                          sm:text-lg
-                        "
-                        style={{
-                          color: "var(--text-primary)",
-                        }}
-                      >
-                        Engineering digital systems
-                        with clarity, scale, and
-                        purpose.
-                      </p>
-                    </div>
+                    />
                   </div>
                 </div>
               </div>
 
-              {/* -------------------------------------------------
-                  STATUS CARD
-                  ------------------------------------------------- */}
+              {/* =================================================
+                  FLOATING STATUS CARD
+                  ================================================= */}
 
-              <motion.div
-                animate={{
-                  y: [0, -8, 0],
-                }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
+              <div
+                ref={statusRef}
                 className="
                   absolute
                   left-3
                   top-6
+                  z-20
                   hidden
                   border
                   px-3
@@ -787,8 +1025,14 @@ export default function Hero({
                   sm:py-3
                 "
                 style={{
-                  borderColor: "var(--border)",
-                  background: "var(--surface)",
+                  borderColor:
+                    "var(--border)",
+                  background:
+                    "var(--surface)",
+                  transition:
+                    "transform 0.15s linear",
+                  willChange:
+                    "transform",
                 }}
               >
                 <div
@@ -875,82 +1119,95 @@ export default function Hero({
                     </p>
                   </div>
                 </div>
-              </motion.div>
+              </div>
 
-              {/* -------------------------------------------------
+              {/* =================================================
                   TECHNOLOGY STACK
-                  ------------------------------------------------- */}
+                  ================================================= */}
 
-              <motion.div
-                initial={{
-                  opacity: 0,
-                  y: 15,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                transition={transition(0.65)}
-                className="
-                  mt-3
-                  border
-                  p-3
-                  backdrop-blur-[20px]
-
-                  sm:mt-4
-                  sm:p-4
-                "
+              <div
+                ref={techRef}
                 style={{
-                  borderColor: "var(--border)",
-                  background: "var(--surface-soft)",
+                  transition:
+                    "transform 0.15s linear",
+                  willChange:
+                    "transform",
                 }}
               >
-                <div
+                <motion.div
+                  initial={{
+                    opacity: 0,
+                    y: 15,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={transition(0.65)}
                   className="
-                    mb-2.5
-                    flex
-                    items-center
-                    justify-between
+                    mt-3
+                    border
+                    p-3
+                    backdrop-blur-[20px]
 
-                    sm:mb-3
+                    sm:mt-4
+                    sm:p-4
                   "
+                  style={{
+                    borderColor:
+                      "var(--border)",
+                    background:
+                      "var(--surface-soft)",
+                  }}
                 >
-                  <span
+                  <div
                     className="
-                      text-[8px]
-                      uppercase
-                      tracking-[0.25em]
+                      mb-2.5
+                      flex
+                      items-center
+                      justify-between
 
-                      sm:text-[9px]
-                      sm:tracking-[0.3em]
+                      sm:mb-3
                     "
-                    style={{
-                      color:
-                        "var(--text-secondary)",
-                    }}
                   >
-                    Technology
-                  </span>
+                    <span
+                      className="
+                        text-[8px]
+                        uppercase
+                        tracking-[0.25em]
 
-                  <span
-                    className="
-                      text-[8px]
-                      uppercase
-                      tracking-[0.2em]
+                        sm:text-[9px]
+                        sm:tracking-[0.3em]
+                      "
+                      style={{
+                        color:
+                          "var(--text-secondary)",
+                      }}
+                    >
+                      Technology
+                    </span>
 
-                      sm:text-[9px]
-                      sm:tracking-[0.25em]
-                    "
-                    style={{
-                      color: "var(--accent)",
-                    }}
-                  >
-                    Stack
-                  </span>
-                </div>
+                    <span
+                      className="
+                        text-[8px]
+                        uppercase
+                        tracking-[0.2em]
 
-                <HeroTechStack />
-              </motion.div>
+                        sm:text-[9px]
+                        sm:tracking-[0.25em]
+                      "
+                      style={{
+                        color:
+                          "var(--accent)",
+                      }}
+                    >
+                      Stack
+                    </span>
+                  </div>
+
+                  <HeroTechStack />
+                </motion.div>
+              </div>
             </motion.div>
           </div>
         </div>
@@ -988,8 +1245,10 @@ export default function Hero({
             sm:tracking-[0.28em]
           "
           style={{
-            borderColor: "var(--border)",
-            color: "var(--text-secondary)",
+            borderColor:
+              "var(--border)",
+            color:
+              "var(--text-secondary)",
           }}
         >
           <div
@@ -1017,7 +1276,8 @@ export default function Hero({
                   rounded-full
                 "
                 style={{
-                  background: "var(--accent)",
+                  background:
+                    "var(--accent)",
                   opacity: 0.4,
                 }}
               />
@@ -1030,14 +1290,16 @@ export default function Hero({
                   rounded-full
                 "
                 style={{
-                  background: "var(--accent)",
+                  background:
+                    "var(--accent)",
                 }}
               />
             </span>
 
             <span
               style={{
-                color: "var(--accent)",
+                color:
+                  "var(--accent)",
               }}
             >
               Sensory engine active
@@ -1046,7 +1308,8 @@ export default function Hero({
             <span
               className="hidden sm:inline"
               style={{
-                color: "var(--text-muted)",
+                color:
+                  "var(--text-muted)",
               }}
             >
               •
@@ -1055,7 +1318,8 @@ export default function Hero({
             <span
               className="hidden sm:inline"
               style={{
-                color: "var(--text-muted)",
+                color:
+                  "var(--text-muted)",
               }}
             >
               Cloud / DevOps / AI
@@ -1073,7 +1337,8 @@ export default function Hero({
               duration-700
             "
             style={{
-              color: "var(--text-secondary)",
+              color:
+                "var(--text-secondary)",
             }}
           >
             <span className="group-hover:text-[var(--accent)]">

@@ -8,31 +8,25 @@ import {
   Mail,
   Send,
 } from "lucide-react";
-import {
-  FaGithub,
-  FaLinkedin,
-} from "react-icons/fa";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { motion } from "framer-motion";
 
-const email = "ratul087@gmail.com";
-
-const socialLinks = [
-  {
-    label: "GitHub",
-    href: "https://github.com/",
-    icon: FaGithub,
-  },
-  {
-    label: "LinkedIn",
-    href: "https://linkedin.com/in/",
-    icon: FaLinkedin,
-  },
-];
+import {
+  portfolioProfile,
+  socialLinks,
+} from "../data/portfolio";
 
 const easing = [0.19, 1, 0.22, 1] as const;
 
+const socialIcons = {
+  GitHub: FaGithub,
+  LinkedIn: FaLinkedin,
+};
+
 export default function Contact() {
   const [copied, setCopied] = useState(false);
+
+  const email = portfolioProfile.email;
 
   const copyEmail = async () => {
     try {
@@ -74,9 +68,7 @@ export default function Contact() {
         borderColor: "var(--border)",
       }}
     >
-      {/* =====================================================
-          BACKGROUND
-          ===================================================== */}
+      {/* Background */}
 
       <div
         aria-hidden="true"
@@ -86,8 +78,6 @@ export default function Contact() {
           inset-0
         "
       >
-        {/* Very subtle grid */}
-
         <div
           className="
             absolute
@@ -100,8 +90,6 @@ export default function Contact() {
             backgroundSize: "64px 64px",
           }}
         />
-
-        {/* Small accent glow */}
 
         <div
           className="
@@ -121,15 +109,10 @@ export default function Contact() {
         />
       </div>
 
-      {/* =====================================================
-          CONTAINER
-          ===================================================== */}
+      {/* Container */}
 
       <div className="relative mx-auto max-w-7xl">
-
-        {/* ===================================================
-            HEADER
-            =================================================== */}
+        {/* Header */}
 
         <motion.div
           initial={{
@@ -148,12 +131,8 @@ export default function Contact() {
             duration: 0.8,
             ease: easing,
           }}
-          className="
-            max-w-4xl
-          "
+          className="max-w-4xl"
         >
-          {/* Label */}
-
           <div className="flex items-center gap-4">
             <span
               className="
@@ -184,8 +163,6 @@ export default function Contact() {
             </span>
           </div>
 
-          {/* Heading */}
-
           <h2
             id="contact-heading"
             className="
@@ -201,6 +178,7 @@ export default function Contact() {
             }}
           >
             Let&apos;s build
+
             <span
               className="
                 block
@@ -214,8 +192,6 @@ export default function Contact() {
               something good.
             </span>
           </h2>
-
-          {/* Description */}
 
           <p
             className="
@@ -234,15 +210,12 @@ export default function Contact() {
               color: "var(--text-secondary)",
             }}
           >
-            Have a project, an idea, or an opportunity
-            you think we should talk about? I&apos;d
-            love to hear from you.
+            Have a project, an idea, or an opportunity you think
+            we should talk about? I&apos;d love to hear from you.
           </p>
         </motion.div>
 
-        {/* ===================================================
-            CONTACT AREA
-            =================================================== */}
+        {/* Contact area */}
 
         <motion.div
           initial={{
@@ -265,6 +238,7 @@ export default function Contact() {
           className="
             mt-12
             border
+
             sm:mt-16
           "
           style={{
@@ -272,9 +246,7 @@ export default function Contact() {
             background: "var(--surface-soft)",
           }}
         >
-          {/* =================================================
-              EMAIL
-              ================================================= */}
+          {/* Email */}
 
           <div
             className="
@@ -285,8 +257,6 @@ export default function Contact() {
               lg:p-10
             "
           >
-            {/* Availability */}
-
             <div className="flex items-center gap-3">
               <span
                 className="
@@ -341,8 +311,6 @@ export default function Contact() {
               </span>
             </div>
 
-            {/* Email row */}
-
             <div
               className="
                 mt-7
@@ -386,7 +354,14 @@ export default function Contact() {
                     font-medium
                     tracking-[-0.035em]
                     transition-colors
-                    duration-500
+                    duration-200
+
+                    hover:text-[var(--accent)]
+
+                    focus-visible:outline
+                    focus-visible:outline-2
+                    focus-visible:outline-offset-4
+                    focus-visible:outline-[var(--accent)]
 
                     sm:text-2xl
 
@@ -400,8 +375,6 @@ export default function Contact() {
                 </a>
               </div>
 
-              {/* Buttons */}
-
               <div
                 className="
                   flex
@@ -409,8 +382,6 @@ export default function Contact() {
                   gap-2.5
                 "
               >
-                {/* Copy */}
-
                 <button
                   type="button"
                   onClick={copyEmail}
@@ -426,8 +397,14 @@ export default function Contact() {
                     uppercase
                     tracking-[0.14em]
                     transition-all
-                    duration-500
+                    duration-200
+
                     hover:-translate-y-0.5
+
+                    focus-visible:outline
+                    focus-visible:outline-2
+                    focus-visible:outline-offset-2
+                    focus-visible:outline-[var(--accent)]
                   "
                   style={{
                     borderColor: copied
@@ -450,8 +427,6 @@ export default function Contact() {
                   {copied ? "Copied" : "Copy email"}
                 </button>
 
-                {/* Send */}
-
                 <a
                   href={`mailto:${email}`}
                   className="
@@ -465,8 +440,15 @@ export default function Contact() {
                     uppercase
                     tracking-[0.14em]
                     transition-all
-                    duration-500
+                    duration-200
+
                     hover:-translate-y-0.5
+                    hover:opacity-90
+
+                    focus-visible:outline
+                    focus-visible:outline-2
+                    focus-visible:outline-offset-2
+                    focus-visible:outline-[var(--accent)]
                   "
                   style={{
                     background: "var(--accent)",
@@ -486,9 +468,7 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* =================================================
-              SOCIAL LINKS
-              ================================================= */}
+          {/* Social links */}
 
           <div
             className="
@@ -501,12 +481,13 @@ export default function Contact() {
               borderColor: "var(--border)",
             }}
           >
-            {socialLinks.map(
-              ({
-                label,
-                href,
-                icon: Icon,
-              }) => (
+            {socialLinks.map(({ label, href }) => {
+              const Icon =
+                socialIcons[
+                  label as keyof typeof socialIcons
+                ];
+
+              return (
                 <a
                   key={label}
                   href={href}
@@ -522,7 +503,14 @@ export default function Contact() {
                     px-6
                     py-4
                     transition-colors
-                    duration-500
+                    duration-200
+
+                    hover:bg-[var(--surface)]
+
+                    focus-visible:outline
+                    focus-visible:outline-2
+                    focus-visible:outline-offset-[-2px]
+                    focus-visible:outline-[var(--accent)]
 
                     sm:border-r
                     sm:px-7
@@ -534,12 +522,14 @@ export default function Contact() {
                   }}
                 >
                   <span className="flex items-center gap-3">
-                    <Icon
-                      size={17}
-                      style={{
-                        color: "var(--accent)",
-                      }}
-                    />
+                    {Icon && (
+                      <Icon
+                        size={17}
+                        style={{
+                          color: "var(--accent)",
+                        }}
+                      />
+                    )}
 
                     <span
                       className="
@@ -547,8 +537,7 @@ export default function Contact() {
                         font-medium
                       "
                       style={{
-                        color:
-                          "var(--text-secondary)",
+                        color: "var(--text-secondary)",
                       }}
                     >
                       {label}
@@ -560,18 +549,17 @@ export default function Contact() {
                     strokeWidth={1.5}
                     className="
                       transition-transform
-                      duration-500
+                      duration-200
                       group-hover:translate-x-0.5
                       group-hover:-translate-y-0.5
                     "
                     style={{
-                      color:
-                        "var(--text-muted)",
+                      color: "var(--text-muted)",
                     }}
                   />
                 </a>
-              )
-            )}
+              );
+            })}
 
             {/* Email */}
 
@@ -588,7 +576,14 @@ export default function Contact() {
                 px-6
                 py-4
                 transition-colors
-                duration-500
+                duration-200
+
+                hover:bg-[var(--surface)]
+
+                focus-visible:outline
+                focus-visible:outline-2
+                focus-visible:outline-offset-[-2px]
+                focus-visible:outline-[var(--accent)]
 
                 sm:border-t-0
                 sm:px-7
@@ -614,8 +609,7 @@ export default function Contact() {
                     font-medium
                   "
                   style={{
-                    color:
-                      "var(--text-secondary)",
+                    color: "var(--text-secondary)",
                   }}
                 >
                   Email
@@ -627,7 +621,7 @@ export default function Contact() {
                 strokeWidth={1.5}
                 className="
                   transition-transform
-                  duration-500
+                  duration-200
                   group-hover:translate-x-0.5
                   group-hover:-translate-y-0.5
                 "
@@ -639,9 +633,7 @@ export default function Contact() {
           </div>
         </motion.div>
 
-        {/* ===================================================
-            BOTTOM NOTE
-            =================================================== */}
+        {/* Bottom note */}
 
         <motion.div
           initial={{
