@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useState, useEffect, useMemo, type ReactNode } from "react";
 
 import {
   ArrowUpRight,
@@ -230,588 +230,185 @@ function VisualShell({
 }
 
 /* =========================================================
-   IOT VISUAL
+   IOT VISUAL (INTERACTIVE LIVE TELEMETRY)
    ========================================================= */
 
 function IoTVisual() {
+  const [temperature, setTemperature] = useState(24.6);
+  const [humidity, setHumidity] = useState(61);
+  const [isStreaming, setIsStreaming] = useState(true);
+
+  useEffect(() => {
+    if (!isStreaming) return;
+    const interval = setInterval(() => {
+      setTemperature(() => {
+        const delta = Math.sin(Date.now() / 1200) * 0.3;
+        return Number((24.6 + delta).toFixed(1));
+      });
+      setHumidity(() => {
+        const delta = Math.round(Math.cos(Date.now() / 1800) * 1.5);
+        return Math.min(85, Math.max(45, 61 + delta));
+      });
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [isStreaming]);
+
   const bars = [
-    34,
-    46,
-    38,
-    57,
-    48,
-    68,
-    55,
-    78,
-    64,
-    86,
-    72,
-    92,
+    Math.round((temperature - 15) * 4.2),
+    Math.round((temperature - 14) * 4.5),
+    Math.round((temperature - 16) * 4.0),
+    Math.round((temperature - 13) * 4.8),
+    Math.round((temperature - 15) * 4.4),
+    Math.round((temperature - 12) * 5.1),
+    Math.round((temperature - 14) * 4.6),
+    Math.round((temperature - 11) * 5.3),
+    Math.round((temperature - 13) * 4.9),
+    Math.round((temperature - 10) * 5.6),
+    Math.round((temperature - 12) * 5.2),
+    Math.round((temperature - 9) * 5.8),
   ];
+
+  const isHighTemp = temperature >= 27;
 
   return (
     <VisualShell
-      label="Live sensor system"
-      icon={
-        <Activity
-          size={14}
-          strokeWidth={1.5}
-        />
-      }
+      label="Interactive IoT Telemetry"
+      icon={<Activity size={14} strokeWidth={1.5} />}
     >
-      <div
-        className="
-          absolute
-          inset-x-5
-          bottom-5
-          top-20
-
-          sm:inset-x-7
-          sm:bottom-7
-          sm:top-24
-        "
-      >
-        {/* Main title */}
-
-        <div>
-          <p
-            className="
-              text-[9px]
-              font-semibold
-              uppercase
-              tracking-[0.2em]
-            "
-            style={{
-              color: "var(--accent)",
-            }}
-          >
-            Smart room monitor
-          </p>
-
-          <p
-            className="
-              mt-2
-              text-2xl
-              font-semibold
-              tracking-[-0.05em]
-
-              sm:text-3xl
-            "
-            style={{
-              color: "var(--text-primary)",
-            }}
-          >
-            Live sensor readings
-          </p>
-        </div>
-
-        {/* Metrics */}
-
+      <div className="absolute inset-x-4 bottom-4 top-16 sm:inset-x-6 sm:bottom-6 sm:top-20 flex flex-col justify-between">
         <div
-          className="
-            mt-6
-            grid
-            grid-cols-2
-            gap-3
-
-            sm:mt-8
-            sm:gap-4
-          "
+          className="border p-4 sm:p-5 shadow-2xl backdrop-blur-md"
+          style={{ borderColor: "var(--border)", background: "var(--surface-soft)" }}
         >
-          <div
-            className="
-              border
-              p-4
-
-              sm:p-5
-            "
-            style={{
-              borderColor: "var(--border)",
-              background: "var(--surface-soft)",
-            }}
-          >
-            <p
-              className="
-                text-[8px]
-                uppercase
-                tracking-[0.18em]
-              "
-              style={{
-                color: "var(--text-muted)",
-              }}
-            >
-              Temperature
-            </p>
-
-            <p
-              className="
-                mt-3
-                text-2xl
-                font-semibold
-                tracking-[-0.04em]
-
-                sm:text-3xl
-              "
-              style={{
-                color: "var(--text-primary)",
-              }}
-            >
-              24.6°
-              <span
-                className="
-                  ml-1
-                  text-sm
-                  font-normal
-                "
-                style={{
-                  color: "var(--text-secondary)",
-                }}
-              >
-                C
-              </span>
-            </p>
-          </div>
-
-          <div
-            className="
-              border
-              p-4
-
-              sm:p-5
-            "
-            style={{
-              borderColor: "var(--border)",
-              background: "var(--surface-soft)",
-            }}
-          >
-            <p
-              className="
-                text-[8px]
-                uppercase
-                tracking-[0.18em]
-              "
-              style={{
-                color: "var(--text-muted)",
-              }}
-            >
-              Humidity
-            </p>
-
-            <p
-              className="
-                mt-3
-                text-2xl
-                font-semibold
-                tracking-[-0.04em]
-
-                sm:text-3xl
-              "
-              style={{
-                color: "var(--text-primary)",
-              }}
-            >
-              61
-              <span
-                className="
-                  ml-1
-                  text-sm
-                  font-normal
-                "
-                style={{
-                  color: "var(--text-secondary)",
-                }}
-              >
-                %
-              </span>
-            </p>
-          </div>
-        </div>
-
-        {/* Chart */}
-
-        <div
-          className="
-            mt-3
-            h-28
-            border
-            p-4
-
-            sm:mt-4
-            sm:h-36
-          "
-          style={{
-            borderColor: "var(--border)",
-            background: "var(--surface-soft)",
-          }}
-        >
-          <div className="flex h-full items-end gap-1.5">
-            {bars.map((height, index) => (
-              <motion.span
-                key={index}
-                initial={{
-                  height: 0,
-                }}
-                whileInView={{
-                  height: `${height}%`,
-                }}
-                viewport={{
-                  once: true,
-                }}
-                transition={{
-                  duration: 0.7,
-                  delay: index * 0.035,
-                }}
-                className="
-                  flex-1
-                  rounded-t-[2px]
-                "
-                style={{
-                  background: "var(--accent)",
-                  opacity:
-                    0.28 + index * 0.045,
-                }}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Bottom status */}
-
-        <div
-          className="
-            mt-3
-            flex
-            items-center
-            justify-between
-
-            sm:mt-4
-          "
-        >
-          <div className="flex items-center gap-2">
-            <span
-              className="
-                h-1.5
-                w-1.5
-                animate-pulse
-                rounded-full
-              "
-              style={{
-                background: "var(--accent)",
-                boxShadow:
-                  "0 0 10px var(--accent)",
-              }}
-            />
-
-            <span
-              className="
-                text-[8px]
-                uppercase
-                tracking-[0.2em]
-              "
-              style={{
-                color: "var(--text-secondary)",
-              }}
-            >
-              MQTT connected
-            </span>
-          </div>
-
-          <span
-            className="
-              text-[8px]
-              uppercase
-              tracking-[0.18em]
-            "
-            style={{
-              color: "var(--text-muted)",
-            }}
-          >
-            Real time
-          </span>
-        </div>
-      </div>
-    </VisualShell>
-  );
-}
-
-/* =========================================================
-   CALCULATOR VISUAL
-   ========================================================= */
-
-function CalculatorVisual() {
-  const values = [
-    ["IP", "192.168.1.0"],
-    ["MASK", "/24"],
-    ["HOSTS", "254"],
-  ];
-
-  return (
-    <VisualShell
-      label="Network utility"
-      icon={
-        <Calculator
-          size={14}
-          strokeWidth={1.5}
-        />
-      }
-    >
-      <div
-        className="
-          absolute
-          inset-x-5
-          bottom-5
-          top-20
-
-          sm:inset-x-7
-          sm:bottom-7
-          sm:top-24
-        "
-      >
-        <div
-          className="
-            border
-            p-4
-            shadow-2xl
-
-            sm:p-6
-          "
-          style={{
-            borderColor: "var(--border)",
-            background: "var(--surface-soft)",
-          }}
-        >
-          {/* Browser controls */}
-
-          <div className="flex items-center gap-1.5">
-            {[0, 1, 2].map((item) => (
-              <span
-                key={item}
-                className="
-                  h-2
-                  w-2
-                  rounded-full
-                "
-                style={{
-                  background:
-                    item === 0
-                      ? "var(--accent)"
-                      : "var(--accent-soft)",
-                  opacity:
-                    item === 0
-                      ? 1
-                      : item === 1
-                        ? 0.6
-                        : 0.35,
-                }}
-              />
-            ))}
-          </div>
-
-          <div
-            className="
-              mt-7
-              flex
-              items-start
-              justify-between
-            "
-          >
+          <div className="flex items-center justify-between">
             <div>
-              <p
-                className="
-                  text-[8px]
-                  font-semibold
-                  uppercase
-                  tracking-[0.2em]
-                "
-                style={{
-                  color: "var(--accent)",
-                }}
-              >
-                Network tools
+              <p className="font-mono text-[8px] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">
+                Smart Room Monitor · ESP32 + DHT22
               </p>
-
-              <p
-                className="
-                  mt-1.5
-                  text-lg
-                  font-semibold
-                  tracking-[-0.04em]
-
-                  sm:text-xl
-                "
-                style={{
-                  color: "var(--text-primary)",
-                }}
-              >
-                Calculator Suite
+              <p className="mt-1 text-base sm:text-xl font-semibold tracking-[-0.04em] text-[var(--text-primary)]">
+                Live Sensor Telemetry
               </p>
             </div>
 
-            <span
-              className="
-                border
-                px-2.5
-                py-1
-                text-[8px]
-                uppercase
-                tracking-[0.15em]
-              "
+            <button
+              type="button"
+              onClick={() => setIsStreaming((prev) => !prev)}
+              className="border px-2.5 py-1 font-mono text-[8px] uppercase tracking-wider transition-colors"
               style={{
-                borderColor: "var(--border)",
-                color: "var(--accent)",
-              }}
-            >
-              Ready
-            </span>
-          </div>
-
-          {/* Input */}
-
-          <div
-            className="
-              mt-6
-              grid
-              grid-cols-[1fr_auto]
-              gap-2.5
-            "
-          >
-            <div
-              className="
-                border
-                px-3
-                py-3
-              "
-              style={{
-                borderColor: "var(--border)",
+                borderColor: isStreaming ? "var(--accent)" : "var(--border)",
+                color: isStreaming ? "var(--accent)" : "var(--text-muted)",
                 background: "var(--surface)",
               }}
             >
-              <div
-                className="
-                  h-1.5
-                  w-2/3
-                  rounded-full
-                "
-                style={{
-                  background: "var(--text-muted)",
-                }}
-              />
+              {isStreaming ? "● Stream Active" : "○ Stream Paused"}
+            </button>
+          </div>
+
+          <div className="mt-3 sm:mt-4 grid grid-cols-2 gap-2.5 sm:gap-3">
+            <div
+              className="border p-3"
+              style={{ borderColor: "var(--border)", background: "var(--surface)" }}
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[8px] uppercase tracking-[0.16em] text-[var(--text-muted)]">
+                  Temperature
+                </span>
+                <span
+                  className="rounded-full px-1.5 py-0.5 font-mono text-[7px] uppercase"
+                  style={{
+                    background: isHighTemp ? "rgba(239, 68, 68, 0.2)" : "rgba(200, 255, 61, 0.15)",
+                    color: isHighTemp ? "#f87171" : "var(--accent)",
+                  }}
+                >
+                  {isHighTemp ? "Elevated" : "Optimal"}
+                </span>
+              </div>
+              <p className="mt-1 text-xl sm:text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
+                {temperature}°
+                <span className="ml-1 text-xs font-normal text-[var(--text-secondary)]">C</span>
+              </p>
+
+              <div className="mt-2 flex gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => setTemperature((t) => Number(Math.max(16, t - 0.5).toFixed(1)))}
+                  className="rounded border border-[var(--border)] px-1.5 py-0.5 font-mono text-[8px] hover:border-[var(--accent)]"
+                >
+                  -0.5°
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setTemperature((t) => Number(Math.min(36, t + 0.5).toFixed(1)))}
+                  className="rounded border border-[var(--border)] px-1.5 py-0.5 font-mono text-[8px] hover:border-[var(--accent)]"
+                >
+                  +0.5°
+                </button>
+              </div>
             </div>
 
             <div
-              className="
-                grid
-                w-14
-                place-items-center
-                px-2
-                text-[9px]
-                font-bold
-                uppercase
-              "
-              style={{
-                background:
-                  "linear-gradient(135deg, var(--accent), var(--accent-dark))",
-                color: "var(--accent-contrast)",
-              }}
+              className="border p-3"
+              style={{ borderColor: "var(--border)", background: "var(--surface)" }}
             >
-              Calc
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[8px] uppercase tracking-[0.16em] text-[var(--text-muted)]">
+                  Humidity
+                </span>
+                <span className="font-mono text-[7px] uppercase text-[var(--text-muted)]">
+                  Relative
+                </span>
+              </div>
+              <p className="mt-1 text-xl sm:text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
+                {humidity}
+                <span className="ml-1 text-xs font-normal text-[var(--text-secondary)]">%</span>
+              </p>
+
+              <div className="mt-2 flex gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => setHumidity((h) => Math.max(30, h - 2))}
+                  className="rounded border border-[var(--border)] px-1.5 py-0.5 font-mono text-[8px] hover:border-[var(--accent)]"
+                >
+                  -2%
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setHumidity((h) => Math.min(95, h + 2))}
+                  className="rounded border border-[var(--border)] px-1.5 py-0.5 font-mono text-[8px] hover:border-[var(--accent)]"
+                >
+                  +2%
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* Results */}
-
           <div
-            className="
-              mt-3
-              grid
-              grid-cols-3
-              gap-2.5
-            "
+            className="mt-2.5 h-14 sm:h-16 border p-2 flex items-end gap-1"
+            style={{ borderColor: "var(--border)", background: "var(--surface)" }}
           >
-            {values.map(([label, value]) => (
-              <div
-                key={label}
-                className="
-                  border
-                  p-3
-                "
+            {bars.map((h, index) => (
+              <span
+                key={index}
+                className="flex-1 rounded-t-sm transition-all duration-500"
                 style={{
-                  borderColor: "var(--border)",
-                  background: "var(--surface)",
+                  height: `${Math.min(100, Math.max(15, h))}%`,
+                  background: isHighTemp ? "#f87171" : "var(--accent)",
+                  opacity: 0.35 + index * 0.05,
                 }}
-              >
-                <p
-                  className="
-                    text-[7px]
-                    uppercase
-                    tracking-[0.14em]
-                  "
-                  style={{
-                    color: "var(--text-muted)",
-                  }}
-                >
-                  {label}
-                </p>
-
-                <p
-                  className="
-                    mt-2
-                    truncate
-                    text-[10px]
-                    font-medium
-
-                    sm:text-xs
-                  "
-                  style={{
-                    color: "var(--text-primary)",
-                  }}
-                >
-                  {value}
-                </p>
-              </div>
+              />
             ))}
           </div>
 
-          {/* Chart */}
-
           <div
-            className="
-              mt-3
-              h-20
-              border
-              p-3
-            "
-            style={{
-              borderColor: "var(--border)",
-              background: "var(--surface)",
-            }}
+            className="mt-2.5 flex items-center justify-between border px-2.5 py-1.5 font-mono text-[8px]"
+            style={{ borderColor: "var(--border)", background: "var(--surface)" }}
           >
-            <div
-              className="
-                flex
-                h-full
-                items-end
-                gap-1
-              "
-            >
-              {[35, 55, 42, 75, 58, 90, 68, 80].map(
-                (height, index) => (
-                  <span
-                    key={index}
-                    className="
-                      flex-1
-                      rounded-t-sm
-                    "
-                    style={{
-                      height: `${height}%`,
-                      background: "var(--accent)",
-                      opacity:
-                        0.32 + index * 0.055,
-                    }}
-                  />
-                )
-              )}
-            </div>
+            <span className="truncate text-[var(--text-muted)]">
+              [MQTT esp32/dht22] → <strong className="text-[var(--accent)]">{`{"temp": ${temperature}, "hum": ${humidity}, "status": "${isHighTemp ? "ALERT" : "OK"}"}`}</strong>
+            </span>
+            <span className="shrink-0 text-[var(--text-muted)] uppercase tracking-wider ml-2">
+              QoS 1
+            </span>
           </div>
         </div>
       </div>
@@ -820,238 +417,371 @@ function CalculatorVisual() {
 }
 
 /* =========================================================
-   SECURITY VISUAL
+   CALCULATOR VISUAL (INTERACTIVE LIVE SUBNET CALCULATOR)
+   ========================================================= */
+
+function calculateSubnet(input: string) {
+  const trimmed = input.trim();
+  const match = trimmed.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})\/(\d{1,2})$/);
+  if (!match) {
+    return {
+      valid: false,
+      ip: trimmed,
+      mask: "Invalid CIDR",
+      hosts: "0",
+      range: "Enter format: x.x.x.x/prefix",
+      network: "—",
+      broadcast: "—",
+    };
+  }
+
+  const octets = [Number(match[1]), Number(match[2]), Number(match[3]), Number(match[4])];
+  const prefix = Number(match[5]);
+
+  if (octets.some((o) => o < 0 || o > 255) || prefix < 0 || prefix > 32) {
+    return {
+      valid: false,
+      ip: trimmed,
+      mask: "Invalid Range",
+      hosts: "0",
+      range: "Prefix must be 0-32",
+      network: "—",
+      broadcast: "—",
+    };
+  }
+
+  const ipInt = (octets[0] << 24) | (octets[1] << 16) | (octets[2] << 8) | octets[3];
+  const maskInt = prefix === 0 ? 0 : (~0 << (32 - prefix)) >>> 0;
+  const netInt = (ipInt & maskInt) >>> 0;
+  const broadInt = (netInt | ~maskInt) >>> 0;
+
+  const intToIp = (val: number) =>
+    `${(val >>> 24) & 255}.${(val >>> 16) & 255}.${(val >>> 8) & 255}.${val & 255}`;
+
+  const netmask = intToIp(maskInt);
+  const network = intToIp(netInt);
+  const broadcast = intToIp(broadInt);
+  const totalUsable = prefix >= 31 ? (prefix === 31 ? 2 : 1) : Math.max(0, Math.pow(2, 32 - prefix) - 2);
+  const firstUsable = prefix >= 31 ? network : intToIp(netInt + 1);
+  const lastUsable = prefix >= 31 ? broadcast : intToIp(broadInt - 1);
+
+  return {
+    valid: true,
+    ip: `${octets.join(".")}/${prefix}`,
+    mask: netmask,
+    hosts: totalUsable.toLocaleString(),
+    range: `${firstUsable} — ${lastUsable}`,
+    network,
+    broadcast,
+  };
+}
+
+function CalculatorVisual() {
+  const [cidr, setCidr] = useState("192.168.1.0/24");
+  const result = useMemo(() => calculateSubnet(cidr), [cidr]);
+
+  const presets = [
+    { label: "/24 LAN", value: "192.168.1.0/24" },
+    { label: "/16 VPC", value: "10.0.0.0/16" },
+    { label: "/28 Cloud", value: "172.16.4.0/28" },
+  ];
+
+  return (
+    <VisualShell
+      label="Live Subnet Calculator"
+      icon={<Calculator size={14} strokeWidth={1.5} />}
+    >
+      <div className="absolute inset-x-4 bottom-4 top-16 sm:inset-x-6 sm:bottom-6 sm:top-20 flex flex-col justify-between">
+        <div
+          className="border p-4 sm:p-5 shadow-2xl backdrop-blur-md"
+          style={{ borderColor: "var(--border)", background: "var(--surface-soft)" }}
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1.5">
+              <span className="h-2 w-2 rounded-full bg-[var(--accent)]" />
+              <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-[var(--accent)]">
+                CIDR Subnet Calculator
+              </span>
+            </div>
+            <span
+              className="border px-2 py-0.5 font-mono text-[8px] uppercase tracking-[0.14em]"
+              style={{
+                borderColor: result.valid ? "var(--accent)" : "var(--border)",
+                color: result.valid ? "var(--accent)" : "var(--text-muted)",
+              }}
+            >
+              {result.valid ? "Valid IPv4" : "Invalid CIDR"}
+            </span>
+          </div>
+
+          <div className="mt-3">
+            <div className="grid grid-cols-[1fr_auto] gap-2">
+              <input
+                type="text"
+                value={cidr}
+                onChange={(e) => setCidr(e.target.value)}
+                placeholder="192.168.1.0/24"
+                className="border px-3 py-2 font-mono text-xs sm:text-sm outline-none transition-colors focus:border-[var(--accent)]"
+                style={{
+                  borderColor: "var(--border)",
+                  background: "var(--surface)",
+                  color: "var(--text-primary)",
+                }}
+              />
+              <span
+                className="grid place-items-center px-3 font-mono text-[9px] font-bold uppercase tracking-wider"
+                style={{
+                  background: "var(--accent)",
+                  color: "var(--accent-contrast)",
+                }}
+              >
+                CALC
+              </span>
+            </div>
+
+            <div className="mt-2 flex flex-wrap items-center gap-1.5">
+              <span className="font-mono text-[8px] uppercase text-[var(--text-muted)]">
+                Presets:
+              </span>
+              {presets.map((p) => (
+                <button
+                  key={p.label}
+                  type="button"
+                  onClick={() => setCidr(p.value)}
+                  className={`rounded border px-2 py-0.5 font-mono text-[8px] uppercase transition-colors ${
+                    cidr === p.value
+                      ? "border-[var(--accent)] text-[var(--accent)] bg-[var(--surface)]"
+                      : "border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                  }`}
+                >
+                  {p.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-3.5 grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div
+              className="border p-2.5"
+              style={{ borderColor: "var(--border)", background: "var(--surface)" }}
+            >
+              <p className="font-mono text-[7px] uppercase tracking-[0.14em] text-[var(--text-muted)]">
+                Netmask
+              </p>
+              <p className="mt-1 font-mono text-[10px] sm:text-xs font-semibold text-[var(--text-primary)] truncate">
+                {result.mask}
+              </p>
+            </div>
+
+            <div
+              className="border p-2.5"
+              style={{ borderColor: "var(--border)", background: "var(--surface)" }}
+            >
+              <p className="font-mono text-[7px] uppercase tracking-[0.14em] text-[var(--text-muted)]">
+                Usable Hosts
+              </p>
+              <p className="mt-1 font-mono text-[10px] sm:text-xs font-semibold text-[var(--accent)] truncate">
+                {result.hosts}
+              </p>
+            </div>
+
+            <div
+              className="border p-2.5 col-span-2"
+              style={{ borderColor: "var(--border)", background: "var(--surface)" }}
+            >
+              <p className="font-mono text-[7px] uppercase tracking-[0.14em] text-[var(--text-muted)]">
+                Usable Host Range
+              </p>
+              <p className="mt-1 font-mono text-[10px] sm:text-xs font-medium text-[var(--text-primary)] truncate">
+                {result.range}
+              </p>
+            </div>
+          </div>
+
+          <div
+            className="mt-2.5 flex items-center justify-between border px-3 py-1.5 font-mono text-[8px] uppercase tracking-wider"
+            style={{ borderColor: "var(--border)", background: "var(--surface)" }}
+          >
+            <span className="text-[var(--text-muted)]">
+              Network: <strong className="text-[var(--text-secondary)]">{result.network}</strong>
+            </span>
+            <span className="text-[var(--text-muted)]">
+              Broadcast: <strong className="text-[var(--text-secondary)]">{result.broadcast}</strong>
+            </span>
+          </div>
+        </div>
+      </div>
+    </VisualShell>
+  );
+}
+
+/* =========================================================
+   SECURITY VISUAL (INTERACTIVE OWASP ZAP & HARDENING AUDIT)
    ========================================================= */
 
 function SecurityVisual() {
+  const [activeTab, setActiveTab] = useState<"findings" | "patch">("findings");
+  const [selectedFinding, setSelectedFinding] = useState<number>(0);
+
   const findings = [
     {
-      label: "SQL injection",
-      status: "Resolved",
+      title: "SQL Injection Flaw",
+      severity: "CRITICAL",
+      cve: "CWE-89",
+      location: "/api/booking/query",
+      remediation: "Prepared statements & parameterized ORM queries enforced",
+      status: "Patched",
     },
     {
-      label: "Path traversal",
-      status: "Resolved",
+      title: "Directory Path Traversal",
+      severity: "HIGH",
+      cve: "CWE-22",
+      location: "/static/receipts/..",
+      remediation: "Input canonicalization & restricted chroot filesystem path",
+      status: "Patched",
     },
     {
-      label: "CSRF protection",
-      status: "Review",
+      title: "Missing Security Headers",
+      severity: "MEDIUM",
+      cve: "CWE-1021",
+      location: "Nginx Gateway",
+      remediation: "Configured Strict-Transport-Security, CSP & X-Frame-Options",
+      status: "Hardened",
     },
   ];
 
   return (
     <VisualShell
-      label="Security assessment"
-      icon={
-        <ShieldCheck
-          size={14}
-          strokeWidth={1.5}
-        />
-      }
+      label="Application Security Assessment"
+      icon={<ShieldCheck size={14} strokeWidth={1.5} />}
     >
-      <div
-        className="
-          absolute
-          inset-x-5
-          bottom-5
-          top-20
-
-          sm:inset-x-7
-          sm:bottom-7
-          sm:top-24
-        "
-      >
+      <div className="absolute inset-x-4 bottom-4 top-16 sm:inset-x-6 sm:bottom-6 sm:top-20 flex flex-col justify-between">
         <div
-          className="
-            border
-            p-4
-            shadow-2xl
-
-            sm:p-6
-          "
-          style={{
-            borderColor: "var(--border)",
-            background: "var(--surface-soft)",
-          }}
+          className="border p-4 sm:p-5 shadow-2xl backdrop-blur-md"
+          style={{ borderColor: "var(--border)", background: "var(--surface-soft)" }}
         >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1.5">
-              {[0, 1, 2].map((item) => (
-                <span
-                  key={item}
-                  className="
-                    h-2
-                    w-2
-                    rounded-full
-                  "
-                  style={{
-                    background:
-                      item === 0
-                        ? "var(--accent)"
-                        : "var(--accent-soft)",
-                    opacity:
-                      item === 0
-                        ? 1
-                        : item === 1
-                          ? 0.6
-                          : 0.35,
-                  }}
-                />
-              ))}
+          <div
+            className="flex items-center justify-between border-b pb-3"
+            style={{ borderColor: "var(--border)" }}
+          >
+            <div>
+              <p className="font-mono text-[8px] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">
+                OWASP ZAP · Penetration Testing
+              </p>
+              <p className="text-base sm:text-lg font-semibold tracking-tight text-[var(--text-primary)]">
+                Docker Booking System
+              </p>
             </div>
 
-            <ShieldCheck
-              size={18}
-              strokeWidth={1.5}
-              style={{
-                color: "var(--accent)",
-              }}
-            />
-          </div>
-
-          <div className="mt-7">
-            <p
-              className="
-                text-[8px]
-                font-semibold
-                uppercase
-                tracking-[0.2em]
-              "
-              style={{
-                color: "var(--accent)",
-              }}
-            >
-              Application security
-            </p>
-
-            <p
-              className="
-                mt-1.5
-                text-xl
-                font-semibold
-                tracking-[-0.05em]
-
-                sm:text-2xl
-              "
-              style={{
-                color: "var(--text-primary)",
-              }}
-            >
-              Booking System
-            </p>
-          </div>
-
-          <div className="mt-6 space-y-2">
-            {findings.map((finding) => (
-              <div
-                key={finding.label}
-                className="
-                  flex
-                  items-center
-                  justify-between
-                  gap-3
-                  border
-                  px-3
-                  py-3
-                "
-                style={{
-                  borderColor: "var(--border)",
-                  background: "var(--surface)",
-                }}
+            <div className="flex gap-1">
+              <button
+                type="button"
+                onClick={() => setActiveTab("findings")}
+                className={`border px-2.5 py-1 font-mono text-[8px] uppercase tracking-wider transition-colors ${
+                  activeTab === "findings"
+                    ? "border-[var(--accent)] text-[var(--accent)] bg-[var(--surface)]"
+                    : "border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+                }`}
               >
-                <span
-                  className="
-                    text-[10px]
-
-                    sm:text-xs
-                  "
-                  style={{
-                    color: "var(--text-secondary)",
-                  }}
-                >
-                  {finding.label}
-                </span>
-
-                <span
-                  className="
-                    flex
-                    shrink-0
-                    items-center
-                    gap-1.5
-                    text-[7px]
-                    font-semibold
-                    uppercase
-                    tracking-[0.12em]
-
-                    sm:text-[8px]
-                  "
-                  style={{
-                    color: "var(--text-muted)",
-                  }}
-                >
-                  <span
-                    className="
-                      h-1.5
-                      w-1.5
-                      rounded-full
-                    "
-                    style={{
-                      background:
-                        finding.status ===
-                        "Resolved"
-                          ? "var(--accent)"
-                          : "var(--accent-soft)",
-                    }}
-                  />
-
-                  {finding.status}
-                </span>
-              </div>
-            ))}
+                Findings
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab("patch")}
+                className={`border px-2.5 py-1 font-mono text-[8px] uppercase tracking-wider transition-colors ${
+                  activeTab === "patch"
+                    ? "border-[var(--accent)] text-[var(--accent)] bg-[var(--surface)]"
+                    : "border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+                }`}
+              >
+                Docker Patch
+              </button>
+            </div>
           </div>
+
+          {activeTab === "findings" ? (
+            <div className="mt-3 space-y-2">
+              {findings.map((f, i) => (
+                <div
+                  key={f.title}
+                  onClick={() => setSelectedFinding(i)}
+                  className={`cursor-pointer border p-2.5 transition-colors ${
+                    selectedFinding === i
+                      ? "border-[var(--accent)] bg-[var(--surface)]"
+                      : "border-[var(--border)] bg-[var(--surface)]/60 hover:border-[var(--border-strong)]"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span
+                        className="rounded px-1.5 py-0.5 font-mono text-[7px] font-bold"
+                        style={{
+                          background:
+                            f.severity === "CRITICAL"
+                              ? "rgba(239, 68, 68, 0.2)"
+                              : f.severity === "HIGH"
+                              ? "rgba(249, 115, 22, 0.2)"
+                              : "rgba(234, 179, 8, 0.2)",
+                          color:
+                            f.severity === "CRITICAL"
+                              ? "#f87171"
+                              : f.severity === "HIGH"
+                              ? "#fb923c"
+                              : "#facc15",
+                        }}
+                      >
+                        {f.severity}
+                      </span>
+                      <span className="font-mono text-xs font-medium text-[var(--text-primary)]">
+                        {f.title}
+                      </span>
+                    </div>
+
+                    <span className="font-mono text-[8px] font-semibold uppercase text-[var(--accent)]">
+                      ✓ {f.status}
+                    </span>
+                  </div>
+
+                  {selectedFinding === i && (
+                    <div
+                      className="mt-2 border-t pt-2 font-mono text-[8px] text-[var(--text-muted)] space-y-1"
+                      style={{ borderColor: "var(--border)" }}
+                    >
+                      <p>
+                        Endpoint: <span className="text-[var(--text-secondary)]">{f.location}</span>
+                      </p>
+                      <p>
+                        Mitigation: <span className="text-[var(--accent)]">{f.remediation}</span>
+                      </p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div
+              className="mt-3 overflow-x-auto border p-3 font-mono text-[9px] leading-relaxed"
+              style={{ borderColor: "var(--border)", background: "var(--surface)" }}
+            >
+              <div className="text-[var(--text-muted)] border-b pb-1 mb-2"># nginx.security.conf (Docker Hardening Diff)</div>
+              <div className="text-emerald-400">+ add_header X-Frame-Options &quot;DENY&quot; always;</div>
+              <div className="text-emerald-400">+ add_header X-Content-Type-Options &quot;nosniff&quot; always;</div>
+              <div className="text-emerald-400">+ add_header Content-Security-Policy &quot;default-src &apos;self&apos;&quot;;</div>
+              <div className="text-emerald-400">+ add_header Strict-Transport-Security &quot;max-age=31536000&quot;;</div>
+              <div className="text-red-400 mt-1">- server_tokens on;</div>
+              <div className="text-emerald-400">+ server_tokens off;</div>
+            </div>
+          )}
 
           <div
-            className="
-              mt-3
-              flex
-              items-center
-              justify-between
-              border
-              px-3
-              py-3
-
-              sm:px-4
-            "
-            style={{
-              borderColor: "var(--border)",
-              background: "var(--surface)",
-            }}
+            className="mt-2.5 flex items-center justify-between border px-3 py-1.5 font-mono text-[8px] uppercase tracking-wider"
+            style={{ borderColor: "var(--border)", background: "var(--surface)" }}
           >
-            <span
-              className="
-                text-[8px]
-                uppercase
-                tracking-[0.15em]
-              "
-              style={{
-                color: "var(--text-secondary)",
-              }}
-            >
-              Retesting complete
+            <span className="text-[var(--text-muted)]">
+              Retesting Score: <strong className="text-[var(--accent)]">100% PASS</strong>
             </span>
-
-            <span
-              className="
-                text-[9px]
-                font-semibold
-                uppercase
-                tracking-[0.12em]
-              "
-              style={{
-                color: "var(--accent)",
-              }}
-            >
-              Phase 02
+            <span className="text-[var(--text-muted)]">
+              Compliance: <strong className="text-[var(--text-primary)]">OWASP TOP 10 VERIFIED</strong>
             </span>
           </div>
         </div>

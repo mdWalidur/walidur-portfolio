@@ -5,6 +5,7 @@ import {
   BrainCircuit,
   ShieldCheck,
 } from "lucide-react";
+import { FaAws } from "react-icons/fa";
 
 import {
   SiDocker,
@@ -15,6 +16,11 @@ import {
 } from "react-icons/si";
 
 const techStack = [
+  {
+    name: "AWS Cloud",
+    href: "#credentials",
+    icon: FaAws,
+  },
   {
     name: "Docker",
     href: "https://www.docker.com/",

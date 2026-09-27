@@ -1,12 +1,41 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { portfolioProfile } from "@/components/data/portfolio";
+import HeroTechStack from "@/components/sections/HeroTechStack";
+
+function useTampereTime() {
+  const [time, setTime] = useState<string>("");
+
+  useEffect(() => {
+    const update = () => {
+      try {
+        const formatted = new Intl.DateTimeFormat("en-GB", {
+          timeZone: "Europe/Helsinki",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false,
+        }).format(new Date());
+        setTime(formatted);
+      } catch {
+        setTime("18:00:00");
+      }
+    };
+    update();
+    const interval = setInterval(update, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return time;
+}
 
 export default function Hero() {
   const shouldReduceMotion = useReducedMotion();
+  const tampereTime = useTampereTime();
 
   const scrollToWork = () => {
     document
@@ -74,21 +103,36 @@ export default function Hero() {
 
       <div className="page-shell relative z-10 flex min-h-[100svh] flex-col pt-28 sm:pt-32">
         {/* ===================================================
-            TOP METADATA
+            TOP METADATA & TELEMETRY HUD
             =================================================== */}
 
         <motion.div
           initial="hidden"
           animate="visible"
           variants={fadeUp}
-          className="editorial-grid"
+          className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--border)] pb-4 font-mono text-[10px] uppercase tracking-[0.14em]"
         >
-          <div className="col-span-4 md:col-span-2">
-            <p className="meta">Portfolio </p>
+          <div className="flex items-center gap-2.5">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inset-0 animate-ping rounded-full bg-[var(--accent)] opacity-75" />
+              <span className="relative h-2 w-2 rounded-full bg-[var(--accent)]" />
+            </span>
+            <span className="font-semibold text-[var(--text-primary)]">Tampere, Finland</span>
+            <span className="text-[var(--text-muted)]">
+              {tampereTime ? `${tampereTime} EET` : "EET (UTC+3)"}
+            </span>
           </div>
 
-          <div className="col-span-4 text-right md:col-span-3 md:col-start-10">
-            <p className="meta">Tampere, Finland</p>
+          <div className="flex items-center gap-4 text-[var(--text-muted)]">
+            <span className="hidden sm:inline">
+              REGION: <span className="text-[var(--text-primary)]">eu-north-1</span>
+            </span>
+            <span className="hidden md:inline">
+              LATENCY: <span className="text-[var(--accent)]">~24ms</span>
+            </span>
+            <span className="border border-[var(--accent)]/40 bg-[var(--surface-soft)] px-2 py-0.5 text-[9px] font-semibold text-[var(--accent)]">
+              Status: Available
+            </span>
           </div>
         </motion.div>
 
@@ -221,6 +265,29 @@ export default function Hero() {
                 across software engineering and cloud technologies.
               </p>
             </div>
+          </motion.div>
+
+          {/* =================================================
+              CORE STACK & CLOUD INFRASTRUCTURE
+              ================================================= */}
+
+          <motion.div
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.65,
+              duration: shouldReduceMotion ? 0 : 0.8,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="col-span-4 mt-8 md:col-span-10 md:col-start-2"
+          >
+            <div className="mb-3 flex items-center gap-3">
+              <span className="h-px w-6 bg-[var(--accent)]" />
+              <p className="font-mono text-[9px] font-semibold uppercase tracking-[0.2em] text-[var(--text-muted)]">
+                Core Stack & Cloud Infrastructure
+              </p>
+            </div>
+            <HeroTechStack />
           </motion.div>
         </div>
 

@@ -1,4 +1,5 @@
 import Navbar from "@/components/layout/Navbar";
+import CommandPalette from "@/components/ui/CommandPalette";
 import Hero from "@/components/sections/Hero";
 import Work from "@/components/sections/Work";
 import Experience from "@/components/sections/Experience";
@@ -11,6 +12,7 @@ export default function Home() {
   return (
     <div className="relative min-h-screen overflow-x-clip bg-[var(--background)] text-[var(--text-primary)]">
       <Navbar />
+      <CommandPalette />
 
       <main>
         <Hero />
