@@ -19,6 +19,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://mdwalidur.github.io"
+  ),
+
   title: {
     default: "Walidur Rahman — IT Engineering Portfolio",
     template: "%s | Walidur Rahman",
@@ -44,10 +48,19 @@ export const metadata: Metadata = {
 
   openGraph: {
     type: "website",
+    locale: "en_US",
     title: "Walidur Rahman — IT Engineering Portfolio",
     description:
       "Exploring software, cloud systems, DevOps, AI, and modern technology.",
     siteName: "Walidur Rahman",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Walidur Rahman — IT Engineering Portfolio",
+      },
+    ],
   },
 
   twitter: {
@@ -55,6 +68,7 @@ export const metadata: Metadata = {
     title: "Walidur Rahman — IT Engineering Portfolio",
     description:
       "IT Engineering portfolio focused on software, cloud, DevOps, and emerging technology.",
+    images: ["/og-image.png"],
   },
 };
 

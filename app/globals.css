@@ -84,6 +84,8 @@
 
   --shadow-color: rgba(0, 0, 0, 0.34);
 
+  --accent-readable: rgba(242, 240, 232, 0.68);
+
   --selection-background: var(--accent);
   --selection-foreground: var(--accent-contrast);
 }
@@ -126,6 +128,8 @@
   --header-text: rgba(242, 240, 232, 0.8);
 
   --shadow-color: rgba(0, 0, 0, 0.34);
+
+  --accent-readable: rgba(242, 240, 232, 0.68);
 }
 
 /* =========================================================
@@ -166,6 +170,8 @@
   --header-text: rgba(21, 23, 26, 0.8);
 
   --shadow-color: rgba(32, 29, 22, 0.12);
+
+  --accent-readable: rgba(21, 23, 26, 0.68);
 }
 
 /* =========================================================
@@ -206,6 +212,8 @@
   --header-text: rgba(232, 238, 248, 0.8);
 
   --shadow-color: rgba(0, 0, 0, 0.4);
+
+  --accent-readable: rgba(232, 238, 248, 0.68);
 }
 
 /* =========================================================

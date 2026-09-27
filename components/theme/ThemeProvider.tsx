@@ -5,7 +5,7 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 
@@ -32,24 +32,50 @@ function isValidTheme(value: string | null): value is ThemeName {
   return value !== null && validThemes.includes(value as ThemeName);
 }
 
+const themeListeners = new Set<() => void>();
+
+function notifyThemeChange() {
+  for (const listener of themeListeners) {
+    listener();
+  }
+}
+
+function subscribeToTheme(callback: () => void) {
+  themeListeners.add(callback);
+  window.addEventListener("storage", callback);
+  return () => {
+    themeListeners.delete(callback);
+    window.removeEventListener("storage", callback);
+  };
+}
+
+function getClientThemeSnapshot(): ThemeName {
+  if (typeof window === "undefined") return "signal";
+  try {
+    const savedTheme = window.localStorage.getItem(STORAGE_KEY);
+    return isValidTheme(savedTheme) ? savedTheme : "signal";
+  } catch {
+    return "signal";
+  }
+}
+
+function getServerThemeSnapshot(): ThemeName {
+  return "signal";
+}
+
 export function ThemeProvider({
   children,
 }: {
   children: ReactNode;
 }) {
-  const [theme, setThemeState] = useState<ThemeName>("signal");
-
-  useEffect(() => {
-    const savedTheme = window.localStorage.getItem(STORAGE_KEY);
-
-    if (isValidTheme(savedTheme)) {
-      setThemeState(savedTheme);
-    }
-  }, []);
+  const theme = useSyncExternalStore(
+    subscribeToTheme,
+    getClientThemeSnapshot,
+    getServerThemeSnapshot
+  );
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
-    window.localStorage.setItem(STORAGE_KEY, theme);
   }, [theme]);
 
   const setTheme = useCallback((nextTheme: ThemeName) => {
@@ -57,7 +83,13 @@ export function ThemeProvider({
 
     root.classList.add("is-theme-changing");
 
-    setThemeState(nextTheme);
+    try {
+      window.localStorage.setItem(STORAGE_KEY, nextTheme);
+    } catch {
+      // Ignore storage write errors (e.g. private mode quota)
+    }
+
+    notifyThemeChange();
 
     window.setTimeout(() => {
       root.classList.remove("is-theme-changing");

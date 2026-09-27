@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import {
-  ArrowUpRight,
   Award,
   ExternalLink,
   ShieldCheck,
@@ -218,11 +217,6 @@ export default function Certifications() {
                   }}
                 />
 
-                {/* =================================================
-                    NUMBER
-                    ================================================= */}
-
-                
                 {/* =================================================
                     BADGE AREA
                     ================================================= */}

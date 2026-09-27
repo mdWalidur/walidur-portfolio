@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { portfolioProfile } from "@/components/data/portfolio";
 
 export default function Hero() {
   const shouldReduceMotion = useReducedMotion();
@@ -239,7 +240,7 @@ export default function Hero() {
           {/* Social links */}
           <div className="col-span-2 flex items-center gap-5 md:col-span-3">
             <a
-              href="https://github.com/mdWalidur"
+              href={portfolioProfile.github}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Visit GitHub profile"
@@ -249,7 +250,7 @@ export default function Hero() {
             </a>
 
             <a
-              href="https://www.linkedin.com/"
+              href={portfolioProfile.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Visit LinkedIn profile"

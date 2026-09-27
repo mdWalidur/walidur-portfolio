@@ -303,6 +303,11 @@ function NetworkStructure({
    ATMOSPHERIC PARTICLES
    ========================================================= */
 
+function pseudoRandom(seed: number): number {
+  const x = Math.sin(seed * 12.9898 + 78.233) * 43758.5453123;
+  return x - Math.floor(x);
+}
+
 function AtmosphericParticles({
   colors,
   isMobile,
@@ -329,13 +334,13 @@ function AtmosphericParticles({
 
     for (let i = 0; i < particleCount; i++) {
       result[i * 3] =
-        (Math.random() - 0.5) * 9;
+        (pseudoRandom(i * 3 + 1) - 0.5) * 9;
 
       result[i * 3 + 1] =
-        (Math.random() - 0.5) * 6;
+        (pseudoRandom(i * 3 + 2) - 0.5) * 6;
 
       result[i * 3 + 2] =
-        (Math.random() - 0.5) * 4;
+        (pseudoRandom(i * 3 + 3) - 0.5) * 4;
     }
 
     return result;

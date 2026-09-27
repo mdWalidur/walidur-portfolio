@@ -53,7 +53,14 @@ export default function Navbar() {
      RESTORE FOCUS TO MENU BUTTON
      ========================================================= */
 
+  const isFirstRender = useRef(true);
+
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
     if (!isOpen) {
       menuButtonRef.current?.focus();
     }
