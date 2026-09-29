@@ -1,9 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  // Allow development access from local network (used when accessing via IP)
-  allowedDevOrigins: ["192.168.56.1", "localhost"],
+  output: "standalone",
+  // Allow development access through cloud run proxy origins and localhost
+  allowedDevOrigins: ["localhost", "*.run.app"],
 };
 
 export default nextConfig;

@@ -525,6 +525,10 @@ export default function Navbar() {
                     </motion.a>
                   ))}
 
+                  <div className="mt-3 border-t border-[var(--border-soft)] pt-3">
+                    <ThemeSwitcher variant="drawer" />
+                  </div>
+
                   <a
                     href="#contact"
                     onClick={closeMenu}

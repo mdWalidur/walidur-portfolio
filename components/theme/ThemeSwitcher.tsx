@@ -1,130 +1,184 @@
 "use client";
 
-import { useState } from "react";
-import { Check, Palette } from "lucide-react";
+import { useSyncExternalStore } from "react";
+import { motion } from "framer-motion";
+import { Zap, Sun, Moon } from "lucide-react";
 import { useTheme, type ThemeName } from "./ThemeProvider";
 
-const themes: {
-  name: ThemeName;
+function emptySubscribe() {
+  return () => {};
+}
+
+export const themes: {
+  id: ThemeName;
   label: string;
-  description: string;
-  preview: string[];
+  shortLabel: string;
+  icon: typeof Zap;
+  accent: string;
+  tagline: string;
 }[] = [
   {
-    name: "signal",
+    id: "signal",
     label: "Signal",
-    description: "Graphite / Ivory / Lime",
-    preview: ["#121314", "#F2F0E8", "#C8FF3D"],
+    shortLabel: "Signal",
+    icon: Zap,
+    accent: "#c8ff3d",
+    tagline: "Graphite / Lime",
   },
   {
-    name: "paper",
+    id: "paper",
     label: "Paper",
-    description: "Editorial / Ink / Cobalt",
-    preview: ["#EEECE5", "#15171A", "#315EFB"],
+    shortLabel: "Paper",
+    icon: Sun,
+    accent: "#315efb",
+    tagline: "Editorial / Ink",
   },
   {
-    name: "midnight",
+    id: "midnight",
     label: "Midnight",
-    description: "Blue-black / Ice / Signal",
-    preview: ["#090E18", "#E8EEF8", "#6C8DFF"],
+    shortLabel: "Midnight",
+    icon: Moon,
+    accent: "#6c8dff",
+    tagline: "Deep Navy / Ice",
   },
 ];
 
-export default function ThemeSwitcher() {
+interface ThemeSwitcherProps {
+  variant?: "segmented" | "compact" | "drawer";
+  className?: string;
+}
+
+export default function ThemeSwitcher({
+  variant = "segmented",
+  className = "",
+}: ThemeSwitcherProps) {
   const { theme, setTheme } = useTheme();
-  const [isOpen, setIsOpen] = useState(false);
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
 
-  return (
-    <div className="relative">
-      <button
-        type="button"
-        onClick={() => setIsOpen((open) => !open)}
-        aria-expanded={isOpen}
-        aria-label="Change color theme"
-        className="interactive flex h-10 w-10 items-center justify-center border border-[var(--border)] bg-[var(--surface-soft)] text-[var(--text-primary)]"
+  if (!mounted) {
+    return (
+      <div
+        className={`flex h-8 items-center border border-[var(--border)] bg-[var(--surface-soft)] px-2 ${className}`}
+        aria-hidden="true"
       >
-        <Palette size={17} strokeWidth={1.7} />
-      </button>
+        <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--text-muted)]">
+          Theme
+        </span>
+      </div>
+    );
+  }
 
-      {isOpen && (
-        <>
+  // Drawer variant for mobile dropdown menu
+  if (variant === "drawer") {
+    return (
+      <div className={`w-full ${className}`}>
+        <div className="mb-2.5 flex items-center justify-between px-1">
+          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted)]">
+            Color Theme
+          </span>
+          <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--accent)]">
+            Current: {theme}
+          </span>
+        </div>
+
+        <div
+          role="radiogroup"
+          aria-label="Theme selection"
+          className="grid grid-cols-3 gap-1.5 border border-[var(--border)] bg-[var(--surface-soft)] p-1.5"
+        >
+          {themes.map((t) => {
+            const isActive = theme === t.id;
+            const Icon = t.icon;
+
+            return (
+              <button
+                key={t.id}
+                type="button"
+                role="radio"
+                aria-checked={isActive}
+                onClick={() => setTheme(t.id)}
+                className={`relative flex flex-col items-center justify-center gap-1.5 px-2 py-2.5 transition-all duration-200 focus-visible:outline-none ${
+                  isActive
+                    ? "border border-[var(--border-strong)] bg-[var(--surface-raised)] shadow-sm text-[var(--text-primary)]"
+                    : "border border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)]"
+                }`}
+              >
+                <div className="flex items-center gap-1.5">
+                  <span
+                    className="h-2 w-2 rounded-full border border-black/20"
+                    style={{ backgroundColor: t.accent }}
+                  />
+                  <Icon size={14} className={isActive ? "text-[var(--accent)]" : ""} />
+                </div>
+                <span className="font-mono text-[10px] font-medium uppercase tracking-[0.14em]">
+                  {t.label}
+                </span>
+                <span className="text-[8px] text-[var(--text-faint)] tracking-tight">
+                  {t.tagline}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  // Segmented toggle variant in the Navbar
+  return (
+    <div
+      role="radiogroup"
+      aria-label="Theme toggle"
+      className={`relative inline-flex items-center border border-[var(--border)] bg-[var(--surface-soft)] p-0.5 backdrop-blur-md ${className}`}
+    >
+      {themes.map((t) => {
+        const isActive = theme === t.id;
+        const Icon = t.icon;
+
+        return (
           <button
+            key={t.id}
             type="button"
-            aria-label="Close theme menu"
-            className="fixed inset-0 z-40 cursor-default bg-transparent"
-            onClick={() => setIsOpen(false)}
-          />
-
-          <div
-            className="absolute right-0 top-[calc(100%+0.75rem)] z-50 w-72 border border-[var(--border)] bg-[var(--surface-raised)] p-2 shadow-2xl"
-            role="menu"
-            aria-label="Choose color theme"
+            role="radio"
+            aria-checked={isActive}
+            aria-label={`Switch to ${t.label} theme`}
+            onClick={() => setTheme(t.id)}
+            className={`group relative z-10 flex h-7 items-center gap-1.5 px-2 text-[10px] font-medium uppercase tracking-[0.16em] transition-colors duration-200 focus-visible:outline-none sm:px-2.5 ${
+              isActive
+                ? "text-[var(--text-primary)]"
+                : "text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
+            }`}
           >
-            <div className="border-b border-[var(--border-soft)] px-3 py-3">
-              <p className="meta">
-                Environment
-              </p>
+            {isActive && (
+              <motion.span
+                layoutId="theme-active-indicator"
+                className="absolute inset-0 z-0 border border-[var(--border-strong)] bg-[var(--surface-raised)] shadow-sm"
+                transition={{ type: "spring", stiffness: 450, damping: 35 }}
+              />
+            )}
 
-              <p className="mt-2 text-sm text-[var(--text-secondary)]">
-                Choose your viewing mode.
-              </p>
-            </div>
-
-            <div className="pt-2">
-              {themes.map((item) => {
-                const isActive = theme === item.name;
-
-                return (
-                  <button
-                    key={item.name}
-                    type="button"
-                    role="menuitemradio"
-                    aria-checked={isActive}
-                    onClick={() => {
-                      setTheme(item.name);
-                      setIsOpen(false);
-                    }}
-                    className={`interactive flex w-full items-center gap-3 px-3 py-3 text-left ${
-                      isActive
-                        ? "bg-[var(--surface-hover)]"
-                        : ""
-                    }`}
-                  >
-                    <div className="flex -space-x-1">
-                      {item.preview.map((color) => (
-                        <span
-                          key={color}
-                          className="h-4 w-4 rounded-full border border-black/10"
-                          style={{
-                            backgroundColor: color,
-                          }}
-                        />
-                      ))}
-                    </div>
-
-                    <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium text-[var(--text-primary)]">
-                        {item.label}
-                      </p>
-
-                      <p className="mt-0.5 text-xs text-[var(--text-muted)]">
-                        {item.description}
-                      </p>
-                    </div>
-
-                    {isActive && (
-                      <Check
-                        size={16}
-                        className="text-[var(--accent)]"
-                      />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </>
-      )}
+            <span className="relative z-10 flex items-center gap-1.5">
+              <span
+                className="h-1.5 w-1.5 rounded-full transition-transform group-hover:scale-125"
+                style={{
+                  backgroundColor: t.accent,
+                  boxShadow: isActive ? `0 0 6px ${t.accent}` : "none",
+                }}
+              />
+              <Icon
+                size={12}
+                strokeWidth={1.75}
+                className={isActive ? "text-[var(--accent)]" : "opacity-70 group-hover:opacity-100"}
+              />
+              <span className="hidden sm:inline">{t.shortLabel}</span>
+            </span>
+          </button>
+        );
+      })}
     </div>
   );
 }
