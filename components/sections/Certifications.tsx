@@ -66,7 +66,8 @@ export default function Certifications() {
       aria-labelledby="credentials-heading"
       className="relative scroll-mt-28 overflow-hidden border-t px-5 py-24 sm:px-8 sm:py-32 lg:px-12 xl:px-20"
       style={{
-        background: "var(--background)",
+        background:
+          "color-mix(in srgb, var(--background) 72%, transparent)",
         color: "var(--text-primary)",
         borderColor: "var(--border)",
       }}
@@ -193,11 +194,8 @@ export default function Certifications() {
               }}
               style={{
                 perspective: "1200px",
-                background: "var(--surface-soft)",
-                borderColor: "var(--border)",
-                boxShadow: "0 20px 70px var(--shadow-color)",
               }}
-              className="group relative overflow-hidden border backdrop-blur-[20px]"
+              className="glass-card group relative overflow-hidden rounded-3xl"
             >
               {/* Card */}
               <div className="h-full">
@@ -386,13 +384,7 @@ export default function Certifications() {
           }}
           variants={reveal}
           transition={transition(0.25)}
-          className="group relative mt-5 overflow-hidden border backdrop-blur-[20px]"
-          style={{
-            background: "var(--surface-soft)",
-            borderColor: "var(--border)",
-            boxShadow:
-              "0 20px 70px var(--shadow-color)",
-          }}
+          className="glass-card group relative mt-5 overflow-hidden rounded-3xl"
         >
           <div className="grid md:grid-cols-[1.15fr_0.85fr]">
 

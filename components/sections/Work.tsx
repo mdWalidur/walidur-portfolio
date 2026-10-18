@@ -16,7 +16,6 @@ import { motion } from "framer-motion";
 import SectionShell from "@/components/ui/SectionTitle";
 
 type Project = {
-  number: string;
   title: string;
   category: string;
   description: string;
@@ -28,7 +27,6 @@ type Project = {
 
 const projects: Project[] = [
   {
-    number: "01",
     title: "Smart Room Monitor",
     category: "Real-Time IoT Dashboard",
     description:
@@ -49,7 +47,6 @@ const projects: Project[] = [
   },
 
   {
-    number: "02",
     title: "Network Calculator Suite",
     category: "Networking Web Tool",
     description:
@@ -66,7 +63,6 @@ const projects: Project[] = [
   },
 
   {
-    number: "03",
     title: "System Security Assessment",
     category: "Application Security Testing",
     description:
@@ -100,6 +96,7 @@ function VisualShell({
   return (
     <div
       className="
+        glass-card-strong
         relative
         flex
         h-full
@@ -107,8 +104,7 @@ function VisualShell({
         flex-col
         justify-between
         overflow-hidden
-        border
-        bg-[var(--surface)]
+        rounded-2xl
         p-4
 
         sm:min-h-[390px]
@@ -116,10 +112,6 @@ function VisualShell({
 
         lg:min-h-[440px]
       "
-      style={{
-        borderColor: "var(--border)",
-        boxShadow: "0 24px 80px var(--shadow-color)",
-      }}
     >
       {/* Ambient glow */}
 
@@ -844,9 +836,9 @@ function ProjectCard({
         delay: index * 0.08,
         ease: [0.19, 1, 0.22, 1],
       }}
-      className="group relative"
+      className="glass-card group relative rounded-3xl p-6 sm:p-8 lg:p-10"
     >
-      {/* Project number line */}
+      {/* Project header line */}
 
       <div
         className="
@@ -861,26 +853,13 @@ function ProjectCard({
         <div className="flex items-center gap-3">
           <span
             className="
-              font-mono
-              text-sm
-              tracking-[-0.02em]
-            "
-            style={{
-              color: "var(--accent)",
-            }}
-          >
-            /{project.number}
-          </span>
-
-          <span
-            className="
               h-px
               w-8
 
               sm:w-12
             "
             style={{
-              background: "var(--border)",
+              background: "var(--accent)",
             }}
           />
 
@@ -900,22 +879,6 @@ function ProjectCard({
             Selected project
           </span>
         </div>
-
-        <span
-          className="
-            hidden
-            text-[8px]
-            uppercase
-            tracking-[0.25em]
-
-            sm:block
-          "
-          style={{
-            color: "var(--text-muted)",
-          }}
-        >
-          0{index + 1} / 03
-        </span>
       </div>
 
       {/* Main layout */}
@@ -1026,22 +989,18 @@ function ProjectCard({
               <span
                 key={tag}
                 className="
-                  border
-                  px-2.5
+                  glass-pill
+                  rounded-full
+                  px-3
                   py-1.5
                   text-[8px]
                   font-medium
                   uppercase
                   tracking-[0.1em]
-                  transition-colors
-                  duration-500
-
-                  sm:px-3
+                  sm:px-3.5
                   sm:text-[9px]
                 "
                 style={{
-                  borderColor: "var(--border)",
-                  background: "var(--surface-soft)",
                   color: "var(--text-secondary)",
                 }}
               >
@@ -1159,26 +1118,6 @@ function ProjectCard({
           </div>
         </div>
       </div>
-
-      {/* Divider */}
-
-      {index < projects.length - 1 && (
-        <div
-          className="
-            mt-14
-            h-px
-            w-full
-
-            sm:mt-20
-
-            lg:mt-28
-          "
-          style={{
-            background:
-              "linear-gradient(90deg, var(--border), transparent)",
-          }}
-        />
-      )}
     </motion.article>
   );
 }
@@ -1195,9 +1134,9 @@ export default function Work() {
       title="Projects made to solve real problems."
       description="A selection of projects spanning IoT, web development, networking, and cybersecurity."
       contentClassName="
-        space-y-14
-        sm:space-y-20
-        lg:space-y-28
+        space-y-10
+        sm:space-y-14
+        lg:space-y-16
       "
     >
       {projects.map((project, index) => (
@@ -1230,21 +1169,22 @@ export default function Work() {
           ease: [0.19, 1, 0.22, 1],
         }}
         className="
+          glass-card
           group
-          mt-12
+          mt-10
           flex
           min-h-16
           items-center
           justify-between
           gap-4
-          border-y
-          px-1
+          rounded-2xl
+          px-6
           py-5
           outline-none
           transition-all
           duration-700
 
-          sm:mt-20
+          sm:mt-14
           sm:min-h-20
           sm:py-6
 
@@ -1252,7 +1192,6 @@ export default function Work() {
           focus-visible:ring-[var(--accent)]
         "
         style={{
-          borderColor: "var(--border)",
           color: "var(--text-primary)",
         }}
       >

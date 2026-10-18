@@ -76,7 +76,8 @@ export default function Contact() {
         xl:px-20
       "
       style={{
-        background: "var(--background)",
+        background:
+          "color-mix(in srgb, var(--background) 72%, transparent)",
         color: "var(--text-primary)",
         borderColor: "var(--border)",
       }}
@@ -249,15 +250,13 @@ export default function Contact() {
             ease: easing,
           }}
           className="
+            glass-card-strong
             mt-12
-            border
+            overflow-hidden
+            rounded-3xl
 
             sm:mt-16
           "
-          style={{
-            borderColor: "var(--border)",
-            background: "var(--surface-soft)",
-          }}
         >
           {/* Email */}
 

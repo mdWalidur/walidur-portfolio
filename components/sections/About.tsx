@@ -6,6 +6,8 @@ import {
   BrainCircuit,
   Code2,
   Globe2,
+  Layers,
+  Palette,
   Sparkles,
 } from "lucide-react";
 import { motion } from "framer-motion";
@@ -19,6 +21,27 @@ const skills = [
   "Node.js",
   "REST APIs",
   "Git & GitHub",
+];
+
+const services = [
+  {
+    icon: Sparkles,
+    title: "Interactive Experience",
+    subtitle: "WebGL · 3D Interfaces · Real-Time Systems",
+    text: "Immersive 3D web experiences, fluid motion choreography, and responsive telemetry interfaces built with React, Three.js, and Framer Motion.",
+  },
+  {
+    icon: Palette,
+    title: "Visual Arts",
+    subtitle: "Minimalist Direction · Spatial Glass UI",
+    text: "Clean editorial typography, tactile glassmorphic surfaces, and high-contrast visual systems crafted with precision and clarity.",
+  },
+  {
+    icon: Layers,
+    title: "Cloud & AI Engineering",
+    subtitle: "AWS · Docker · DevOps · AI Workflows",
+    text: "Scalable cloud infrastructure, containerized deployments, security-hardened APIs, and practical AI integrations.",
+  },
 ];
 
 const principles = [
@@ -62,7 +85,8 @@ export default function About() {
         xl:px-20
       "
       style={{
-        background: "var(--background)",
+        background:
+          "color-mix(in srgb, var(--background) 72%, transparent)",
         color: "var(--text-primary)",
       }}
     >
@@ -403,19 +427,14 @@ export default function About() {
               ease: easing,
             }}
             className="
+              glass-card-strong
               relative
               overflow-hidden
-              border
+              rounded-3xl
               p-6
 
               sm:p-8
             "
-            style={{
-              borderColor: "var(--border)",
-              background: "var(--surface-soft)",
-              boxShadow:
-                "0 30px 90px var(--shadow-color)",
-            }}
           >
             <div
               aria-hidden="true"
@@ -441,6 +460,7 @@ export default function About() {
                     h-10
                     w-10
                     place-items-center
+                    rounded-xl
                     border
                   "
                   style={{
@@ -530,17 +550,14 @@ export default function About() {
 
               <div
                 className="
+                  glass-pill
                   mt-6
                   flex
                   items-center
                   gap-3
-                  border
+                  rounded-2xl
                   p-4
                 "
-                style={{
-                  borderColor: "var(--border)",
-                  background: "var(--surface)",
-                }}
               >
                 <span
                   className="
@@ -593,6 +610,68 @@ export default function About() {
         </div>
 
         {/* ===================================================
+            SERVICES — INTERACTIVE EXPERIENCE & VISUAL ARTS
+            =================================================== */}
+
+        <div className="mt-20 border-t border-[var(--border)] pt-10 sm:mt-24 sm:pt-12">
+          <div className="mb-8 flex items-center gap-3">
+            <span
+              className="h-px w-8"
+              style={{ background: "var(--accent)" }}
+            />
+            <p
+              className="text-[9px] font-semibold uppercase tracking-[0.28em]"
+              style={{ color: "var(--accent)" }}
+            >
+              Services & Capabilities
+            </p>
+          </div>
+
+          <div className="grid gap-5 md:grid-cols-3">
+            {services.map(({ icon: ServiceIcon, title, subtitle, text }, index) => (
+              <motion.div
+                key={title}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{
+                  delay: index * 0.08,
+                  duration: 0.65,
+                  ease: easing,
+                }}
+                whileHover={{ y: -5 }}
+                className="glass-card group relative rounded-2xl p-6 sm:p-7"
+              >
+                <div className="flex items-center justify-between">
+                  <span
+                    className="grid h-10 w-10 place-items-center rounded-xl border"
+                    style={{
+                      borderColor: "var(--glass-border)",
+                      background: "var(--surface-soft)",
+                      color: "var(--accent)",
+                    }}
+                  >
+                    <ServiceIcon size={17} strokeWidth={1.5} />
+                  </span>
+                </div>
+
+                <p className="mt-5 font-mono text-[8px] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">
+                  {subtitle}
+                </p>
+
+                <h3 className="mt-1.5 text-lg font-medium tracking-[-0.025em] text-[var(--text-primary)] sm:text-xl">
+                  {title}
+                </h3>
+
+                <p className="mt-2.5 text-xs leading-6 text-[var(--text-secondary)] sm:text-sm">
+                  {text}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* ===================================================
             TOOLKIT
             =================================================== */}
 
@@ -614,11 +693,11 @@ export default function About() {
             ease: easing,
           }}
           className="
-            mt-20
+            mt-16
             border-t
             pt-10
 
-            sm:mt-28
+            sm:mt-20
             sm:pt-12
           "
           style={{
@@ -710,18 +789,13 @@ export default function About() {
                     duration: 0.5,
                     ease: easing,
                   }}
+                  whileHover={{ y: -2, scale: 1.03 }}
                   className="
-                    border
+                    glass-pill
+                    rounded-xl
                     px-4
                     py-3
-                    transition-all
-                    duration-500
-                    hover:-translate-y-0.5
                   "
-                  style={{
-                    borderColor: "var(--border)",
-                    background: "var(--surface-soft)",
-                  }}
                 >
                   <span
                     className="
@@ -743,147 +817,107 @@ export default function About() {
         </motion.div>
 
         {/* ===================================================
-    PRINCIPLES
-    =================================================== */}
+            PRINCIPLES
+            =================================================== */}
 
-<div
-  className="
-    mt-12
-    grid
-    overflow-hidden
-    border
+        <div className="mt-12 grid gap-4 sm:grid-cols-3">
+          {principles.map(
+            ({ icon: Icon, title, text }, index) => (
+              <motion.div
+                key={title}
+                initial={{
+                  opacity: 0,
+                  y: 12,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                viewport={{
+                  once: true,
+                  amount: 0.15,
+                }}
+                transition={{
+                  delay: index * 0.06,
+                  duration: 0.6,
+                  ease: easing,
+                }}
+                whileHover={{ y: -4 }}
+                className="
+                  glass-card
+                  group
+                  relative
+                  min-h-[180px]
+                  rounded-2xl
+                  p-6
+                  sm:min-h-[182px]
+                  sm:p-7
+                  lg:p-8
+                "
+              >
+                {/* Icon */}
 
-    sm:grid-cols-3
-  "
-  style={{
-    borderColor: "var(--border)",
-    background: "var(--border)",
-  }}
->
-  {principles.map(
-    ({ icon: Icon, title, text }, index) => (
-      <motion.div
-        key={title}
-        initial={{
-          opacity: 0,
-          y: 12,
-        }}
-        whileInView={{
-          opacity: 1,
-          y: 0,
-        }}
-        viewport={{
-          once: true,
-          amount: 0.15,
-        }}
-        transition={{
-          delay: index * 0.06,
-          duration: 0.6,
-          ease: easing,
-        }}
-        className={`
-          group
-          relative
-          min-h-[180px]
-          p-6
+                <span
+                  className="
+                    flex
+                    h-9
+                    w-9
+                    items-center
+                    justify-center
+                    rounded-xl
+                    border
+                  "
+                  style={{
+                    borderColor: "var(--glass-border)",
+                    background: "var(--surface-soft)",
+                    color: "var(--accent)",
+                  }}
+                >
+                  <Icon
+                    size={17}
+                    strokeWidth={1.5}
+                  />
+                </span>
 
-          sm:min-h-[182px]
-          sm:p-7
+                {/* Content */}
 
-          lg:p-8
+                <div className="mt-6">
+                  <h3
+                    className="
+                      text-base
+                      font-medium
+                      tracking-[-0.025em]
 
-          ${index < principles.length - 1
-            ? "border-b sm:border-b-0 sm:border-r"
-            : ""}
-        `}
-        style={{
-          background: "var(--surface)",
-          borderColor: "var(--border)",
-        }}
-      >
-        {/* Number */}
+                      sm:text-lg
+                    "
+                    style={{
+                      color: "var(--text-primary)",
+                    }}
+                  >
+                    {title}
+                  </h3>
 
-        <span
-          className="
-            absolute
-            right-7
-            top-7
-            font-mono
-            text-[7px]
-            tracking-[0.18em]
+                  <p
+                    className="
+                      mt-2
+                      max-w-sm
+                      text-xs
+                      leading-6
 
-            lg:right-8
-            lg:top-8
-          "
-          style={{
-            color: "var(--text-muted)",
-          }}
-        >
-          {String(index + 1).padStart(2, "0")}
-        </span>
-
-        {/* Icon */}
-
-        <span
-          className="
-            flex
-            h-9
-            w-9
-            items-center
-            justify-center
-            border
-          "
-          style={{
-            borderColor: "var(--border)",
-            background: "var(--surface-soft)",
-            color: "var(--accent)",
-          }}
-        >
-          <Icon
-            size={17}
-            strokeWidth={1.5}
-          />
-        </span>
-
-        {/* Content */}
-
-        <div className="mt-6">
-          <h3
-            className="
-              text-base
-              font-medium
-              tracking-[-0.025em]
-
-              sm:text-lg
-            "
-            style={{
-              color: "var(--text-primary)",
-            }}
-          >
-            {title}
-          </h3>
-
-          <p
-            className="
-              mt-2
-              max-w-sm
-              text-xs
-              leading-6
-
-              sm:text-sm
-              sm:leading-6
-            "
-            style={{
-              color: "var(--text-secondary)",
-            }}
-          >
-            {text}
-          </p>
+                      sm:text-sm
+                      sm:leading-6
+                    "
+                    style={{
+                      color: "var(--text-secondary)",
+                    }}
+                  >
+                    {text}
+                  </p>
+                </div>
+              </motion.div>
+            )
+          )}
         </div>
-      </motion.div>
-    )
-  )}
-</div>
 
         {/* ===================================================
             BOTTOM STATEMENT

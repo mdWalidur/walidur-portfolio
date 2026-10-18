@@ -12,6 +12,7 @@ export default function Footer() {
     <footer
       className="
         relative
+        z-10
         w-full
         px-5
         pb-20
@@ -25,7 +26,8 @@ export default function Footer() {
         xl:px-20
       "
       style={{
-        background: "var(--background)",
+        background:
+          "color-mix(in srgb, var(--background) 82%, transparent)",
         color: "var(--text-primary)",
       }}
     >

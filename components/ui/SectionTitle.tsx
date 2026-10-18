@@ -29,6 +29,7 @@ export default function SectionShell({
         relative
         scroll-mt-28
         overflow-hidden
+        border-t
         px-5
         py-24
         sm:px-8
@@ -38,7 +39,9 @@ export default function SectionShell({
         ${className}
       `}
       style={{
-        background: "var(--background)",
+        background:
+          "color-mix(in srgb, var(--background) 72%, transparent)",
+        borderColor: "var(--border)",
         color: "var(--text-primary)",
       }}
     >

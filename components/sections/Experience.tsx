@@ -189,22 +189,17 @@ function ExperienceCard({
           ===================================================== */}
 
       <div
-        className="
+        className={`
           overflow-hidden
-          border
+          rounded-2xl
           transition-all
           duration-500
-        "
+          ${expanded ? "glass-card-strong" : "glass-card"}
+        `}
         style={{
           borderColor: expanded
-            ? "color-mix(in srgb, var(--accent) 32%, var(--border))"
-            : "var(--border)",
-          background: expanded
-            ? "var(--surface)"
-            : "var(--surface-soft)",
-          boxShadow: expanded
-            ? "0 25px 80px color-mix(in srgb, var(--shadow-color) 45%, transparent)"
-            : "none",
+            ? "var(--glass-border-glow)"
+            : "var(--glass-border)",
         }}
       >
         {/* ===================================================
@@ -759,7 +754,8 @@ export default function Experience() {
         xl:px-20
       "
       style={{
-        background: "var(--background)",
+        background:
+          "color-mix(in srgb, var(--background) 72%, transparent)",
         color: "var(--text-primary)",
       }}
     >
