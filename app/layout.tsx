@@ -105,6 +105,14 @@ export const metadata: Metadata = {
     description:
       "Architecting resilient cloud infrastructure, intelligent AI systems, and tactile full-stack web experiences.",
     siteName: "Walidur Rahman",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Walidur Rahman — Cloud / DevOps + AI Engineer",
+      },
+    ],
   },
 
   twitter: {
@@ -112,6 +120,7 @@ export const metadata: Metadata = {
     title: "Walidur Rahman — Cloud, DevOps & AI Engineer",
     description:
       "Architecting resilient cloud infrastructure, intelligent AI systems, and tactile full-stack web experiences.",
+    images: ["/social-preview.png"],
   },
 };
 
