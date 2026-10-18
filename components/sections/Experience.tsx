@@ -742,12 +742,21 @@ export default function Experience() {
   return (
     <section
       id="experience"
+      aria-labelledby="experience-heading"
       className="
         relative
+        scroll-mt-28
         overflow-hidden
+        px-5
         py-24
 
-        md:py-32
+        sm:px-8
+        sm:py-28
+
+        lg:px-12
+        lg:py-32
+
+        xl:px-20
       "
       style={{
         background: "var(--background)",
@@ -822,18 +831,7 @@ export default function Experience() {
           CONTAINER
           ===================================================== */}
 
-      <div
-        className="
-          relative
-          mx-auto
-          max-w-7xl
-          px-5
-
-          sm:px-6
-
-          lg:px-8
-        "
-      >
+      <div className="relative mx-auto max-w-7xl">
         {/* =================================================
             HEADER
             ================================================= */}
@@ -900,6 +898,7 @@ export default function Experience() {
           {/* Heading */}
 
           <h2
+            id="experience-heading"
             className="
               max-w-4xl
               text-[clamp(2.7rem,8vw,5.8rem)]

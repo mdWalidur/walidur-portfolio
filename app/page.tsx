@@ -16,14 +16,11 @@ export default function Home() {
 
       <main>
         <Hero />
-
-        <div className="page-shell">
-          <Work />
-          <About />
-          <Experience />
-          <Certifications />
-          <Contact />
-        </div>
+        <Work />
+        <About />
+        <Experience />
+        <Certifications />
+        <Contact />
       </main>
 
       <Footer />

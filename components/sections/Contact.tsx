@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
   Check,
@@ -25,8 +25,17 @@ const socialIcons = {
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef<number | null>(null);
 
   const email = portfolioProfile.email;
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current !== null) {
+        window.clearTimeout(copyTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const copyEmail = async () => {
     try {
@@ -34,7 +43,11 @@ export default function Contact() {
 
       setCopied(true);
 
-      window.setTimeout(() => {
+      if (copyTimeoutRef.current !== null) {
+        window.clearTimeout(copyTimeoutRef.current);
+      }
+
+      copyTimeoutRef.current = window.setTimeout(() => {
         setCopied(false);
       }, 2200);
     } catch {
@@ -500,6 +513,7 @@ export default function Contact() {
                     items-center
                     justify-between
                     gap-4
+                    border-b
                     px-6
                     py-4
                     transition-colors
@@ -512,6 +526,7 @@ export default function Contact() {
                     focus-visible:outline-offset-[-2px]
                     focus-visible:outline-[var(--accent)]
 
+                    sm:border-b-0
                     sm:border-r
                     sm:px-7
 
@@ -572,7 +587,6 @@ export default function Contact() {
                 items-center
                 justify-between
                 gap-4
-                border-t
                 px-6
                 py-4
                 transition-colors
@@ -585,7 +599,6 @@ export default function Contact() {
                 focus-visible:outline-offset-[-2px]
                 focus-visible:outline-[var(--accent)]
 
-                sm:border-t-0
                 sm:px-7
 
                 lg:px-8

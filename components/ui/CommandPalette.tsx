@@ -225,7 +225,7 @@ export default function CommandPalette() {
         onClick={openPalette}
         aria-label="Open Command Palette (⌘K)"
         title="Command Palette (⌘K)"
-        className="fixed bottom-6 left-6 z-40 hidden sm:flex items-center gap-2.5 border px-3.5 py-2 font-mono text-[11px] uppercase tracking-[0.14em] backdrop-blur-md transition-all duration-300 hover:scale-[1.02] shadow-xl"
+        className="fixed bottom-5 left-5 sm:bottom-6 sm:left-6 z-40 flex items-center gap-2 sm:gap-2.5 border px-3 py-2 sm:px-3.5 font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.14em] backdrop-blur-md transition-all duration-300 hover:scale-[1.02] shadow-xl"
         style={{
           background: "var(--header-background)",
           borderColor: "var(--border)",
@@ -234,7 +234,8 @@ export default function CommandPalette() {
         }}
       >
         <Terminal size={14} style={{ color: "var(--accent)" }} />
-        <span>Command Menu</span>
+        <span className="hidden sm:inline">Command Menu</span>
+        <span className="sm:hidden">Cmd</span>
         <kbd
           className="rounded border px-1.5 py-0.5 text-[9px] font-semibold"
           style={{
@@ -250,7 +251,12 @@ export default function CommandPalette() {
       {/* Modal Dialog */}
       <AnimatePresence>
         {isOpen && (
-          <div className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-16 sm:pt-24">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Command Palette"
+            className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-16 sm:pt-24"
+          >
             {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
@@ -297,6 +303,7 @@ export default function CommandPalette() {
 
                 <button
                   type="button"
+                  aria-label="Close command palette"
                   onClick={() => setIsOpen(false)}
                   className="p-1 text-[var(--text-muted)] hover:text-[var(--text-primary)]"
                 >
@@ -313,6 +320,7 @@ export default function CommandPalette() {
                 <input
                   ref={inputRef}
                   type="text"
+                  aria-label="Search commands"
                   value={query}
                   onChange={(e) => {
                     setQuery(e.target.value);

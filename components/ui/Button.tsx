@@ -24,8 +24,8 @@ export default function Button({
       className={clsx(
         "group inline-flex items-center justify-center gap-2 rounded-full px-7 py-4 font-medium transition-all duration-300",
         variant === "primary"
-          ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/20 hover:-translate-y-1 hover:bg-emerald-600"
-          : "border border-white/15 hover:border-emerald-500 hover:bg-white/5",
+          ? "bg-[var(--accent)] text-[var(--accent-contrast)] shadow-lg hover:-translate-y-1 hover:opacity-90"
+          : "border border-[var(--border)] text-[var(--text-primary)] hover:border-[var(--accent)] hover:bg-[var(--surface-soft)]",
         className
       )}
     >

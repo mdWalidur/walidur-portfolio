@@ -12,9 +12,9 @@ type ThemeColors = {
 };
 
 const FALLBACK_COLORS: ThemeColors = {
-  accent: "#c5a059",
-  accentSoft: "#e8d0a3",
-  accentDark: "#b8860b",
+  accent: "#c8ff3d",
+  accentSoft: "#ddff85",
+  accentDark: "#94c520",
 };
 
 /* =========================================================

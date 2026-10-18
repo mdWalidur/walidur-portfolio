@@ -14,11 +14,11 @@ export default function Footer() {
         relative
         w-full
         px-5
-        pb-7
+        pb-20
         pt-5
 
         sm:px-8
-        sm:pb-8
+        sm:pb-20
 
         lg:px-12
 
@@ -35,6 +35,9 @@ export default function Footer() {
           mx-auto
           max-w-7xl
           border-t
+          pt-6
+
+          sm:pt-5
         "
         style={{
           borderColor: "var(--border)",
@@ -57,16 +60,15 @@ export default function Footer() {
             ease: easing,
           }}
           className="
+            relative
             flex
             flex-col
             gap-5
-            pt-6
 
             sm:flex-row
             sm:items-center
             sm:justify-between
             sm:gap-6
-            sm:pt-5
           "
         >
           {/* =================================================

@@ -264,6 +264,8 @@ export default function HeroTechStack() {
                 duration-500
                 group-hover:translate-y-0
                 group-hover:opacity-100
+                group-focus-visible:translate-y-0
+                group-focus-visible:opacity-100
               "
               style={{
                 borderColor:
@@ -290,51 +292,15 @@ export default function HeroTechStack() {
                 z-10
                 h-6
                 w-6
+                text-[var(--text-secondary)]
                 transition-[color,filter]
-                duration-700
+                duration-500
+                group-hover:text-[var(--accent)]
+                group-focus-visible:text-[var(--accent)]
                 sm:h-7
                 sm:w-7
               "
-              style={{
-                color:
-                  "var(--text-secondary)",
-              }}
             />
-
-            {/* =================================================
-                HOVER CENTER DOT
-                ================================================= */}
-
-            <span
-              aria-hidden="true"
-              className="
-                pointer-events-none
-                absolute
-                inset-0
-                grid
-                place-items-center
-                rounded-full
-                opacity-0
-                transition-opacity
-                duration-700
-                group-hover:opacity-100
-              "
-            >
-              <span
-                className="
-                  h-1.5
-                  w-1.5
-                  rounded-full
-                  blur-[2px]
-                "
-                style={{
-                  background:
-                    "var(--accent)",
-                  boxShadow:
-                    "0 0 14px color-mix(in srgb, var(--accent) 70%, transparent)",
-                }}
-              />
-            </span>
           </motion.a>
         );
       })}

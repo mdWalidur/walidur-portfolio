@@ -19,10 +19,11 @@ function useTampereTime() {
           minute: "2-digit",
           second: "2-digit",
           hour12: false,
+          timeZoneName: "short",
         }).format(new Date());
         setTime(formatted);
       } catch {
-        setTime("18:00:00");
+        setTime("18:00:00 EET");
       }
     };
     update();
@@ -52,7 +53,7 @@ export default function Hero() {
   const fadeUp = {
     hidden: {
       opacity: 0,
-      y: shouldReduceMotion ? 0 : 24,
+      y: 24,
     },
     visible: {
       opacity: 1,
@@ -119,7 +120,7 @@ export default function Hero() {
             </span>
             <span className="font-semibold text-[var(--text-primary)]">Tampere, Finland</span>
             <span className="text-[var(--text-muted)]">
-              {tampereTime ? `${tampereTime} EET` : "EET (UTC+3)"}
+              {tampereTime || "Europe/Helsinki"}
             </span>
           </div>
 
@@ -149,7 +150,7 @@ export default function Hero() {
               variants={{
                 hidden: {
                   opacity: 0,
-                  y: shouldReduceMotion ? 0 : 20,
+                  y: 20,
                 },
                 visible: {
                   opacity: 1,
@@ -166,49 +167,51 @@ export default function Hero() {
               Software / Cloud / Systems
             </motion.p>
 
-            {/* WALIDUR */}
-            <div className="overflow-hidden">
-              <motion.h1
-                initial={{
-                  opacity: 0,
-                  y: shouldReduceMotion ? 0 : 80,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                transition={{
-                  delay: 0.15,
-                  duration: shouldReduceMotion ? 0 : 1,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="font-semibold leading-[0.82] tracking-[-0.07em] text-[clamp(4.4rem,13vw,13rem)] text-[var(--text-primary)]"
-              >
-                WALIDUR
-              </motion.h1>
-            </div>
+            <h1 className="font-semibold leading-[0.82] tracking-[-0.07em] text-[clamp(4.4rem,13vw,13rem)] text-[var(--text-primary)]">
+              {/* WALIDUR */}
+              <span className="block overflow-hidden">
+                <motion.span
+                  initial={{
+                    opacity: 0,
+                    y: 80,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    delay: 0.15,
+                    duration: shouldReduceMotion ? 0 : 1,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  className="block"
+                >
+                  WALIDUR
+                </motion.span>
+              </span>
 
-            {/* RAHMAN */}
-            <div className="overflow-hidden md:ml-[12%]">
-              <motion.h1
-                initial={{
-                  opacity: 0,
-                  y: shouldReduceMotion ? 0 : 80,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                transition={{
-                  delay: 0.27,
-                  duration: shouldReduceMotion ? 0 : 1,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="font-semibold leading-[0.82] tracking-[-0.07em] text-[clamp(4.4rem,13vw,13rem)] text-[var(--text-primary)]"
-              >
-                RAHMAN
-              </motion.h1>
-            </div>
+              {/* RAHMAN */}
+              <span className="block overflow-hidden md:ml-[12%]">
+                <motion.span
+                  initial={{
+                    opacity: 0,
+                    y: 80,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    delay: 0.27,
+                    duration: shouldReduceMotion ? 0 : 1,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  className="block"
+                >
+                  RAHMAN
+                </motion.span>
+              </span>
+            </h1>
           </div>
 
           {/* =================================================
@@ -218,7 +221,7 @@ export default function Hero() {
           <motion.div
             initial={{
               opacity: 0,
-              y: shouldReduceMotion ? 0 : 30,
+              y: 30,
             }}
             animate={{
               opacity: 1,
@@ -244,7 +247,7 @@ export default function Hero() {
           <motion.div
             initial={{
               opacity: 0,
-              y: shouldReduceMotion ? 0 : 30,
+              y: 30,
             }}
             animate={{
               opacity: 1,
@@ -272,7 +275,7 @@ export default function Hero() {
               ================================================= */}
 
           <motion.div
-            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
               delay: 0.65,

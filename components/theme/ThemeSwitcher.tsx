@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Check, Palette } from "lucide-react";
 import { useTheme, type ThemeName } from "./ThemeProvider";
 
@@ -33,6 +33,17 @@ const themes: {
 export default function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen]);
 
   return (
     <div className="relative">
@@ -94,7 +105,7 @@ export default function ThemeSwitcher() {
                       {item.preview.map((color) => (
                         <span
                           key={color}
-                          className="h-4 w-4 rounded-full border border-black/10"
+                          className="h-4 w-4 rounded-full border border-[var(--border-strong)]"
                           style={{
                             backgroundColor: color,
                           }}

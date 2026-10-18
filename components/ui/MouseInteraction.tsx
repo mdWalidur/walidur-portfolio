@@ -80,7 +80,7 @@ export default function MouseInteraction() {
           zIndex: 9998,
 
           background:
-            "radial-gradient(circle, rgba(197,160,89,0.18) 0%, rgba(197,160,89,0.08) 30%, rgba(197,160,89,0.025) 55%, transparent 72%)",
+            "radial-gradient(circle, color-mix(in srgb, var(--accent) 18%, transparent) 0%, color-mix(in srgb, var(--accent) 8%, transparent) 30%, color-mix(in srgb, var(--accent) 2.5%, transparent) 55%, transparent 72%)",
 
           filter: "blur(18px)",
 
@@ -113,10 +113,10 @@ export default function MouseInteraction() {
 
           zIndex: 9999,
 
-          background: "#c5a059",
+          background: "var(--accent)",
 
           boxShadow:
-            "0 0 12px rgba(197,160,89,0.9)",
+            "0 0 12px color-mix(in srgb, var(--accent) 90%, transparent)",
 
           willChange: "transform",
         }}

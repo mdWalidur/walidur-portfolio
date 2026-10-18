@@ -64,10 +64,11 @@ export default function Certifications() {
     <section
       id="credentials"
       aria-labelledby="credentials-heading"
-      className="relative scroll-mt-28 overflow-hidden px-5 py-24 sm:px-8 sm:py-32 lg:px-12 xl:px-20"
+      className="relative scroll-mt-28 overflow-hidden border-t px-5 py-24 sm:px-8 sm:py-32 lg:px-12 xl:px-20"
       style={{
         background: "var(--background)",
         color: "var(--text-primary)",
+        borderColor: "var(--border)",
       }}
     >
       {/* =====================================================
@@ -192,19 +193,14 @@ export default function Certifications() {
               }}
               style={{
                 perspective: "1200px",
+                background: "var(--surface-soft)",
+                borderColor: "var(--border)",
+                boxShadow: "0 20px 70px var(--shadow-color)",
               }}
               className="group relative overflow-hidden border backdrop-blur-[20px]"
             >
               {/* Card */}
-              <div
-                className="h-full"
-                style={{
-                  background: "var(--surface-soft)",
-                  borderColor: "var(--border)",
-                  boxShadow:
-                    "0 20px 70px var(--shadow-color)",
-                }}
-              >
+              <div className="h-full">
                 {/* =================================================
                     ACCENT GLOW
                     ================================================= */}
@@ -410,12 +406,12 @@ export default function Certifications() {
             >
               <div className="relative aspect-[16/10] overflow-hidden">
                 <Image
-  src="/certifications/linux-essentials.jpeg"
-  alt="Linux Essentials Certification from Cisco Networking Academy"
-  fill
-  sizes="(min-width: 768px) 55vw, 100vw"
-  className="object-contain transition-transform duration-700 group-hover:scale-[1.02]"
-/>
+                  src="/certifications/linux-essentials.jpeg"
+                  alt="Linux Essentials Certification from Cisco Networking Academy"
+                  fill
+                  sizes="(min-width: 768px) 55vw, 100vw"
+                  className="object-contain transition-transform duration-700 group-hover:scale-[1.02]"
+                />
 
                 {/* Image overlay */}
                 <div
@@ -509,6 +505,26 @@ export default function Certifications() {
                   </span>
                 ))}
               </div>
+
+              <a
+                href="/certifications/linux-essentials.jpeg"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group/link mt-7 inline-flex items-center gap-2 self-start text-[10px] font-bold uppercase tracking-[0.18em]"
+                style={{
+                  color: "var(--text-primary)",
+                }}
+              >
+                View certificate
+
+                <ExternalLink
+                  size={14}
+                  className="transition-all duration-700 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
+                  style={{
+                    color: "var(--accent)",
+                  }}
+                />
+              </a>
             </div>
           </div>
         </motion.article>
