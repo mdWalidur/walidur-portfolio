@@ -127,6 +127,7 @@ export default function HeroTechStack() {
               shrink-0
               rounded-full
               border
+              border-transparent
               p-3
               outline-none
               backdrop-blur-[20px]

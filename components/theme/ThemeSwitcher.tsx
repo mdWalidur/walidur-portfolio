@@ -22,24 +22,24 @@ export const themes: {
     label: "Signal",
     shortLabel: "Signal",
     icon: Zap,
-    accent: "#c8ff3d",
-    tagline: "Graphite / Lime",
+    accent: "#e5a965",
+    tagline: "Warm Obsidian / Amber",
   },
   {
     id: "paper",
     label: "Paper",
     shortLabel: "Paper",
     icon: Sun,
-    accent: "#315efb",
-    tagline: "Editorial / Ink",
+    accent: "#b85630",
+    tagline: "Warm Sand / Terracotta",
   },
   {
     id: "midnight",
     label: "Midnight",
     shortLabel: "Midnight",
     icon: Moon,
-    accent: "#6c8dff",
-    tagline: "Deep Navy / Ice",
+    accent: "#7aa2f7",
+    tagline: "Deep Slate / Sky",
   },
 ];
 
@@ -62,7 +62,7 @@ export default function ThemeSwitcher({
   if (!mounted) {
     return (
       <div
-        className={`flex h-8 items-center border border-[var(--border)] bg-[var(--surface-soft)] px-2 ${className}`}
+        className={`flex h-9 items-center rounded-full border border-[var(--glass-border)] bg-[var(--surface-soft)] px-3 ${className}`}
         aria-hidden="true"
       >
         <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--text-muted)]">
@@ -72,23 +72,22 @@ export default function ThemeSwitcher({
     );
   }
 
-  // Drawer variant for mobile dropdown menu
   if (variant === "drawer") {
     return (
       <div className={`w-full ${className}`}>
         <div className="mb-2.5 flex items-center justify-between px-1">
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted)]">
-            Color Theme
+            Theme
           </span>
           <span className="font-mono text-[9px] uppercase tracking-wider text-[var(--accent)]">
-            Current: {theme}
+            {theme}
           </span>
         </div>
 
         <div
           role="radiogroup"
           aria-label="Theme selection"
-          className="grid grid-cols-3 gap-1.5 border border-[var(--border)] bg-[var(--surface-soft)] p-1.5"
+          className="grid grid-cols-3 gap-1.5 rounded-2xl border border-[var(--glass-border)] bg-[var(--surface-soft)] p-1.5"
         >
           {themes.map((t) => {
             const isActive = theme === t.id;
@@ -101,24 +100,24 @@ export default function ThemeSwitcher({
                 role="radio"
                 aria-checked={isActive}
                 onClick={() => setTheme(t.id)}
-                className={`relative flex flex-col items-center justify-center gap-1.5 px-2 py-2.5 transition-all duration-200 focus-visible:outline-none ${
+                className={`relative flex flex-col items-center justify-center gap-1 rounded-xl px-2 py-2.5 transition-all duration-200 focus-visible:outline-none ${
                   isActive
-                    ? "border border-[var(--border-strong)] bg-[var(--surface-raised)] shadow-sm text-[var(--text-primary)]"
-                    : "border border-transparent text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface-hover)]"
+                    ? "border border-[var(--glass-border-glow)] bg-[var(--surface-raised)] text-[var(--text-primary)] shadow-sm"
+                    : "border border-transparent text-[var(--text-muted)] hover:bg-[var(--surface-hover)] hover:text-[var(--text-primary)]"
                 }`}
               >
                 <div className="flex items-center gap-1.5">
                   <span
-                    className="h-2 w-2 rounded-full border border-[var(--border-strong)]"
+                    className="h-2 w-2 rounded-full"
                     style={{ backgroundColor: t.accent }}
                   />
-                  <Icon size={14} className={isActive ? "text-[var(--accent)]" : ""} />
+                  <Icon
+                    size={13}
+                    className={isActive ? "text-[var(--accent)]" : ""}
+                  />
                 </div>
-                <span className="font-mono text-[10px] font-medium uppercase tracking-[0.14em]">
+                <span className="font-mono text-[10px] font-medium uppercase tracking-[0.12em]">
                   {t.label}
-                </span>
-                <span className="text-[8px] text-[var(--text-faint)] tracking-tight">
-                  {t.tagline}
                 </span>
               </button>
             );
@@ -128,12 +127,11 @@ export default function ThemeSwitcher({
     );
   }
 
-  // Segmented toggle variant in the Navbar
   return (
     <div
       role="radiogroup"
       aria-label="Theme toggle"
-      className={`relative inline-flex items-center border border-[var(--border)] bg-[var(--surface-soft)] p-0.5 backdrop-blur-md ${className}`}
+      className={`relative inline-flex items-center rounded-full border border-[var(--glass-border)] bg-[var(--surface-soft)] p-1 backdrop-blur-xl ${className}`}
     >
       {themes.map((t) => {
         const isActive = theme === t.id;
@@ -146,8 +144,9 @@ export default function ThemeSwitcher({
             role="radio"
             aria-checked={isActive}
             aria-label={`Switch to ${t.label} theme`}
+            title={`${t.label} (${t.tagline})`}
             onClick={() => setTheme(t.id)}
-            className={`group relative z-10 flex h-7 items-center gap-1.5 px-2 text-[10px] font-medium uppercase tracking-[0.16em] transition-colors duration-200 focus-visible:outline-none sm:px-2.5 ${
+            className={`group relative z-10 flex h-7 items-center gap-1.5 rounded-full px-2.5 text-[10px] font-medium tracking-[0.08em] transition-colors duration-200 focus-visible:outline-none ${
               isActive
                 ? "text-[var(--text-primary)]"
                 : "text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
@@ -156,7 +155,7 @@ export default function ThemeSwitcher({
             {isActive && (
               <motion.span
                 layoutId="theme-active-indicator"
-                className="absolute inset-0 z-0 border border-[var(--border-strong)] bg-[var(--surface-raised)] shadow-sm"
+                className="absolute inset-0 z-0 rounded-full border border-[var(--glass-border-glow)] bg-[var(--surface-raised)] shadow-sm"
                 transition={{ type: "spring", stiffness: 450, damping: 35 }}
               />
             )}
@@ -166,15 +165,19 @@ export default function ThemeSwitcher({
                 className="h-1.5 w-1.5 rounded-full transition-transform group-hover:scale-125"
                 style={{
                   backgroundColor: t.accent,
-                  boxShadow: isActive ? `0 0 6px ${t.accent}` : "none",
+                  boxShadow: isActive ? `0 0 8px ${t.accent}` : "none",
                 }}
               />
               <Icon
                 size={12}
                 strokeWidth={1.75}
-                className={isActive ? "text-[var(--accent)]" : "opacity-70 group-hover:opacity-100"}
+                className={
+                  isActive
+                    ? "text-[var(--accent)]"
+                    : "opacity-70 group-hover:opacity-100"
+                }
               />
-              <span className="hidden sm:inline">{t.shortLabel}</span>
+              <span className="hidden xl:inline">{t.shortLabel}</span>
             </span>
           </button>
         );

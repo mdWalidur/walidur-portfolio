@@ -10,37 +10,15 @@ export default function Footer() {
 
   return (
     <footer
-      className="
-        relative
-        z-10
-        w-full
-        px-5
-        pb-20
-        pt-5
-
-        sm:px-8
-        sm:pb-20
-
-        lg:px-12
-
-        xl:px-20
-      "
+      className="relative z-10 w-full px-5 pb-16 pt-5 sm:px-8 sm:pb-20"
       style={{
         background:
-          "color-mix(in srgb, var(--background) 82%, transparent)",
+          "color-mix(in oklab, var(--background) 84%, transparent)",
         color: "var(--text-primary)",
       }}
     >
       <div
-        className="
-          relative
-          mx-auto
-          max-w-7xl
-          border-t
-          pt-6
-
-          sm:pt-5
-        "
+        className="relative mx-auto max-w-6xl border-t pt-6 sm:pt-5"
         style={{
           borderColor: "var(--border)",
         }}

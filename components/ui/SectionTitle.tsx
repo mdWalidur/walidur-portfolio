@@ -33,14 +33,13 @@ export default function SectionShell({
         px-5
         py-24
         sm:px-8
-        sm:py-32
-        lg:px-12
-        xl:px-20
+        sm:py-28
+        lg:py-32
         ${className}
       `}
       style={{
         background:
-          "color-mix(in srgb, var(--background) 72%, transparent)",
+          "color-mix(in oklab, var(--background) 76%, transparent)",
         borderColor: "var(--border)",
         color: "var(--text-primary)",
       }}
@@ -63,7 +62,7 @@ export default function SectionShell({
         "
         style={{
           background: "var(--accent)",
-          opacity: 0.035,
+          opacity: 0.04,
         }}
       />
 
@@ -80,8 +79,8 @@ export default function SectionShell({
           blur-[130px]
         "
         style={{
-          background: "var(--accent)",
-          opacity: 0.025,
+          background: "var(--secondary-accent)",
+          opacity: 0.03,
         }}
       />
 
@@ -89,7 +88,7 @@ export default function SectionShell({
           MAIN CONTAINER
           ===================================================== */}
 
-      <div className="relative mx-auto max-w-7xl">
+      <div className="relative mx-auto max-w-6xl">
         {/* ===================================================
             HEADER
             =================================================== */}

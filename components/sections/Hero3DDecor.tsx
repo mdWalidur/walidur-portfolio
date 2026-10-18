@@ -19,10 +19,10 @@ type ThemeColors = {
 };
 
 const FALLBACK_COLORS: ThemeColors = {
-  accent: "#c8ff3d",
-  accentSoft: "#ddff85",
-  accentDark: "#94c520",
-  secondaryAccent: "#7c9cff",
+  accent: "#e5a965",
+  accentSoft: "#f3c892",
+  accentDark: "#c4823b",
+  secondaryAccent: "#d97757",
 };
 
 function emptySubscribe() {
@@ -361,7 +361,7 @@ function ParticleGlobe({
       );
 
       // Shift globe slightly toward center as user scrolls down sections
-      const basePosX = isMobile ? 0 : 0.95;
+      const basePosX = isMobile ? 0 : 1.15;
       const scrollShiftX = isMobile
         ? 0
         : basePosX * (1 - Math.min(1, interaction.scrollProgress * 1.8));
@@ -399,7 +399,7 @@ function ParticleGlobe({
   return (
     <group
       ref={outerGroupRef}
-      position={isMobile ? [0, 0.15, 0] : [0.95, 0.05, 0]}
+      position={isMobile ? [0, 0.18, 0] : [1.15, 0.12, 0]}
     >
       <group ref={globeSpinRef}>
         {/* Primary Fibonacci Particle Globe */}

@@ -30,7 +30,7 @@ export default function CommandPalette() {
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { theme, setTheme } = useTheme();
+  const { setTheme } = useTheme();
 
   const scrollTo = (id: string) => {
     setIsOpen(false);
@@ -97,9 +97,9 @@ export default function CommandPalette() {
     },
     {
       id: "theme-signal",
-      label: "Switch Theme: Signal (Dark)",
+      label: "Switch Theme: Signal (Warm Dark)",
       category: "Theme",
-      detail: "High-contrast graphite, ivory, and lime",
+      detail: "Warm obsidian, parchment ivory, and amber gold",
       icon: Palette,
       action: () => {
         setTheme("signal");
@@ -108,9 +108,9 @@ export default function CommandPalette() {
     },
     {
       id: "theme-paper",
-      label: "Switch Theme: Paper (Light)",
+      label: "Switch Theme: Paper (Warm Light)",
       category: "Theme",
-      detail: "Warm editorial paper, ink, and cobalt",
+      detail: "Soft warm sandstone, espresso ink, and terracotta",
       icon: Palette,
       action: () => {
         setTheme("paper");
@@ -119,9 +119,9 @@ export default function CommandPalette() {
     },
     {
       id: "theme-midnight",
-      label: "Switch Theme: Midnight (OLED)",
+      label: "Switch Theme: Midnight (Deep Slate)",
       category: "Theme",
-      detail: "Deep low-light navy, ice, and cyan",
+      detail: "Deep slate navy, luminous sky, and warm gold",
       icon: Palette,
       action: () => {
         setTheme("midnight");
@@ -136,7 +136,11 @@ export default function CommandPalette() {
       icon: ExternalLink,
       action: () => {
         setIsOpen(false);
-        window.open("https://github.com/mdWalidur", "_blank", "noopener,noreferrer");
+        window.open(
+          "https://github.com/mdWalidur",
+          "_blank",
+          "noopener,noreferrer"
+        );
       },
     },
     {
@@ -163,13 +167,6 @@ export default function CommandPalette() {
       cmd.category.toLowerCase().includes(query.toLowerCase())
   );
 
-  const openPalette = () => {
-    setQuery("");
-    setSelectedIndex(0);
-    setIsOpen(true);
-  };
-
-  /* Keyboard shortcut listener: Cmd + K or Ctrl + K */
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
@@ -188,11 +185,20 @@ export default function CommandPalette() {
       }
     };
 
+    const handleCustomOpen = () => {
+      setQuery("");
+      setSelectedIndex(0);
+      setIsOpen(true);
+    };
+
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    window.addEventListener("open-command-palette", handleCustomOpen);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("open-command-palette", handleCustomOpen);
+    };
   }, []);
 
-  /* Focus input on open */
   useEffect(() => {
     if (isOpen) {
       const timer = setTimeout(() => inputRef.current?.focus(), 50);
@@ -218,219 +224,143 @@ export default function CommandPalette() {
   };
 
   return (
-    <>
-      {/* Floating launcher trigger button */}
-      <button
-        type="button"
-        onClick={openPalette}
-        aria-label="Open Command Palette (⌘K)"
-        title="Command Palette (⌘K)"
-        className="fixed bottom-5 left-5 sm:bottom-6 sm:left-6 z-40 flex items-center gap-2 sm:gap-2.5 border px-3 py-2 sm:px-3.5 font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.14em] backdrop-blur-md transition-all duration-300 hover:scale-[1.02] shadow-xl"
-        style={{
-          background: "var(--header-background)",
-          borderColor: "var(--border)",
-          color: "var(--text-secondary)",
-          boxShadow: "0 10px 40px var(--shadow-color)",
-        }}
-      >
-        <Terminal size={14} style={{ color: "var(--accent)" }} />
-        <span className="hidden sm:inline">Command Menu</span>
-        <span className="sm:hidden">Cmd</span>
-        <kbd
-          className="rounded border px-1.5 py-0.5 text-[9px] font-semibold"
-          style={{
-            borderColor: "var(--border)",
-            background: "var(--surface)",
-            color: "var(--accent)",
-          }}
+    <AnimatePresence>
+      {isOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Command Palette"
+          className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-20 sm:pt-28"
         >
-          ⌘K
-        </kbd>
-      </button>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsOpen(false)}
+            className="fixed inset-0 bg-black/60 backdrop-blur-md"
+          />
 
-      {/* Modal Dialog */}
-      <AnimatePresence>
-        {isOpen && (
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-label="Command Palette"
-            className="fixed inset-0 z-50 flex items-start justify-center p-4 pt-16 sm:pt-24"
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96, y: -16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: -16 }}
+            transition={{ duration: 0.22, ease: [0.19, 1, 0.22, 1] }}
+            className="glass-card-strong relative w-full max-w-xl overflow-hidden rounded-3xl"
           >
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-md"
-            />
-
-            {/* Terminal Window */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96, y: -16 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: -16 }}
-              transition={{ duration: 0.22, ease: [0.19, 1, 0.22, 1] }}
-              className="relative w-full max-w-xl overflow-hidden border shadow-2xl backdrop-blur-2xl"
-              style={{
-                background: "var(--surface)",
-                borderColor: "var(--border-strong)",
-                boxShadow: "0 25px 80px var(--shadow-color)",
-              }}
+            <div
+              className="flex items-center gap-3 border-b px-5 py-4"
+              style={{ borderColor: "var(--border)" }}
             >
-              {/* Terminal Title Bar */}
-              <div
-                className="flex items-center justify-between border-b px-4 py-3"
-                style={{
-                  borderColor: "var(--border)",
-                  background: "var(--surface-soft)",
+              <Search size={16} style={{ color: "var(--accent)" }} />
+              <input
+                ref={inputRef}
+                type="text"
+                aria-label="Search commands"
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  setSelectedIndex(0);
                 }}
+                onKeyDown={handleKeyDownInput}
+                placeholder="Type a command or jump to section..."
+                className="w-full bg-transparent text-sm outline-none placeholder:text-[var(--text-muted)]"
+                style={{ color: "var(--text-primary)" }}
+              />
+              <button
+                type="button"
+                aria-label="Close command palette"
+                onClick={() => setIsOpen(false)}
+                className="rounded-full p-1 text-[var(--text-muted)] hover:text-[var(--text-primary)]"
               >
-                <div className="flex items-center gap-2.5">
-                  <div className="flex gap-1.5">
-                    <span className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-amber-500/80" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-500/80" />
-                  </div>
-                  <span
-                    className="font-mono text-[10px] uppercase tracking-[0.2em]"
+                <X size={15} />
+              </button>
+            </div>
+
+            <div className="max-h-80 overflow-y-auto p-2.5">
+              {filteredCommands.length === 0 ? (
+                <div className="py-8 text-center">
+                  <p
+                    className="font-mono text-xs"
                     style={{ color: "var(--text-muted)" }}
                   >
-                    terminal://walidur-system
-                  </span>
+                    No matching commands found.
+                  </p>
                 </div>
-
-                <button
-                  type="button"
-                  aria-label="Close command palette"
-                  onClick={() => setIsOpen(false)}
-                  className="p-1 text-[var(--text-muted)] hover:text-[var(--text-primary)]"
-                >
-                  <X size={15} />
-                </button>
-              </div>
-
-              {/* Input Area */}
-              <div
-                className="flex items-center gap-3 border-b px-4 py-3.5"
-                style={{ borderColor: "var(--border)" }}
-              >
-                <Search size={16} style={{ color: "var(--accent)" }} />
-                <input
-                  ref={inputRef}
-                  type="text"
-                  aria-label="Search commands"
-                  value={query}
-                  onChange={(e) => {
-                    setQuery(e.target.value);
-                    setSelectedIndex(0);
-                  }}
-                  onKeyDown={handleKeyDownInput}
-                  placeholder="Type a command or jump to section..."
-                  className="w-full bg-transparent font-mono text-sm outline-none placeholder:text-[var(--text-muted)]"
-                  style={{ color: "var(--text-primary)" }}
-                />
-                <span
-                  className="rounded border px-1.5 py-0.5 font-mono text-[9px] uppercase"
-                  style={{
-                    borderColor: "var(--border)",
-                    color: "var(--text-muted)",
-                  }}
-                >
-                  ESC to close
-                </span>
-              </div>
-
-              {/* Command List */}
-              <div className="max-h-80 overflow-y-auto p-2">
-                {filteredCommands.length === 0 ? (
-                  <div className="py-8 text-center">
-                    <p className="font-mono text-xs" style={{ color: "var(--text-muted)" }}>
-                      No matching commands found.
-                    </p>
-                  </div>
-                ) : (
-                  filteredCommands.map((item, index) => {
-                    const isSelected = index === selectedIndex;
-                    const Icon = item.icon;
-                    return (
-                      <button
-                        key={item.id}
-                        type="button"
-                        onClick={item.action}
-                        onMouseEnter={() => setSelectedIndex(index)}
-                        className={`group flex w-full items-center justify-between border px-3 py-2.5 text-left transition-all ${
-                          isSelected ? "border-[var(--accent)]" : "border-transparent"
-                        }`}
-                        style={{
-                          background: isSelected
-                            ? "color-mix(in srgb, var(--accent) 10%, var(--surface))"
-                            : "transparent",
-                        }}
-                      >
-                        <div className="flex items-center gap-3 min-w-0">
-                          <span
-                            className="grid h-7 w-7 shrink-0 place-items-center rounded border"
-                            style={{
-                              borderColor: isSelected ? "var(--accent)" : "var(--border)",
-                              background: "var(--surface)",
-                              color: isSelected ? "var(--accent)" : "var(--text-muted)",
-                            }}
-                          >
-                            <Icon size={14} />
-                          </span>
-
-                          <div className="min-w-0">
-                            <p
-                              className="truncate text-xs font-medium"
-                              style={{
-                                color: isSelected
-                                  ? "var(--text-primary)"
-                                  : "var(--text-secondary)",
-                              }}
-                            >
-                              {item.label}
-                            </p>
-                            <p
-                              className="truncate text-[10px]"
-                              style={{ color: "var(--text-muted)" }}
-                            >
-                              {item.detail}
-                            </p>
-                          </div>
-                        </div>
-
+              ) : (
+                filteredCommands.map((item, index) => {
+                  const isSelected = index === selectedIndex;
+                  const Icon = item.icon;
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={item.action}
+                      onMouseEnter={() => setSelectedIndex(index)}
+                      className={`group flex w-full items-center justify-between rounded-2xl border px-3.5 py-2.5 text-left transition-all ${
+                        isSelected
+                          ? "border-[var(--glass-border-glow)]"
+                          : "border-transparent"
+                      }`}
+                      style={{
+                        background: isSelected
+                          ? "var(--surface-soft)"
+                          : "transparent",
+                      }}
+                    >
+                      <div className="flex min-w-0 items-center gap-3">
                         <span
-                          className="shrink-0 font-mono text-[9px] uppercase tracking-wider"
+                          className="grid h-8 w-8 shrink-0 place-items-center rounded-xl border"
                           style={{
-                            color: isSelected ? "var(--accent)" : "var(--text-muted)",
+                            borderColor: isSelected
+                              ? "var(--accent)"
+                              : "var(--border)",
+                            background: "var(--surface)",
+                            color: isSelected
+                              ? "var(--accent)"
+                              : "var(--text-muted)",
                           }}
                         >
-                          {isSelected ? "↵ Enter" : item.category}
+                          <Icon size={14} />
                         </span>
-                      </button>
-                    );
-                  })
-                )}
-              </div>
 
-              {/* Bottom Status bar */}
-              <div
-                className="flex items-center justify-between border-t px-4 py-2 font-mono text-[9px] uppercase"
-                style={{
-                  borderColor: "var(--border)",
-                  background: "var(--surface-soft)",
-                  color: "var(--text-muted)",
-                }}
-              >
-                <span>↑↓ navigate</span>
-                <span>Active Theme: {theme}</span>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-    </>
+                        <div className="min-w-0">
+                          <p
+                            className="truncate text-xs font-medium"
+                            style={{
+                              color: isSelected
+                                ? "var(--text-primary)"
+                                : "var(--text-secondary)",
+                            }}
+                          >
+                            {item.label}
+                          </p>
+                          <p
+                            className="truncate text-[10px]"
+                            style={{ color: "var(--text-muted)" }}
+                          >
+                            {item.detail}
+                          </p>
+                        </div>
+                      </div>
+
+                      <span
+                        className="shrink-0 font-mono text-[9px] uppercase tracking-wider"
+                        style={{
+                          color: isSelected
+                            ? "var(--accent)"
+                            : "var(--text-muted)",
+                        }}
+                      >
+                        {isSelected ? "↵" : item.category}
+                      </span>
+                    </button>
+                  );
+                })
+              )}
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
   );
 }

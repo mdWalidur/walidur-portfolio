@@ -1,18 +1,61 @@
 @import "tailwindcss";
 
 /* =========================================================
+   TAILWIND V4 THEME CONFIGURATION (@theme)
+   Exposes semantic colors, typography, spacing, and shadows
+   across all Tailwind utility classes.
+   ========================================================= */
+
+@theme inline {
+  --font-sans: var(--font-body);
+  --font-display: var(--font-space-grotesk), system-ui, sans-serif;
+  --font-serif: var(--font-playfair), Georgia, serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+
+  --color-background: var(--background);
+  --color-background-deep: var(--background-deep);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-soft: var(--surface-soft);
+  --color-surface-hover: var(--surface-hover);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-faint: var(--text-faint);
+
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-dark: var(--accent-dark);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-secondary-accent: var(--secondary-accent);
+
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-border-soft: var(--border-soft);
+  --color-glass-border: var(--glass-border);
+  --color-glass-border-glow: var(--glass-border-glow);
+
+  --shadow-glass: 0 24px 64px -16px var(--shadow-color), 0 8px 24px -8px var(--shadow-color);
+  --shadow-glass-strong: 0 28px 80px -18px var(--shadow-color), 0 10px 28px -10px var(--shadow-color);
+  --shadow-pill: 0 8px 24px -6px var(--shadow-color);
+}
+
+/* =========================================================
    WALIDUR RAHMAN — PORTFOLIO DESIGN SYSTEM
-   EDITORIAL ENGINEERING / 2026
+   WARM EDITORIAL ENGINEERING / 2026
    ========================================================= */
 
 :root {
   /* ---------------------------------------------------------
-     TYPOGRAPHY
+     TYPOGRAPHY (Space Grotesk + Playfair Display + Plus Jakarta Sans + JetBrains Mono)
      --------------------------------------------------------- */
 
-  --font-display: var(--font-geist-sans);
-  --font-body: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-space-grotesk), system-ui, sans-serif;
+  --font-serif: var(--font-playfair), Georgia, serif;
+  --font-body: var(--font-jakarta), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
 
   /* ---------------------------------------------------------
      LAYOUT
@@ -49,50 +92,52 @@
   --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
 
   /* ---------------------------------------------------------
-     DEFAULT THEME
-     SIGNAL
+     DEFAULT THEME — SIGNAL (WARM OBSIDIAN & AMBER GOLD)
+     Soft warm architectural dark palette with high contrast
      --------------------------------------------------------- */
 
-  --background: #121314;
-  --background-deep: #0a0b0c;
+  color-scheme: dark;
 
-  --surface: #191b1d;
-  --surface-raised: #222528;
-  --surface-soft: rgba(255, 255, 255, 0.035);
-  --surface-hover: rgba(255, 255, 255, 0.065);
+  --background: #0f0d0b;
+  --background-deep: #090807;
 
-  --foreground: #f2f0e8;
+  --surface: #181512;
+  --surface-raised: #221d19;
+  --surface-soft: rgba(246, 241, 233, 0.045);
+  --surface-hover: rgba(246, 241, 233, 0.085);
 
-  --text-primary: #f2f0e8;
-  --text-secondary: rgba(242, 240, 232, 0.68);
-  --text-muted: rgba(242, 240, 232, 0.46);
-  --text-faint: rgba(242, 240, 232, 0.28);
+  --foreground: #f6f1e9;
 
-  --accent: #c8ff3d;
-  --accent-soft: #ddff85;
-  --accent-dark: #94c520;
-  --accent-contrast: #101300;
+  --text-primary: #f6f1e9;
+  --text-secondary: rgba(246, 241, 233, 0.74);
+  --text-muted: rgba(246, 241, 233, 0.52);
+  --text-faint: rgba(246, 241, 233, 0.3);
 
-  --secondary-accent: #7c9cff;
+  --accent: #e5a965;
+  --accent-soft: #f3c892;
+  --accent-dark: #c4823b;
+  --accent-contrast: #140f0a;
 
-  --border: rgba(242, 240, 232, 0.14);
-  --border-strong: rgba(242, 240, 232, 0.24);
-  --border-soft: rgba(242, 240, 232, 0.075);
+  --secondary-accent: #d97757;
 
-  --header-background: rgba(18, 19, 20, 0.84);
-  --header-text: rgba(242, 240, 232, 0.8);
+  --border: rgba(246, 241, 233, 0.14);
+  --border-strong: rgba(246, 241, 233, 0.25);
+  --border-soft: rgba(246, 241, 233, 0.08);
 
-  --shadow-color: rgba(0, 0, 0, 0.34);
+  --header-background: rgba(15, 13, 11, 0.84);
+  --header-text: rgba(246, 241, 233, 0.86);
 
-  --accent-readable: rgba(242, 240, 232, 0.68);
+  --shadow-color: rgba(5, 4, 3, 0.45);
+
+  --accent-readable: rgba(246, 241, 233, 0.74);
 
   --selection-background: var(--accent);
   --selection-foreground: var(--accent-contrast);
 
-  --glass-bg: rgba(20, 22, 26, 0.52);
-  --glass-bg-strong: rgba(24, 27, 32, 0.72);
-  --glass-border: rgba(242, 240, 232, 0.12);
-  --glass-border-glow: rgba(200, 255, 61, 0.28);
+  --glass-bg: rgba(24, 21, 18, 0.58);
+  --glass-bg-strong: rgba(30, 26, 22, 0.78);
+  --glass-border: rgba(246, 241, 233, 0.14);
+  --glass-border-glow: rgba(229, 169, 101, 0.38);
   --in-oklab: ;
   --in-oklch: ;
 }
@@ -105,144 +150,174 @@
 }
 
 /* =========================================================
-   THEME 01 — SIGNAL
+   THEME 01 — SIGNAL (WARM OBSIDIAN & AMBER GOLD)
    MAIN PORTFOLIO IDENTITY
    ========================================================= */
 
 [data-theme="signal"] {
   color-scheme: dark;
 
-  --background: #121314;
-  --background-deep: #0a0b0c;
+  --background: #0f0d0b;
+  --background-deep: #090807;
 
-  --surface: #191b1d;
-  --surface-raised: #222528;
-  --surface-soft: rgba(255, 255, 255, 0.035);
-  --surface-hover: rgba(255, 255, 255, 0.065);
+  --surface: #181512;
+  --surface-raised: #221d19;
+  --surface-soft: rgba(246, 241, 233, 0.045);
+  --surface-hover: rgba(246, 241, 233, 0.085);
 
-  --foreground: #f2f0e8;
+  --foreground: #f6f1e9;
 
-  --text-primary: #f2f0e8;
-  --text-secondary: rgba(242, 240, 232, 0.68);
-  --text-muted: rgba(242, 240, 232, 0.46);
-  --text-faint: rgba(242, 240, 232, 0.28);
+  --text-primary: #f6f1e9;
+  --text-secondary: rgba(246, 241, 233, 0.74);
+  --text-muted: rgba(246, 241, 233, 0.52);
+  --text-faint: rgba(246, 241, 233, 0.3);
 
-  --accent: #c8ff3d;
-  --accent-soft: #ddff85;
-  --accent-dark: #94c520;
-  --accent-contrast: #101300;
+  --accent: #e5a965;
+  --accent-soft: #f3c892;
+  --accent-dark: #c4823b;
+  --accent-contrast: #140f0a;
 
-  --secondary-accent: #7c9cff;
+  --secondary-accent: #d97757;
 
-  --border: rgba(242, 240, 232, 0.14);
-  --border-strong: rgba(242, 240, 232, 0.24);
-  --border-soft: rgba(242, 240, 232, 0.075);
+  --border: rgba(246, 241, 233, 0.14);
+  --border-strong: rgba(246, 241, 233, 0.25);
+  --border-soft: rgba(246, 241, 233, 0.08);
 
-  --header-background: rgba(18, 19, 20, 0.84);
-  --header-text: rgba(242, 240, 232, 0.8);
+  --header-background: rgba(15, 13, 11, 0.84);
+  --header-text: rgba(246, 241, 233, 0.86);
 
-  --shadow-color: rgba(0, 0, 0, 0.34);
+  --shadow-color: rgba(5, 4, 3, 0.45);
 
-  --accent-readable: rgba(242, 240, 232, 0.68);
+  --accent-readable: rgba(246, 241, 233, 0.74);
 
-  --glass-bg: rgba(20, 22, 26, 0.52);
-  --glass-bg-strong: rgba(24, 27, 32, 0.72);
-  --glass-border: rgba(242, 240, 232, 0.13);
-  --glass-border-glow: rgba(200, 255, 61, 0.32);
+  --glass-bg: rgba(24, 21, 18, 0.58);
+  --glass-bg-strong: rgba(30, 26, 22, 0.78);
+  --glass-border: rgba(246, 241, 233, 0.14);
+  --glass-border-glow: rgba(229, 169, 101, 0.38);
 }
 
 /* =========================================================
-   THEME 02 — PAPER
-   EDITORIAL / LIGHT
+   THEME 02 — PAPER (WARM SANDSTONE & TERRACOTTA)
+   EDITORIAL / SOFT WARM DAYLIGHT
    ========================================================= */
 
 [data-theme="paper"] {
   color-scheme: light;
 
-  --background: #eeece5;
-  --background-deep: #e3e0d7;
+  --background: #f5f0e6;
+  --background-deep: #ebe3d5;
 
-  --surface: #e7e4dc;
-  --surface-raised: #f7f5ef;
-  --surface-soft: rgba(20, 22, 25, 0.035);
-  --surface-hover: rgba(20, 22, 25, 0.06);
+  --surface: #efe8dc;
+  --surface-raised: #faf7f2;
+  --surface-soft: rgba(28, 24, 20, 0.045);
+  --surface-hover: rgba(28, 24, 20, 0.08);
 
-  --foreground: #15171a;
+  --foreground: #1c1814;
 
-  --text-primary: #15171a;
-  --text-secondary: rgba(21, 23, 26, 0.68);
-  --text-muted: rgba(21, 23, 26, 0.48);
-  --text-faint: rgba(21, 23, 26, 0.3);
+  --text-primary: #1c1814;
+  --text-secondary: rgba(28, 24, 20, 0.74);
+  --text-muted: rgba(28, 24, 20, 0.54);
+  --text-faint: rgba(28, 24, 20, 0.32);
 
-  --accent: #315efb;
-  --accent-soft: #7896ff;
-  --accent-dark: #2048cf;
-  --accent-contrast: #ffffff;
+  --accent: #b85630;
+  --accent-soft: #d97b54;
+  --accent-dark: #944020;
+  --accent-contrast: #faf7f2;
 
-  --secondary-accent: #a85e38;
+  --secondary-accent: #2d6a5e;
 
-  --border: rgba(21, 23, 26, 0.15);
-  --border-strong: rgba(21, 23, 26, 0.25);
-  --border-soft: rgba(21, 23, 26, 0.08);
+  --border: rgba(28, 24, 20, 0.14);
+  --border-strong: rgba(28, 24, 20, 0.24);
+  --border-soft: rgba(28, 24, 20, 0.08);
 
-  --header-background: rgba(238, 236, 229, 0.88);
-  --header-text: rgba(21, 23, 26, 0.8);
+  --header-background: rgba(245, 240, 230, 0.86);
+  --header-text: rgba(28, 24, 20, 0.85);
 
-  --shadow-color: rgba(32, 29, 22, 0.12);
+  --shadow-color: rgba(38, 30, 20, 0.11);
 
-  --accent-readable: rgba(21, 23, 26, 0.68);
+  --accent-readable: rgba(28, 24, 20, 0.74);
 
-  --glass-bg: rgba(247, 245, 239, 0.65);
-  --glass-bg-strong: rgba(247, 245, 239, 0.84);
-  --glass-border: rgba(21, 23, 26, 0.14);
-  --glass-border-glow: rgba(49, 94, 251, 0.3);
+  --glass-bg: rgba(250, 247, 242, 0.72);
+  --glass-bg-strong: rgba(250, 247, 242, 0.88);
+  --glass-border: rgba(28, 24, 20, 0.14);
+  --glass-border-glow: rgba(184, 86, 48, 0.34);
 }
 
 /* =========================================================
-   THEME 03 — MIDNIGHT
+   THEME 03 — MIDNIGHT (DEEP SLATE & LUMINOUS SKY)
    TECHNICAL / LOW-LIGHT
    ========================================================= */
 
 [data-theme="midnight"] {
   color-scheme: dark;
 
-  --background: #090e18;
-  --background-deep: #05080f;
+  --background: #0a0f18;
+  --background-deep: #060910;
 
-  --surface: #101724;
-  --surface-raised: #182130;
-  --surface-soft: rgba(225, 237, 255, 0.035);
-  --surface-hover: rgba(225, 237, 255, 0.065);
+  --surface: #111826;
+  --surface-raised: #192234;
+  --surface-soft: rgba(232, 238, 248, 0.045);
+  --surface-hover: rgba(232, 238, 248, 0.08);
 
-  --foreground: #e8eef8;
+  --foreground: #edf2fa;
 
-  --text-primary: #e8eef8;
-  --text-secondary: rgba(232, 238, 248, 0.68);
-  --text-muted: rgba(232, 238, 248, 0.46);
-  --text-faint: rgba(232, 238, 248, 0.28);
+  --text-primary: #edf2fa;
+  --text-secondary: rgba(237, 242, 250, 0.74);
+  --text-muted: rgba(237, 242, 250, 0.52);
+  --text-faint: rgba(237, 242, 250, 0.3);
 
-  --accent: #6c8dff;
-  --accent-soft: #a9bcff;
-  --accent-dark: #4564d6;
-  --accent-contrast: #080d1a;
+  --accent: #7aa2f7;
+  --accent-soft: #a9c4ff;
+  --accent-dark: #4f77d6;
+  --accent-contrast: #080d18;
 
-  --secondary-accent: #8ee6d1;
+  --secondary-accent: #e0af68;
 
-  --border: rgba(232, 238, 248, 0.13);
-  --border-strong: rgba(232, 238, 248, 0.22);
-  --border-soft: rgba(232, 238, 248, 0.075);
+  --border: rgba(237, 242, 250, 0.14);
+  --border-strong: rgba(237, 242, 250, 0.24);
+  --border-soft: rgba(237, 242, 250, 0.08);
 
-  --header-background: rgba(9, 14, 24, 0.88);
-  --header-text: rgba(232, 238, 248, 0.8);
+  --header-background: rgba(10, 15, 24, 0.86);
+  --header-text: rgba(237, 242, 250, 0.85);
 
-  --shadow-color: rgba(0, 0, 0, 0.4);
+  --shadow-color: rgba(0, 0, 0, 0.45);
 
-  --accent-readable: rgba(232, 238, 248, 0.68);
+  --accent-readable: rgba(237, 242, 250, 0.74);
 
-  --glass-bg: rgba(14, 22, 36, 0.56);
-  --glass-bg-strong: rgba(18, 28, 45, 0.76);
-  --glass-border: rgba(232, 238, 248, 0.13);
-  --glass-border-glow: rgba(108, 141, 255, 0.34);
+  --glass-bg: rgba(17, 24, 38, 0.58);
+  --glass-bg-strong: rgba(22, 31, 48, 0.78);
+  --glass-border: rgba(237, 242, 250, 0.14);
+  --glass-border-glow: rgba(122, 162, 247, 0.36);
+}
+
+/* =========================================================
+   HIGH CONTRAST & FORCED COLORS ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-contrast: more) {
+  :root,
+  [data-theme="signal"],
+  [data-theme="midnight"] {
+    --text-secondary: rgba(255, 255, 255, 0.88);
+    --text-muted: rgba(255, 255, 255, 0.72);
+    --border: rgba(255, 255, 255, 0.32);
+    --glass-border: rgba(255, 255, 255, 0.32);
+  }
+
+  [data-theme="paper"] {
+    --text-secondary: rgba(15, 12, 10, 0.9);
+    --text-muted: rgba(15, 12, 10, 0.75);
+    --border: rgba(15, 12, 10, 0.34);
+    --glass-border: rgba(15, 12, 10, 0.34);
+  }
+}
+
+@media (forced-colors: active) {
+  .glass-card,
+  .glass-card-strong,
+  .glass-pill {
+    border: 1px solid CanvasText;
+  }
 }
 
 /* =========================================================
@@ -270,9 +345,14 @@ body {
 
   background:
     radial-gradient(
-      circle at 50% -20%,
-      color-mix(in srgb, var(--accent) 8%, transparent),
-      transparent 45%
+      circle at 50% -18%,
+      color-mix(in oklab, var(--accent) 11%, transparent),
+      transparent 48%
+    ),
+    radial-gradient(
+      circle at 85% 22%,
+      color-mix(in oklab, var(--secondary-accent) 7%, transparent),
+      transparent 42%
     ),
     var(--background);
 
@@ -302,7 +382,19 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: var(--font-display), Arial, sans-serif;
+  font-family: var(--font-display);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
 }
 
 p {

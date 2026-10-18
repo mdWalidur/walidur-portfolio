@@ -10,11 +10,11 @@ export const portfolioProfile: PortfolioProfile = {
   location: "Tampere, Finland",
 
   headline:
-    "IT Engineering Student focused on software development, cloud technologies, and building practical digital solutions.",
+    "Architecting resilient cloud infrastructure, intelligent AI systems, and tactile full-stack web experiences.",
 
   summary:
-    "I am an IT Engineering student with an interest in software development, cloud computing, DevOps, and modern web technologies. I enjoy building practical projects, learning new technologies, and improving my skills through hands-on development.",
-  
+    "IT Engineering student in Tampere, Finland specializing in AWS cloud architecture, containerized DevOps workflows, machine learning telemetry, and high-craft TypeScript interfaces.",
+
   email: "ratul087@gmail.com",
 
   github: "https://github.com/mdWalidur",
