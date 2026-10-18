@@ -35,65 +35,144 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500", "600"],
 });
 
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://walidur-portfolio.vercel.app";
+
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://mdwalidur.github.io"
-  ),
+  metadataBase: new URL(SITE_URL),
 
   title: {
-    default: "Walidur Rahman — Cloud, DevOps & Creative Engineering",
+    default: "Walidur Rahman — Cloud, DevOps & AI Engineer",
     template: "%s | Walidur Rahman",
   },
 
   description:
-    "Portfolio of Walidur Rahman — engineering resilient cloud architectures, automated DevOps pipelines, and expressive digital experiences.",
+    "Portfolio of Md Walidur Rahman — IT Engineering student in Tampere, Finland specializing in AWS cloud architecture, Docker, Kubernetes, DevOps automation, AI systems, and full-stack TypeScript web development.",
+
+  applicationName: "Walidur Rahman Portfolio",
+
+  authors: [
+    {
+      name: "Md Walidur Rahman",
+      url: SITE_URL,
+    },
+  ],
+  creator: "Md Walidur Rahman",
+  publisher: "Md Walidur Rahman",
+  category: "technology",
 
   keywords: [
     "Walidur Rahman",
+    "Md Walidur Rahman",
     "Cloud Engineer",
-    "DevOps",
-    "Software Developer",
+    "DevOps Engineer",
     "AWS",
     "Docker",
     "Kubernetes",
+    "Software Developer",
+    "Full-Stack Developer",
+    "TypeScript",
+    "React",
+    "Next.js",
     "Artificial Intelligence",
-    "Portfolio",
+    "Cybersecurity",
+    "Tampere",
+    "Finland",
+    "Centria University of Applied Sciences",
   ],
+
+  alternates: {
+    canonical: "/",
+  },
 
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 
   openGraph: {
     type: "website",
     locale: "en_US",
-    title: "Walidur Rahman — Cloud, DevOps & Creative Engineering",
+    url: SITE_URL,
+    title: "Walidur Rahman — Cloud, DevOps & AI Engineer",
     description:
-      "Engineering resilient cloud systems, automated pipelines, and expressive web experiences.",
+      "Architecting resilient cloud infrastructure, intelligent AI systems, and tactile full-stack web experiences.",
     siteName: "Walidur Rahman",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Walidur Rahman — Portfolio",
-      },
-    ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Walidur Rahman — Cloud, DevOps & Creative Engineering",
+    title: "Walidur Rahman — Cloud, DevOps & AI Engineer",
     description:
-      "Engineering resilient cloud systems, automated pipelines, and expressive web experiences.",
-    images: ["/og-image.png"],
+      "Architecting resilient cloud infrastructure, intelligent AI systems, and tactile full-stack web experiences.",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#121314",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0f0d0b" },
+    { media: "(prefers-color-scheme: light)", color: "#f5f0e6" },
+  ],
   colorScheme: "dark light",
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#person`,
+      name: "Md Walidur Rahman",
+      alternateName: "Walidur Rahman",
+      url: SITE_URL,
+      jobTitle: "Cloud, DevOps & Full-Stack Engineer",
+      description:
+        "IT Engineering student in Tampere, Finland specializing in AWS cloud architecture, containerized DevOps workflows, machine learning telemetry, and high-craft TypeScript interfaces.",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Tampere",
+        addressCountry: "FI",
+      },
+      alumniOf: {
+        "@type": "CollegeOrUniversity",
+        name: "Centria University of Applied Sciences",
+      },
+      knowsAbout: [
+        "Amazon Web Services (AWS)",
+        "Docker",
+        "Kubernetes",
+        "DevOps",
+        "CI/CD",
+        "TypeScript",
+        "React",
+        "Next.js",
+        "Python",
+        "Artificial Intelligence",
+        "Cybersecurity",
+      ],
+      sameAs: [
+        "https://github.com/mdWalidur",
+        "https://www.linkedin.com/in/md-walidur-rahman-b86453264/",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: "Walidur Rahman — Portfolio",
+      publisher: {
+        "@id": `${SITE_URL}/#person`,
+      },
+      inLanguage: "en-US",
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -110,6 +189,10 @@ export default function RootLayout({
       <body
         className={`${spaceGrotesk.variable} ${playfairDisplay.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable} antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
