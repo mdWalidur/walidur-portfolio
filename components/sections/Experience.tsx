@@ -261,14 +261,14 @@ export default function Experience() {
         >
           <h2
             id="experience-heading"
-            className="text-[clamp(2.5rem,6.5vw,5rem)] font-light leading-[0.94] tracking-[-0.06em]"
+            className="text-[clamp(2.4rem,5.5vw,4.6rem)] font-light leading-[1.14] tracking-[-0.03em]"
           >
             Experience{" "}
             <span
-              className="font-serif italic"
+              className="inline-block pr-1 font-serif italic tracking-normal"
               style={{ color: "var(--accent)" }}
             >
-              & education.
+              &amp; education.
             </span>
           </h2>
         </motion.div>

@@ -67,11 +67,11 @@ export default function Contact() {
         >
           <h2
             id="contact-heading"
-            className="text-[clamp(2.6rem,7vw,5.6rem)] font-light leading-[0.92] tracking-[-0.06em]"
+            className="text-[clamp(2.4rem,5.8vw,4.8rem)] font-light leading-[1.14] tracking-[-0.03em]"
           >
             Let&apos;s build{" "}
             <span
-              className="font-serif italic"
+              className="inline-block pr-1 font-serif italic tracking-normal"
               style={{ color: "var(--accent)" }}
             >
               something good.

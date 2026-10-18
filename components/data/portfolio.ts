@@ -10,10 +10,10 @@ export const portfolioProfile: PortfolioProfile = {
   location: "Tampere, Finland",
 
   headline:
-    "Architecting resilient cloud infrastructure, intelligent AI systems, and tactile full-stack web experiences.",
+    "Full-Stack & Cloud Engineer designing scalable web applications, automated DevOps pipelines, and practical AI-driven systems.",
 
   summary:
-    "IT Engineering student in Tampere, Finland specializing in AWS cloud architecture, containerized DevOps workflows, machine learning telemetry, and high-craft TypeScript interfaces.",
+    "IT Engineering student in Tampere, Finland focused on AWS cloud infrastructure, containerized microservices, and high-performance TypeScript & React web applications.",
 
   email: "ratul087@gmail.com",
 

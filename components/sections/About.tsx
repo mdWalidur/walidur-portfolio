@@ -43,11 +43,11 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.85, ease: easing }}
-              className="max-w-4xl text-[clamp(2.6rem,6.5vw,5.2rem)] font-light leading-[0.94] tracking-[-0.06em]"
+              className="max-w-4xl text-[clamp(2.4rem,5.5vw,4.6rem)] font-light leading-[1.14] tracking-[-0.03em]"
             >
               I turn ambitious ideas into{" "}
               <span
-                className="font-serif italic"
+                className="inline-block pr-1 font-serif italic tracking-normal"
                 style={{ color: "var(--accent)" }}
               >
                 useful digital experiences.

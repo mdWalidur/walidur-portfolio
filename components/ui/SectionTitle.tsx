@@ -167,8 +167,8 @@ export default function SectionShell({
                 max-w-4xl
                 text-4xl
                 font-light
-                leading-[1.04]
-                tracking-[-0.055em]
+                leading-[1.14]
+                tracking-[-0.03em]
                 sm:text-5xl
                 lg:text-6xl
               "
