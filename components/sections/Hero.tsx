@@ -292,13 +292,6 @@ export default function Hero() {
               }}
               className="mb-2 flex items-center justify-between px-1 lg:mb-28"
             >
-              <span className="glass-pill inline-flex items-center gap-2 rounded-full px-3 py-1 font-mono text-[9px] uppercase tracking-[0.18em] text-[var(--text-secondary)]">
-                <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
-                3D Particle Globe · Interactive Centerpiece
-              </span>
-              <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-[var(--text-muted)]">
-                
-              </span>
             </motion.div>
 
             {/* Floating Glassmorphic Service Cards (Interactive Experience & Visual Arts) */}

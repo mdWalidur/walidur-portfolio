@@ -197,22 +197,6 @@ function VisualShell({
             {label}
           </span>
         </div>
-
-        <span
-          className="
-            hidden
-            text-[8px]
-            uppercase
-            tracking-[0.25em]
-
-            sm:block
-          "
-          style={{
-            color: "var(--text-muted)",
-          }}
-        >
-          SYSTEM / 2026
-        </span>
       </div>
 
       <div className="relative z-10 flex flex-1 flex-col justify-center">
@@ -838,49 +822,6 @@ function ProjectCard({
       }}
       className="glass-card group relative rounded-3xl p-6 sm:p-8 lg:p-10"
     >
-      {/* Project header line */}
-
-      <div
-        className="
-          mb-5
-          flex
-          items-center
-          justify-between
-
-          sm:mb-7
-        "
-      >
-        <div className="flex items-center gap-3">
-          <span
-            className="
-              h-px
-              w-8
-
-              sm:w-12
-            "
-            style={{
-              background: "var(--accent)",
-            }}
-          />
-
-          <span
-            className="
-              text-[8px]
-              uppercase
-              tracking-[0.22em]
-
-              sm:text-[9px]
-              sm:tracking-[0.28em]
-            "
-            style={{
-              color: "var(--text-muted)",
-            }}
-          >
-            Selected project
-          </span>
-        </div>
-      </div>
-
       {/* Main layout */}
 
       <div
@@ -1130,7 +1071,6 @@ export default function Work() {
   return (
     <SectionShell
       id="work"
-      eyebrow="Selected work"
       title="Projects made to solve real problems."
       description="A selection of projects spanning IoT, web development, networking, and cybersecurity."
       contentClassName="
