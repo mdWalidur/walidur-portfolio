@@ -105,7 +105,7 @@ export default function Hero() {
               <span className="font-serif italic font-normal tracking-[-0.02em] text-[var(--text-primary)]">
                 interactive
               </span>{" "}
-              craft.
+              Web Applications.
             </motion.h1>
 
             <motion.p
