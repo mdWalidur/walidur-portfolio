@@ -52,7 +52,7 @@ const projects: Project[] = [
       "GitHub Pages",
       "Responsive Design",
     ],
-    liveUrl: "https://mdwalidur.github.io/Network-Calculator-Suite/",
+    liveUrl: "https://network-calculator-suite.vercel.app/",
     icon: Network,
   },
   {
