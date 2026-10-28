@@ -97,6 +97,10 @@ export const metadata: Metadata = {
     },
   },
 
+  verification: {
+    google: "2bb2978517b96898",
+  },
+
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
